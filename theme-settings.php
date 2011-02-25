@@ -1,5 +1,4 @@
 <?php
-// $Id$
 
 // require_once for the functions that need to be available when we are outside
 // of the omega theme in the administrative interface

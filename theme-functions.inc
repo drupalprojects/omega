@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
  * Return the theme settings' default values from the .info and save them into the database.
  *

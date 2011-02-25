@@ -1,5 +1,4 @@
 <?php
-//$Id$
 // Report all PHP errors (see changelog)
 //ini_set('error_reporting', E_ALL);
 /**

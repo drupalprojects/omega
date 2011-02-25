@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
  * Implementation of theme_preprocess_HOOK().
  * Passes varables to the node templates.

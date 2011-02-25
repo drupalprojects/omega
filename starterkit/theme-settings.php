@@ -1,5 +1,4 @@
 <?php
-// $Id$
 
 // Include the definition of omega_settings() and omega_theme_get_default_settings().
 include_once './' . drupal_get_path('theme', 'omega') . '/theme-settings.php';

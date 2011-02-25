@@ -1,5 +1,4 @@
 <?php
-// $Id$
 
 /*
  * Add any conditional stylesheets you will need for this sub-theme.

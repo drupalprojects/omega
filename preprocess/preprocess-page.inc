@@ -1,5 +1,4 @@
 <?php
-// $Id$
 global $theme_key;
 //include_once './' . drupal_get_path('theme', 'omega') . '/theme-functions.inc';
 $settings = theme_get_settings($theme_key);

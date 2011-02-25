@@ -1,5 +1,4 @@
 <?php
-// $Id$
 $vars['body_attributes'] = array();
 
 $vars['body_attributes']['id'] = 'maintenance-page';
