@@ -1,5 +1,4 @@
 <?php
-// $Id$
 
 /**
  * @file views-view-list.tpl.php

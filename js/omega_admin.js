@@ -1,4 +1,3 @@
-//$Id$
 
 (function ($) {
   omega = jQuery.noConflict();

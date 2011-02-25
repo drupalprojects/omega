@@ -1,5 +1,4 @@
 <?php
-// $Id$
 // Report all PHP errors (see changelog)
 
 /**

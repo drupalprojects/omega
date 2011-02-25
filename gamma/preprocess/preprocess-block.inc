@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
  * @file 
  * preprocess-block.inc is an alternate location for storage on items

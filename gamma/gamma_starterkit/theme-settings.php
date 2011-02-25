@@ -1,5 +1,4 @@
 <?php
-// $Id$
 /**
  * @file
  * template.php for gamma theme

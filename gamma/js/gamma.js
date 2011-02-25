@@ -1,4 +1,3 @@
-// $Id$
 // declare the gamma variable for jQuery usage in the gamma theme.
 (function ($) {
   /**
