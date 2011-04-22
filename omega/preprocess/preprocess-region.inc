@@ -21,7 +21,7 @@ $omega_attributes = isset($vars['elements']['#omega']['attributes']) ? $vars['el
 $zone = isset($vars['elements']['#omega']['zid']) ? $vars['elements']['#omega']['zid'] : array();
 $region = $vars['region'];
 // set the extra classes to assign to this zone.
-$region_classes = explode(' ', omega_theme_get_setting('omega_'. $zone . '_' . $region. '_region_extra_classes'));
+$region_classes = explode(' ', theme_get_setting('omega_'. $zone . '_' . $region. '_region_extra_classes'));
 foreach ($region_classes as $class) {
   if($class) {
     $vars['classes_array'][] = $class;

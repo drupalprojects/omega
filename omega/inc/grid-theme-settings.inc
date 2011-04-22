@@ -26,14 +26,14 @@ $form['omega_grid']['defaults'] = array(
 $form['omega_grid']['defaults']['omega_default_container_width'] = array(
   '#type' => 'select',
   '#title' => t('Default container width'),
-  '#default_value' => omega_theme_get_setting('omega_default_container_width'),
+  '#default_value' => theme_get_setting('omega_default_container_width'),
   '#options' => $containers,
   '#weight' => -50,
   '#description' => t('This width is used for regions like $help, $messages and other non-important regions in page.tpl.php'),
 );
 
 // use a responsive grid instead of the default 960gs
-$responsive = omega_theme_get_setting('omega_responsive_grid') ? omega_theme_get_setting('omega_responsive_grid') : 'disabled';
+$responsive = theme_get_setting('omega_responsive_grid') ? theme_get_setting('omega_responsive_grid') : 'disabled';
 $form['omega_grid']['defaults']['omega_responsive_grid'] = array(
   '#type' => 'radios',
   '#description' => t('Enable adaptive/responsive grid layout. This allows the grid to resize based on the size of the users device. This incorporates mobile first design, so the default behavior is to show the simplest (stacked) version of the layout, and for devices that meet certain display criteria (width), new CSS and grid sizing will be applied. <strong>Implementing this feature will ignore the fixed/fluid setting as it currently is only available for the fixed size grid.</strong>'),
@@ -61,7 +61,7 @@ $form['omega_grid']['defaults']['omega_responsive_mobile'] = array(
   '#states' => $responsive_state,
 );
 
-$responsive_medium = omega_theme_get_setting('omega_responsive_medium') ? omega_theme_get_setting('omega_responsive_medium') : 0;
+$responsive_medium = theme_get_setting('omega_responsive_medium') ? theme_get_setting('omega_responsive_medium') : 0;
 $form['omega_grid']['defaults']['responsive_settings']['omega_responsive_medium'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable 720px grid (medium)'),
@@ -70,7 +70,7 @@ $form['omega_grid']['defaults']['responsive_settings']['omega_responsive_medium'
   '#states' => $responsive_state,
 );
 
-$responsive_default = omega_theme_get_setting('omega_responsive_default') ? omega_theme_get_setting('omega_responsive_default') : 0;
+$responsive_default = theme_get_setting('omega_responsive_default') ? theme_get_setting('omega_responsive_default') : 0;
 $form['omega_grid']['defaults']['omega_responsive_default'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable 960px grid (default)'),
@@ -79,7 +79,7 @@ $form['omega_grid']['defaults']['omega_responsive_default'] = array(
   '#states' => $responsive_state,
 );
 
-$responsive_large = omega_theme_get_setting('omega_responsive_large') ? omega_theme_get_setting('omega_responsive_large') : 0;
+$responsive_large = theme_get_setting('omega_responsive_large') ? theme_get_setting('omega_responsive_large') : 0;
 $form['omega_grid']['defaults']['omega_responsive_large'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable 1200px grid (large)'),
@@ -117,7 +117,7 @@ $viewport_state = array(
   )
 );
 // viewport properties
-$responsive_viewport = omega_theme_get_setting('omega_customize_viewport') ? omega_theme_get_setting('omega_customize_viewport') : 'on';
+$responsive_viewport = theme_get_setting('omega_customize_viewport') ? theme_get_setting('omega_customize_viewport') : 'on';
 $form['omega_grid']['defaults']['omega_customize_viewport'] = array(
   '#type' => 'radios',
   '#title' => t('Customize Viewport settings on iOS and Android devices'),
@@ -129,7 +129,7 @@ $form['omega_grid']['defaults']['omega_customize_viewport'] = array(
   ),
   '#states' => $responsive_state,
 );
-$initial_scale = omega_theme_get_setting('omega_viewport_initial_scale') ? omega_theme_get_setting('omega_viewport_initial_scale') : '1.0';
+$initial_scale = theme_get_setting('omega_viewport_initial_scale') ? theme_get_setting('omega_viewport_initial_scale') : '1.0';
 $form['omega_grid']['defaults']['omega_viewport_initial_scale'] = array(
   '#type' => 'select',
   '#title' => t('initial-scale'),
@@ -138,7 +138,7 @@ $form['omega_grid']['defaults']['omega_viewport_initial_scale'] = array(
   '#description' => t('The initial scaling of the page. This should almost always be set to 1.0.'),
   '#states' => $viewport_state,
 );
-$min_scale = omega_theme_get_setting('omega_viewport_min_scale') ? omega_theme_get_setting('omega_viewport_min_scale') : '1.0';
+$min_scale = theme_get_setting('omega_viewport_min_scale') ? theme_get_setting('omega_viewport_min_scale') : '1.0';
 $form['omega_grid']['defaults']['omega_viewport_min_scale'] = array(
   '#type' => 'select',
   '#title' => t('min-scale'),
@@ -147,7 +147,7 @@ $form['omega_grid']['defaults']['omega_viewport_min_scale'] = array(
   '#description' => t('The minimum scaling of the site. (how far OUT the user can zoom) This should usually be the same as your initial-scale setting.'),
   '#states' => $viewport_state,
 );
-$max_scale = omega_theme_get_setting('omega_viewport_max_scale') ? omega_theme_get_setting('omega_viewport_max_scale') : '1.0';
+$max_scale = theme_get_setting('omega_viewport_max_scale') ? theme_get_setting('omega_viewport_max_scale') : '1.0';
 $form['omega_grid']['defaults']['omega_viewport_max_scale'] = array(
   '#type' => 'select',
   '#title' => t('max-scale'),
@@ -156,7 +156,7 @@ $form['omega_grid']['defaults']['omega_viewport_max_scale'] = array(
   '#description' => t('The maximum scaling of the site. (how far IN the user can zoom) This can be any value between 1 and 10, but should not be too big if you want to preserve your mobile look and feel.'),
   '#states' => $viewport_state,
 );
-$user_scale = omega_theme_get_setting('omega_viewport_user_scale') ? omega_theme_get_setting('omega_viewport_user_scale') : 'no';
+$user_scale = theme_get_setting('omega_viewport_user_scale') ? theme_get_setting('omega_viewport_user_scale') : 'no';
 $form['omega_grid']['defaults']['omega_viewport_user_scale'] = array(
   '#type' => 'checkbox',
   '#title' => t('user-scalable'),
@@ -166,7 +166,7 @@ $form['omega_grid']['defaults']['omega_viewport_user_scale'] = array(
 );
 
 // select fixed/fluid for all zones/entire site.
-$default_omega_layout = omega_theme_get_setting('omega_fixed_fluid') ? omega_theme_get_setting('omega_fixed_fluid') : 'fixed';
+$default_omega_layout = theme_get_setting('omega_fixed_fluid') ? theme_get_setting('omega_fixed_fluid') : 'fixed';
 $form['omega_grid']['defaults']['omega_fixed_fluid'] = array(
   '#type' => 'radios',
   '#description' => t('You may select fluid layout, or the default fixed width layout.'),
@@ -195,7 +195,7 @@ foreach ($zones AS $zone => $regions) {
     //'#suffix' => '</div>', 
   );
   // provide a quick enable/disable option for this zone
-  $zone_enabled = omega_theme_get_setting('omega_'. $zone .'_enabled') || omega_theme_get_setting('omega_'. $zone .'_enabled') == 0 ? omega_theme_get_setting('omega_'. $zone .'_enabled') : 1;
+  $zone_enabled = theme_get_setting('omega_'. $zone .'_enabled') || theme_get_setting('omega_'. $zone .'_enabled') == 0 ? theme_get_setting('omega_'. $zone .'_enabled') : 1;
   $form['omega_grid'][$zone]['omega_'. $zone .'_enabled'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enable this Zone.'),
@@ -204,7 +204,7 @@ foreach ($zones AS $zone => $regions) {
   '#weight' => -50,
   );
   // provide a full width wrapper around the zone (allowing for design elements outside the grid)
-  $zone_wrapper = omega_theme_get_setting('omega_'. $zone .'_wrapper') ? omega_theme_get_setting('omega_'. $zone .'_wrapper') : 0;
+  $zone_wrapper = theme_get_setting('omega_'. $zone .'_wrapper') ? theme_get_setting('omega_'. $zone .'_wrapper') : 0;
   $form['omega_grid'][$zone]['omega_'. $zone .'_wrapper'] = array(
     '#type' => 'checkbox',
     '#title' => t('Provide full width wrapper around this zone.'),
@@ -215,11 +215,11 @@ foreach ($zones AS $zone => $regions) {
   $form['omega_grid'][$zone]['omega_'. $zone .'_container_width'] = array(
     '#type' => 'select',
     '#title' => t('Container width'),
-    '#default_value' => omega_theme_get_setting('omega_'. $zone .'_container_width'),
+    '#default_value' => theme_get_setting('omega_'. $zone .'_container_width'),
     '#options' => $containers,
   );
   // create a chooser for static/dynamic zone
-  $zone_type = omega_theme_get_setting('omega_'. $zone .'_zone_type') ? omega_theme_get_setting('omega_'. $zone .'_zone_type') : 'static';
+  $zone_type = theme_get_setting('omega_'. $zone .'_zone_type') ? theme_get_setting('omega_'. $zone .'_zone_type') : 'static';
   $form['omega_grid'][$zone]['omega_'. $zone .'_zone_type'] = array(
     '#type' => 'radios',
     '#description' => t('<p><strong>Static</strong> Zones are displayed either inline or stacked based on settings.</p><p><strong>Dynamic</strong> Zones are always displayed inline, with a primary region and MUST fit inside the container wrap. Dynamic zones also allow for push & pull classes for content first ordering.'),
@@ -250,7 +250,7 @@ foreach ($zones AS $zone => $regions) {
   $form['omega_grid'][$zone]['omega_'. $zone .'_dynamic_zone_primary_region'] = array(
     '#type' => 'select',
     '#title' => t('Primary Region'),
-    '#default_value' => omega_theme_get_setting('omega_'. $zone .'_dynamic_zone_primary_region'),
+    '#default_value' => theme_get_setting('omega_'. $zone .'_dynamic_zone_primary_region'),
     '#options' => $region_options,
     '#description' => t('The primary region is the one that will gain width when associated regions are empty.'),
     '#states' => array(
@@ -264,7 +264,7 @@ foreach ($zones AS $zone => $regions) {
     '#type' => 'textfield',
     '#title' => t('Additional Zone Classes'),
     '#size' => 60,
-    '#default_value' => omega_theme_get_setting('omega_' . $zone . '_zone_extra_classes'),
+    '#default_value' => theme_get_setting('omega_' . $zone . '_zone_extra_classes'),
     '#description' => t('You can quickly add custom CSS classes to your zone here.'),
   );
   // create friendly names for regions
@@ -281,7 +281,7 @@ foreach ($zones AS $zone => $regions) {
       $region_name = $all_regions[$region];
     }
     // switch this area to place these region groups via weight of the region
-    $weight = intval(omega_theme_get_setting('omega_' . $zone . '_' . $region . '_region_weight') + 100);
+    $weight = intval(theme_get_setting('omega_' . $zone . '_' . $region . '_region_weight') + 100);
     // create a fieldset around the regions so they can be weighted by the order
     // if they are a dynamic region.
     $form['omega_grid'][$zone][$region] = array(
@@ -296,7 +296,7 @@ foreach ($zones AS $zone => $regions) {
       '#prefix' => t('<h4 class="region-title">' . $region_name . $locked_flag . '</h4><div class="prefix_config">'),
       '#type' => 'select',
       '#title' => t('Prefix'),
-      '#default_value' => omega_theme_get_setting('omega_' . $zone . '_' . $region . '_region_prefix'),
+      '#default_value' => theme_get_setting('omega_' . $zone . '_' . $region . '_region_prefix'),
       '#options' => $spacing,
       '#suffix' => '</div>',
     );
@@ -305,7 +305,7 @@ foreach ($zones AS $zone => $regions) {
       '#prefix' => '<div class="width_config">',
       '#type' => 'select',
       '#title' => t('Width'),
-      '#default_value' => omega_theme_get_setting('omega_' . $zone . '_' . $region . '_region_width'),
+      '#default_value' => theme_get_setting('omega_' . $zone . '_' . $region . '_region_width'),
       '#options' => $grids,
       '#suffix' => '</div>',
     );
@@ -314,7 +314,7 @@ foreach ($zones AS $zone => $regions) {
       '#prefix' => '<div class="suffix_config">',
       '#type' => 'select',
       '#title' => t('Suffix'),
-      '#default_value' => omega_theme_get_setting('omega_' . $zone . '_' . $region . '_region_suffix'),
+      '#default_value' => theme_get_setting('omega_' . $zone . '_' . $region . '_region_suffix'),
       '#options' => $spacing,
       '#suffix' => '</div>',
     );
@@ -328,7 +328,7 @@ foreach ($zones AS $zone => $regions) {
       '#prefix' => '<div class="weight_config">',
       '#type' => 'select',
       '#title' => t('Order'),
-      '#default_value' => omega_theme_get_setting('omega_' . $zone . '_' . $region . '_region_order'),
+      '#default_value' => theme_get_setting('omega_' . $zone . '_' . $region . '_region_order'),
       '#options' => $weights,
       //'#description' => t('Only used for dynamic zones, the weight will determine in what order the regions are rendered in page.tpl.php, and also on this form to demonstrate the order in which they will appear. However, source ordering will remain intact as defined in the zones[] array in your .info file.'),
       '#suffix' => '</div>',
@@ -345,7 +345,7 @@ foreach ($zones AS $zone => $regions) {
       '#type' => 'textfield',
       '#title' => t('Additional Region Classes'),
       '#size' => 60,
-      '#default_value' => t(omega_theme_get_setting('omega_' . $zone . '_' . $region . '_region_extra_classes')),
+      '#default_value' => t(theme_get_setting('omega_' . $zone . '_' . $region . '_region_extra_classes')),
       '#description' => t('You can quickly add custom CSS classes to your regions here.'),
       '#suffix' => '</div>',
     );

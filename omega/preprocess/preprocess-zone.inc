@@ -32,7 +32,7 @@ $vars['attributes_array'] = array(
 );
 
 // set the extra classes to assign to this zone.
-$zone_classes = explode(' ', omega_theme_get_setting('omega_'. $zone['zid'] . '_zone_extra_classes'));
+$zone_classes = explode(' ', theme_get_setting('omega_'. $zone['zid'] . '_zone_extra_classes'));
 foreach ($zone_classes as $class) {
   if(isset($class)) {
     $vars['attributes_array']['class'][] = $class;
@@ -44,7 +44,7 @@ $vars['attributes'] = drupal_attributes($vars['attributes_array']);
 
 $populated = FALSE;
 $zone_regions = $zone['#regions'];
-$block_debug = omega_theme_get_setting('debug_block_toggle', FALSE);
+$block_debug = theme_get_setting('debug_block_toggle', FALSE);
 foreach($zone_regions AS $region => $region_data) {
   // let's account for a couple special regions
   switch($region) {
@@ -116,19 +116,19 @@ $zone['populated'] = $populated;
 $regions = array();
 $region_order = array();
 foreach($zone_regions AS $region => $region_data) {
-  $region_width = omega_theme_get_setting('omega_' . $zone['zid'] . '_' . $region . '_region_width');
+  $region_width = theme_get_setting('omega_' . $zone['zid'] . '_' . $region . '_region_width');
   $region_data = is_array($zone_regions[$region]) ? $zone_regions[$region] : FALSE;
   $regions[$region] = array(
     'data' => $region_data,
     'width' => $region_width,
     'spacing' => array(
-      'prefix' => omega_theme_get_setting('omega_' . $zone['zid'] . '_' . $region . '_region_prefix'),
-      'suffix' => omega_theme_get_setting('omega_' . $zone['zid'] . '_' . $region . '_region_suffix')
+      'prefix' => theme_get_setting('omega_' . $zone['zid'] . '_' . $region . '_region_prefix'),
+      'suffix' => theme_get_setting('omega_' . $zone['zid'] . '_' . $region . '_region_suffix')
     ),
   );
   if($zone['zone_type'] == 'dynamic') {
     // dynamic regions take a bit more configuration to apply content first ordering
-    $primary_region = omega_theme_get_setting('omega_'. $zone['zid'] .'_dynamic_zone_primary_region') == $region ? TRUE : FALSE;
+    $primary_region = theme_get_setting('omega_'. $zone['zid'] .'_dynamic_zone_primary_region') == $region ? TRUE : FALSE;
     // let's put in the array of related zones.
     if ($primary_region) {
       $regions[$region]['primary'] = TRUE;
@@ -137,13 +137,13 @@ foreach($zone_regions AS $region => $region_data) {
         // leave out the current region in related info
         if ($r != $region) {
           $related_regions[$r] = array(
-            'width' => omega_theme_get_setting('omega_' . $zone['zid'] . '_' . $r . '_region_width'),
+            'width' => theme_get_setting('omega_' . $zone['zid'] . '_' . $r . '_region_width'),
           );
         }
         $regions[$region]['related'] = $related_regions;
       }
     }
-    $region_weight = intval(omega_theme_get_setting('omega_' . $zone['zid'] . '_' . $region . '_region_order'));
+    $region_weight = intval(theme_get_setting('omega_' . $zone['zid'] . '_' . $region . '_region_order'));
     $region_order[$region_weight] = $region;
   }
 }

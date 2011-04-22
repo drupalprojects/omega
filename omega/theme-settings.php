@@ -29,10 +29,6 @@ function omega_form_system_theme_settings_alter(&$form, &$form_state) {
     $form['delta_notice']['#weight'] = -1000;
   }
   
-  // allow delta to load it's own custom form data, emulating a custom theme.
-  GLOBAL $delta_template;
-  $delta_template = isset($form['delta_template']) ? $form['delta_template']['#value'] : NULL;
-  
   // include general theme functions required both in template.php AND theme-settings.php
   require_once(drupal_get_path('theme', 'omega') . '/inc/theme-functions.inc');
   

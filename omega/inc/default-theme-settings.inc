@@ -10,61 +10,61 @@ $form['omega_general']['optional_css'] = array(
 $form['omega_general']['optional_css']['reset_css'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable reset.css'),
-  '#default_value' => omega_theme_get_setting('reset_css'),
+  '#default_value' => theme_get_setting('reset_css'),
   '#description' => t('reset.css is the default CSS reset standard created by <a href="http://meyerweb.com/eric/tools/css/reset/">Eric Meyer</a>.'),
 );
 $form['omega_general']['optional_css']['text_css'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable text.css'),
-  '#default_value' => omega_theme_get_setting('text_css'),
+  '#default_value' => theme_get_setting('text_css'),
   '#description' => t('text.css offers some generic typography to give the default text presenation a bit more love.'),
 );
 $form['omega_general']['optional_css']['table_css'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable tables.css'),
-  '#default_value' => omega_theme_get_setting('table_css'),
+  '#default_value' => theme_get_setting('table_css'),
   '#description' => t('tables.css provides enhancements to the default table styles.'),
 );
 $form['omega_general']['optional_css']['menu_css'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable menus.css'),
-  '#default_value' => omega_theme_get_setting('menu_css'),
+  '#default_value' => theme_get_setting('menu_css'),
   '#description' => t('menus.css provides enhancements to the default menu styles.'),
 );
 $form['omega_general']['optional_css']['link_css'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable links.css'),
-  '#default_value' => omega_theme_get_setting('link_css'),
+  '#default_value' => theme_get_setting('link_css'),
   '#description' => t('links.css provides enhancements to the default link styles.'),
 );
 $form['omega_general']['optional_css']['form_css'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable forms.css & formalize.css'),
-  '#default_value' => omega_theme_get_setting('form_css'),
+  '#default_value' => theme_get_setting('form_css'),
   '#description' => t('forms.css provides enhancements to the default form styles. formalize.css is also added via this setting. More about formalize.css can be found at <a href="http://formalize.me">formalize.me</a>'),
 );
 $form['omega_general']['optional_css']['pager_css'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable pagers.css'),
-  '#default_value' => omega_theme_get_setting('pager_css'),
+  '#default_value' => theme_get_setting('pager_css'),
   '#description' => t('tables.css provides enhancements to the default pager styles.'),
 );
 $form['omega_general']['optional_css']['regions_css'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable regions.css'),
-  '#default_value' => omega_theme_get_setting('regions_css'),
+  '#default_value' => theme_get_setting('regions_css'),
   '#description' => t('regions.css defines all the default regions of the Omega theme and its sub-themes. Currently there are no defining characteristics in this file, and it can be disabled without affecting any region presentation.'),
 );
 $form['omega_general']['optional_css']['defaults_css'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable defaults.css'),
-  '#default_value' => omega_theme_get_setting('defaults_css'),
+  '#default_value' => theme_get_setting('defaults_css'),
   '#description' => t('defaults.css gives the Omega theme the majority of the spacing and alignment CSS for various elements.'),
 );
 $form['omega_general']['optional_css']['custom_css'] = array(
   '#type' => 'checkbox',
   '#title' => t('Enable custom.css'),
-  '#default_value' => omega_theme_get_setting('custom_css'),
+  '#default_value' => theme_get_setting('custom_css'),
   '#description' => t('custom.css provides some additional CSS that is module related, and not a part of core drupal. Can be disabled and used as a reference for certain items. Contributed CSS that is not directly related to core markup will be in this file.'),
 );
 if (arg(2) != 'delta') {
@@ -79,7 +79,7 @@ if (arg(2) != 'delta') {
   $form['omega_general']['form_settings']['user_login_form'] = array(
     '#type' => 'checkbox',
     '#title' => t('Modify Login Block'),
-    '#default_value' => omega_theme_get_setting('user_login_form'),
+    '#default_value' => theme_get_setting('user_login_form'),
     '#description' => t('<p>The links on the login form are somewhat ugly, and lack a way to add a link without writing over the #markup in the $form[links] section. This modification adds a login link inline with the password request and register links, making a horizontal login block much nicer.</p>'),
   );
   if (module_exists('delta')) {
@@ -89,21 +89,21 @@ if (arg(2) != 'delta') {
     '#type' => 'textfield',
     '#title' => t('Placeholder text for Username Field'),
     '#size' => 60,
-    '#default_value' => omega_theme_get_setting('user_login_name_placeholder'),
+    '#default_value' => theme_get_setting('user_login_name_placeholder'),
     '#description' => t('Only works via HTML5 aware browsers.'),
   );
   $form['omega_general']['form_settings']['user_login_pass_placeholder'] = array(
     '#type' => 'textfield',
     '#title' => t('Placeholder text for Password Field'),
     '#size' => 60,
-    '#default_value' => omega_theme_get_setting('user_login_pass_placeholder'),
+    '#default_value' => theme_get_setting('user_login_pass_placeholder'),
     '#description' => t('Only works via HTML5 aware browsers.'),
   );
   $form['omega_general']['form_settings']['omega_search_default_text'] = array(
     '#type' => 'textfield',
     '#title' => t('Placeholder text for Search field'),
     '#size' => 60,
-    '#default_value' => omega_theme_get_setting('omega_search_default_text'),
+    '#default_value' => theme_get_setting('omega_search_default_text'),
     '#description' => t('Only works via HTML5 aware browsers.'),
   );
 }
@@ -130,7 +130,7 @@ if (module_exists('page_title') == FALSE) {
     '#title' => t('Title separator'),
     '#description' => t('Customize the separator character used in the page title'),
     '#size' => 60,
-    '#default_value' => omega_theme_get_setting('configurable_separator'),
+    '#default_value' => theme_get_setting('configurable_separator'),
   );
     // front page title
   $form['omega_general']['page_format_titles']['front_page_format_titles'] = array(
@@ -143,7 +143,7 @@ if (module_exists('page_title') == FALSE) {
   $form['omega_general']['page_format_titles']['front_page_format_titles']['front_page_title_display'] = array(
     '#type' => 'select',
     '#title' => t('Set text of front page title'),
-    '#default_value' => omega_theme_get_setting('front_page_title_display'),
+    '#default_value' => theme_get_setting('front_page_title_display'),
     '#options' => array(
     'title_slogan' => t('Site title | Site slogan'),
     'slogan_title' => t('Site slogan | Site title'),
@@ -154,7 +154,7 @@ if (module_exists('page_title') == FALSE) {
     '#type' => 'textfield',
     '#title' => t('Custom'),
     '#size' => 60,
-    '#default_value' => omega_theme_get_setting('page_title_display_custom'),
+    '#default_value' => theme_get_setting('page_title_display_custom'),
     '#description' => t('Enter a custom page title for your front page'),
   );
 
@@ -170,7 +170,7 @@ if (module_exists('page_title') == FALSE) {
     '#title' => t('Set text of other page titles'),
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
-    '#default_value' => omega_theme_get_setting('other_page_title_display'),
+    '#default_value' => theme_get_setting('other_page_title_display'),
     '#options' => array(
     'ptitle_slogan' => t('Page title | Site slogan'),
     'ptitle_stitle' => t('Page title | Site title'),
@@ -182,7 +182,7 @@ if (module_exists('page_title') == FALSE) {
     '#type' => 'textfield',
     '#title' => t('Custom'),
     '#size' => 60,
-    '#default_value' => omega_theme_get_setting('other_page_title_display_custom'),
+    '#default_value' => theme_get_setting('other_page_title_display_custom'),
     '#description' => t('Enter a custom page title for all other pages'),
   );
 }
@@ -202,7 +202,7 @@ $form['omega_general']['breadcrumb'] = array(
 $form['omega_general']['breadcrumb']['omega_breadcrumb'] = array(
   '#type' => 'select',
   '#title' => t('Display breadcrumb'),
-  '#default_value' => omega_theme_get_setting('omega_breadcrumb'),
+  '#default_value' => theme_get_setting('omega_breadcrumb'),
   '#options' => array(
     'yes' => t('Yes'),
     'admin' => t('Only in admin section'),
@@ -213,25 +213,25 @@ $form['omega_general']['breadcrumb']['omega_breadcrumb_separator'] = array(
   '#type' => 'textfield',
   '#title' => t('Breadcrumb separator'),
   '#description' => t('Text only. Don’t forget to include spaces.'),
-  '#default_value' => omega_theme_get_setting('omega_breadcrumb_separator'),
+  '#default_value' => theme_get_setting('omega_breadcrumb_separator'),
   '#size' => 5,
   '#maxlength' => 10,
 );
 $form['omega_general']['breadcrumb']['omega_breadcrumb_home'] = array(
   '#type' => 'checkbox',
   '#title' => t('Show home page link in breadcrumb'),
-  '#default_value' => omega_theme_get_setting('omega_breadcrumb_home'),
+  '#default_value' => theme_get_setting('omega_breadcrumb_home'),
 );
 $form['omega_general']['breadcrumb']['omega_breadcrumb_trailing'] = array(
   '#type' => 'checkbox',
   '#title' => t('Append a separator to the end of the breadcrumb'),
-  '#default_value' => omega_theme_get_setting('omega_breadcrumb_trailing'),
+  '#default_value' => theme_get_setting('omega_breadcrumb_trailing'),
   '#description' => t('Useful when the breadcrumb is placed just before the title.'),
 );
 $form['omega_general']['breadcrumb']['omega_breadcrumb_title'] = array(
   '#type' => 'checkbox',
   '#title' => t('Append the content title to the end of the breadcrumb'),
-  '#default_value' => omega_theme_get_setting('omega_breadcrumb_title'),
+  '#default_value' => theme_get_setting('omega_breadcrumb_title'),
   '#description' => t('Useful when the breadcrumb is not placed just before the title.'),
 );
 // menu settings
@@ -262,7 +262,7 @@ $form['omega_general']['menu'] = array(
  */
 
 // the default value here IS 'omgea', which will prevent breaking of existing sites running Omega.
-$menu_type = omega_theme_get_setting('omega_menu_type') ? omega_theme_get_setting('omega_menu_type') : 'omega';
+$menu_type = theme_get_setting('omega_menu_type') ? theme_get_setting('omega_menu_type') : 'omega';
 $form['omega_general']['menu']['omega_menu_type'] = array(
   '#type' => 'radios',
   '#description' => t('Select the type of menus to generate.'),
@@ -278,7 +278,7 @@ $form['omega_general']['menu']['omega_menu_depth'] = array(
   '#type' => 'select',
   '#title' => t('Depth of menu to display'),
   '#description' => t('<p>If in your menu settings, you have selected to use the same menu for primary & secondary navigations, Omega will render the menu as dropdown menus assuming you have menu.css enabled in the Optional CSS section of your theme settings.</p><p>This option will determine how deep your menus will be. 1 level only shows the top level, 2 shows the top level plus the next level down, etc.</p>'),
-  '#default_value' => omega_theme_get_setting('omega_menu_depth'),
+  '#default_value' => theme_get_setting('omega_menu_depth'),
   '#options' => $menu_depth,
   '#states' => array(
     'visible' => array(

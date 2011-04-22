@@ -5,7 +5,7 @@
  * Contents of omega_preprocess_page().
  */
 // if debug blocks are on, add in the javascript that will put those on the page for us.
-if(omega_theme_get_setting('debug_block_toggle')) {
+if(theme_get_setting('debug_block_toggle')) {
   //$regions = system_region_list($theme_key);
   //krumo($theme_info);
   $regions = $theme_info->info['regions'];
@@ -25,11 +25,11 @@ if(omega_theme_get_setting('debug_block_toggle')) {
 }
 
 
-$vars['menu_type'] = $menu_type = omega_theme_get_setting('omega_menu_type') ? omega_theme_get_setting('omega_menu_type') : 'omega';
+$vars['menu_type'] = $menu_type = theme_get_setting('omega_menu_type') ? theme_get_setting('omega_menu_type') : 'omega';
 
 // render the Omega Dropdowns. These are set to be phased out, but cannot be removed for sanity on existing sites.
 if (variable_get('menu_main_links_source', 'main-menu') == variable_get('menu_secondary_links_source', 'user-menu') && $menu_type == 'omega') {
-  $menu_depth = omega_theme_get_setting('omega_menu_depth') ? omega_theme_get_setting('omega_menu_depth') : 1;
+  $menu_depth = theme_get_setting('omega_menu_depth') ? theme_get_setting('omega_menu_depth') : 1;
   // render the menus as nested ULs to style up some drop downs.
   $vars['menu_data'] = $menu = omega_menu_structure(menu_tree_page_data(variable_get('menu_main_links_source', 'main-menu'), $menu_depth, FALSE));
   $vars['main_menu'] = theme('links', array(
@@ -89,7 +89,7 @@ $vars['theme_key'] = $theme_key;
 $vars['theme_info'] = $theme_info;
 // default container width will be used in special zones and zones without a 
 // container width defined in theme settings
-$vars['default_container_width'] = omega_theme_get_setting('omega_default_container_width');
+$vars['default_container_width'] = theme_get_setting('omega_default_container_width');
 // pulling just the zone data out of the theme_info array
 $theme_zones = $theme_info->info['zones'];
 // creating empty array to hold our custom zone[group] data
@@ -115,10 +115,10 @@ foreach ($theme_zones as $zone_ref => $regions) {
   $zone = array();
   //$zone['zone'] = array();
   $zone['zid'] = $zone_ref;
-  $zone['enabled'] = omega_theme_get_setting('omega_'. $zone_ref .'_enabled') || omega_theme_get_setting('omega_'. $zone_ref .'_enabled') == 0 ? omega_theme_get_setting('omega_'. $zone_ref .'_enabled') : 1;
-  $zone['wrapper'] = omega_theme_get_setting('omega_'. $zone_ref .'_wrapper') ? omega_theme_get_setting('omega_'. $zone_ref .'_wrapper') : 0;
-  $zone['zone_type'] = omega_theme_get_setting('omega_'. $zone_ref .'_zone_type') ? omega_theme_get_setting('omega_'. $zone_ref .'_zone_type') : 'static';
-  $zone['container_width'] = omega_theme_get_setting('omega_'. $zone_ref .'_container_width') ? omega_theme_get_setting('omega_'. $zone_ref .'_container_width') : $vars['default_container_width'];
+  $zone['enabled'] = theme_get_setting('omega_'. $zone_ref .'_enabled') || theme_get_setting('omega_'. $zone_ref .'_enabled') == 0 ? theme_get_setting('omega_'. $zone_ref .'_enabled') : 1;
+  $zone['wrapper'] = theme_get_setting('omega_'. $zone_ref .'_wrapper') ? theme_get_setting('omega_'. $zone_ref .'_wrapper') : 0;
+  $zone['zone_type'] = theme_get_setting('omega_'. $zone_ref .'_zone_type') ? theme_get_setting('omega_'. $zone_ref .'_zone_type') : 'static';
+  $zone['container_width'] = theme_get_setting('omega_'. $zone_ref .'_container_width') ? theme_get_setting('omega_'. $zone_ref .'_container_width') : $vars['default_container_width'];
   
   if ($zone['enabled']) {
     if(array_key_exists($zone_ref, $zones_before_content)) {
