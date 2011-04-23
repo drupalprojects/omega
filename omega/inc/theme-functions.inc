@@ -299,3 +299,13 @@ function omega_menu_structure($menu) {
   }
   return $items;
 }
+
+/**
+ * Custom implementation of theme_get_setting.
+ * This is just a wrapper ofor theme_get_setting!
+ * 
+ * REMEMBER TO UPDATE DELTA TO THE LATEST 3.x VERSION !!!
+ */
+function omega_theme_get_setting($var, $theme = NULL) {
+  return theme_get_setting($var, $theme); 
+}
