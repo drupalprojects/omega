@@ -250,7 +250,7 @@ function omega_form_alter(&$form, &$form_state, $form_id) {
   switch ($form_id) {
     // add a login link to the horizontal login bar block
     case 'user_login_block':
-      if(omega_theme_get_setting('user_login_form')) {
+      if(theme_get_setting('user_login_form')) {
         $form['links']['#markup'] = "";
         
         $items = array();
@@ -263,13 +263,13 @@ function omega_form_alter(&$form, &$form_state, $form_id) {
       }
     
       // HTML5 placeholder attribute
-      $form['name']['#attributes']['placeholder'] = omega_theme_get_setting('user_login_name_placeholder');
-      $form['pass']['#attributes']['placeholder'] = omega_theme_get_setting('user_login_pass_placeholder');
+      $form['name']['#attributes']['placeholder'] = theme_get_setting('user_login_name_placeholder');
+      $form['pass']['#attributes']['placeholder'] = theme_get_setting('user_login_pass_placeholder');
 
       break;
     case 'search_block_form':
       // HTML5 placeholder attribute
-      $form['search_block_form']['#attributes']['placeholder'] = omega_theme_get_setting('omega_search_default_text');
+      $form['search_block_form']['#attributes']['placeholder'] = theme_get_setting('omega_search_default_text');
       break;
   }
 }
