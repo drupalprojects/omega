@@ -12,11 +12,11 @@
         $(window).bind('resize.omegaequalheights', function () {
           $($('.equal-height-container').get().reverse()).each(function () {
             var elements = $(this).children('.equal-height-element').css('height', '');
-            
+
             if (!Drupal.behaviors.hasOwnProperty('omegaMediaQueries') || Drupal.omega.getCurrentLayout() != 'mobile') {
               var tallest = 0;
 
-              elements.each(function () {    
+              elements.each(function () {
                 if ($(this).height() > tallest) {
                   tallest = $(this).height();
                 }

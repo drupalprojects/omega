@@ -16,58 +16,58 @@ class alpha_theme_container {
   var $zones;
   var $regions;
   var $page;
-  
+
   /**
    * @todo
    */
   function __construct($theme, $delta = NULL) {
     $this->theme = $theme;
     $this->delta = $delta;
-    
+
     if ($cache = alpha_cache_get($theme, $delta)) {
       foreach ($cache->data as $key => $item) {
         $this->$key = $item;
       }
     }
-    
+
     foreach ($this->cacheable() as $item => $required) {
       if ($required && !isset($this->$item)) {
         $this->init();
-        
+
         alpha_alter('alpha_pre_cache', $this, $theme, $delta);
         alpha_cache_set($this);
-        
+
         return;
       }
     }
-    
+
     alpha_alter('alpha', $this, $theme, $delta);
   }
-  
+
   /**
    * @todo
    */
   function init() {
     $this->settings();
     $this->sections();
-    $this->zones();    
+    $this->zones();
     $this->regions();
     $this->grids();
     $this->grid();
     $this->css();
     $this->libraries();
   }
-  
+
   /**
    * @todo
    */
   function settings() {
-    if (!isset($this->settings)) {      
+    if (!isset($this->settings)) {
       $this->settings = array(
         'grid' => alpha_theme_get_setting('alpha_grid', 'default', $this->theme),
         'css' => alpha_theme_get_setting('alpha_css', array(), $this->theme),
         'libraries' => alpha_theme_get_setting('alpha_libraries', array(), $this->theme),
-        'exclude' => alpha_theme_get_setting('alpha_exclude', array(), $this->theme),      
+        'exclude' => alpha_theme_get_setting('alpha_exclude', array(), $this->theme),
         'responsive' => alpha_theme_get_setting('alpha_responsive', FALSE, $this->theme),
         'toggle' => array(),
         'hidden' => array(),
@@ -97,10 +97,10 @@ class alpha_theme_container {
 
       alpha_alter('alpha_settings', $this->settings, $this->theme);
     }
-    
+
     return $this->settings;
   }
-  
+
   /**
    * @todo
    */
@@ -109,17 +109,17 @@ class alpha_theme_container {
       $this->settings();
       $this->grids = alpha_retrieve_grids($this->theme);
     }
-    
+
     return $this->grids;
   }
-  
+
   /**
    * @todo
    */
   function grid() {
-    if (!isset($this->grid)) {      
-      $this->grids();  
-      
+    if (!isset($this->grid)) {
+      $this->grids();
+
       if (isset($this->grids[$this->settings['grid']])) {
         $this->grid = alpha_grid_css($this->theme, $this->grids[$this->settings['grid']], $this->settings['responsive']);
       }
@@ -130,7 +130,7 @@ class alpha_theme_container {
 
     return $this->grid;
   }
-  
+
   /**
    * @todo
    */
@@ -138,10 +138,10 @@ class alpha_theme_container {
     if (!isset($this->css)) {
       $this->css = alpha_retrieve_css($this->theme);
     }
-    
+
     return $this->css;
   }
-  
+
   /**
    * @todo
    */
@@ -149,10 +149,10 @@ class alpha_theme_container {
     if (!isset($this->libraries)) {
       $this->libraries = alpha_retrieve_libraries($this->theme);
     }
-    
+
     return $this->libraries;
   }
-  
+
   /**
    * @todo
    */
@@ -164,10 +164,10 @@ class alpha_theme_container {
         'footer' => t('Footer'),
       );
     }
-    
+
     return $this->sections;
   }
-  
+
   /**
    * @todo
    */
@@ -180,7 +180,7 @@ class alpha_theme_container {
         foreach ($zones as $zone => $title) {
           $section = alpha_zone_get_setting('section', $zone, NULL, $this->theme);
           $section = isset($this->sections[$section]) ? $section : NULL;
-          
+
           $this->zones[$zone] = array(
             'zone' => $zone,
             'name' => $title,
@@ -198,13 +198,13 @@ class alpha_theme_container {
         }
       }
 
-      uasort($this->zones, 'drupal_sort_weight');    
+      uasort($this->zones, 'drupal_sort_weight');
       alpha_alter('alpha_zones', $this->zones, $this->theme);
     }
 
     return $this->zones;
   }
-  
+
   /**
    * @todo
    */
@@ -212,7 +212,7 @@ class alpha_theme_container {
     if (!isset($this->regions)) {
       $this->zones();
       $this->sections();
-      $this->regions = array();      
+      $this->regions = array();
       $exclude = alpha_regions_exclude();
 
       foreach (system_region_list($this->theme) as $region => $title) {
@@ -221,10 +221,10 @@ class alpha_theme_container {
           $prefix = alpha_region_get_setting('prefix', $region, 0, $this->theme);
           $columns = alpha_region_get_setting('columns', $region, 1, $this->theme);
           $suffix = alpha_region_get_setting('suffix', $region, 0, $this->theme);
-          
+
           $zone = isset($zone) && isset($this->zones[$zone]) ? $zone : NULL;
           $section = isset($zone) && isset($this->zones[$zone]['section']) ? $this->zones[$zone]['section'] : NULL;
-          
+
           $this->regions[$region] = array(
             'region' => $region,
             'name' => $title,
@@ -252,15 +252,15 @@ class alpha_theme_container {
 
     return $this->regions;
   }
-  
+
   /**
    * @todo
    */
   function cacheable() {
     $cacheable = array_fill_keys(array('settings', 'libraries', 'css', 'grids', 'grid', 'regions', 'zones', 'sections'), TRUE);
-    
+
     alpha_alter('alpha_cacheable', $cacheable, $this->theme);
-    
+
     return $cacheable;
   }
 }

@@ -10,7 +10,7 @@ Drupal.omega = Drupal.omega || {};
    */
   var current;
   var previous;
-  
+
   /**
    * @todo
    */
@@ -19,73 +19,73 @@ Drupal.omega = Drupal.omega || {};
     previous = current;
     current = Drupal.settings.omega.layouts.order.hasOwnProperty(index) ? Drupal.settings.omega.layouts.order[index] : 'mobile';
 
-    if (previous != current) {      
-      $('body').removeClass('responsive-layout-' + previous).addClass('responsive-layout-' + current);      
+    if (previous != current) {
+      $('body').removeClass('responsive-layout-' + previous).addClass('responsive-layout-' + current);
       $.event.trigger('responsivelayout', {from: previous, to: current});
     }
   };
-  
+
   /**
    * @todo
    */
   Drupal.omega.getCurrentLayout = function () {
     return current;
   };
-  
+
   /**
    * @todo
    */
   Drupal.omega.getPreviousLayout = function () {
     return previous;
   };
-  
+
   /**
    * @todo
    */
   Drupal.omega.crappyBrowser = function () {
     return $.browser.msie && parseInt($.browser.version, 10) < 9;
   };
-  
+
   /**
    * @todo
    */
   Drupal.omega.checkLayout = function (layout) {
     if (Drupal.settings.omega.layouts.queries.hasOwnProperty(layout) && Drupal.settings.omega.layouts.queries[layout]) {
       var output = Drupal.omega.checkQuery(Drupal.settings.omega.layouts.queries[layout]);
-      
+
       if (!output && layout == Drupal.settings.omega.layouts.primary) {
-        var dummy = $('<div id="omega-check-query"></div>').prependTo('body');       
+        var dummy = $('<div id="omega-check-query"></div>').prependTo('body');
 
         dummy.append('<style media="all">#omega-check-query { position: relative; z-index: -1; }</style>');
         dummy.append('<!--[if (lt IE 9)&(!IEMobile)]><style media="all">#omega-check-query { z-index: 100; }</style><![endif]-->');
-        
+
         output = parseInt(dummy.css('z-index')) == 100;
 
         dummy.remove();
       }
-      
+
       return output;
     }
 
     return false;
   };
-  
+
   /**
    * @todo
    */
   Drupal.omega.checkQuery = function (query) {
-    var dummy = $('<div id="omega-check-query"></div>').prependTo('body');       
-    
+    var dummy = $('<div id="omega-check-query"></div>').prependTo('body');
+
     dummy.append('<style media="all">#omega-check-query { position: relative; z-index: -1; }</style>');
     dummy.append('<style media="' + query + '">#omega-check-query { z-index: 100; }</style>');
 
     var output = parseInt(dummy.css('z-index')) == 100;
-    
+
     dummy.remove();
 
     return output;
   };
-  
+
   /**
    * @todo
    */

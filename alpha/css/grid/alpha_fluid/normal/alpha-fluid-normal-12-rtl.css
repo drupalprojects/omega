@@ -4,7 +4,7 @@
  * ==========================================================
  */
 
-.grid-1, .grid-2, .grid-3, .grid-4, .grid-5, .grid-6, .grid-7, .grid-8, .grid-9, .grid-10, 
+.grid-1, .grid-2, .grid-3, .grid-4, .grid-5, .grid-6, .grid-7, .grid-8, .grid-9, .grid-10,
 .grid-11, .grid-12 {
   float: right;
 }
@@ -33,7 +33,7 @@
 
 .container-12 .prefix-1 {
   padding-left: 0;
-  padding-right: 8.333%;  
+  padding-right: 8.333%;
 }
 
 .container-12 .prefix-2 {

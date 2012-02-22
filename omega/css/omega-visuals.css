@@ -1,6 +1,6 @@
 /* Pagers Positioning */
 .item-list .pager {
-  padding:0;
+  padding: 0;
   margin: 0;
 }
 
@@ -26,12 +26,12 @@
 .pager li.pager-ellipsis,
 .pager li.pager-current,
 .pager li a {
-  padding:4px 8px;
+  padding: 4px 8px;
   text-decoration: none;
 }
 
 .pager li.pager-current {
-  padding:4px 8px;
+  padding: 4px 8px;
   font-weight: bold;
 }
 
@@ -40,7 +40,7 @@
 .pager li.pager-next a,
 .pager li.pager-last a {
   width: 50px;
-  text-align:center;
+  text-align: center;
   padding: 4px 0;
 }
 
@@ -62,7 +62,7 @@
 .pager li.pager-ellipsis,
 .pager li.pager-current,
 .pager li a {
-  color:#1a1a1a;
+  color: #1a1a1a;
 }
 
 .pager li {
@@ -77,7 +77,7 @@
   background: #ddd url(../images/button.png) repeat-x;
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #1a1a1a), color-stop(1, #5a5a5a));
   background: -moz-linear-gradient(top center, #1a1a1a 0%, #5a5a5a 100%);
-  color: #FFF;
+  color: #fff;
   outline: 0;
 }
 
@@ -94,14 +94,14 @@
 }
 
 .pager li a:hover {
-  background:#FFF;
-  color:#454545;
+  background: #fff;
+  color: #454545;
 }
 
 /* Add default border radius to list items & links */
 .pager {
-  background:#ebebeb;
-  border:1px solid;
+  background: #ebebeb;
+  border: 1px solid;
   border-color: #ddd #bbb #999;
   border-radius: 5px;
   -moz-border-radius: 5px;
@@ -125,7 +125,7 @@
 }
 
 table {
-  border: 1px solid #CCC;
+  border: 1px solid #ccc;
   width: 100%;
 }
 
@@ -153,14 +153,14 @@ th a img {
 }
 
 th.active {
-  background: #DDD;
-  border-left: 1px solid #CCC;
-  border-right: 1px solid #CCC;
+  background: #ddd;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
 }
 
 /* Odd & Even Styles */
 tr.even td {
-  background: #F1F5FA;
+  background: #f1f5fa;
 }
 
 tr.odd td {
@@ -168,8 +168,8 @@ tr.odd td {
 }
 
 td.active {
-  border-left: 1px solid #CCC;
-  border-right: 1px solid #CCC;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
 }
 
 tr.even td.active {
@@ -183,7 +183,7 @@ tr.odd td.active {
 tr:hover td,
 tr.even:hover td.active,
 tr.odd:hover td.active {
-  background: #FFFEEE;
+  background: #fffeee;
 }
 
 td ul.links {
@@ -226,7 +226,7 @@ td ul.links {
 
 .node-links ul li a:hover,
 .comment-links ul li a:hover {
-  background: #FFF;
+  background: #fff;
 }
 
 .tips,

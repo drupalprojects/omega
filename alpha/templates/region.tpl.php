@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @file
  * Alpha's theme implementation to display a region.

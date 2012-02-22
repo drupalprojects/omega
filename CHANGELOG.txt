@@ -15,8 +15,8 @@ Project Page:   http://drupal.org/project/omega
 Issue Queue:    http://drupal.org/project/issues/omega
 Usage Stats:    http://drupal.org/project/usage/omega
 Twitter:        http://twitter.com/Omeglicon
-Maintainer(s):  
-                Jake Strawn 
+Maintainer(s):
+                Jake Strawn
                   http://himerus.com
                   http://developmentgeeks.com
                   http://facebook.com/developmentgeeks
@@ -34,7 +34,7 @@ CHANGELOG.txt to track changes to the Omega theme.
 ##########################################################################################
 ##### Current Release: 7.x-3.0-rc2
 ##### Pending changes for Next Release
-########################################################################################## 
+##########################################################################################
 
 7/31/11
 =========
@@ -42,14 +42,14 @@ CHANGELOG.txt to track changes to the Omega theme.
 
 7/29/11
 =========
-#983758   - Panels Integration #1. This might not yet cover mini panels. 
+#983758   - Panels Integration #1. This might not yet cover mini panels.
 
 #1233550  - Fixed a bug that caused zones to be incorrectly described as "empty" in the
 theme settings.
 
 ##########################################################################################
 ##### Changes in: 7.x-3.0-rc1
-########################################################################################## 
+##########################################################################################
 
 7/27/11
 =========
@@ -64,7 +64,7 @@ no unassigned regions" message when there are unassigned regions.
 
 ##########################################################################################
 ##### Changes in: 7.x-3.0-beta2
-########################################################################################## 
+##########################################################################################
 
 7/25/11
 =========
@@ -104,7 +104,7 @@ by default.
 
 ##########################################################################################
 ##### Changes in: 7.x-3.0-beta2
-########################################################################################## 
+##########################################################################################
 
 6/29/11
 =========
@@ -116,7 +116,7 @@ by default.
 
 ##########################################################################################
 ##### Changes in: 7.x-3.0-beta1
-########################################################################################## 
+##########################################################################################
 
 6/27/11
 =========
@@ -134,7 +134,7 @@ CSS classes. This is now fixed.
 
 6/17/11
 =========
-#1191764  - We are no longer use unset() on regions if they are not enabled. Instead move 
+#1191764  - We are no longer use unset() on regions if they are not enabled. Instead move
 them to #excluded so that subthemes can use them later (in hook_page_alter).
 
 #1191762  - Added a JavaScript "Library" to check if a media query / grid layout applies.

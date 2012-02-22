@@ -16,8 +16,8 @@ Project Page:   http://drupal.org/project/omega
 Issue Queue:    http://drupal.org/project/issues/omega
 Usage Stats:    http://drupal.org/project/usage/omega
 Twitter:        http://twitter.com/Omeglicon
-Maintainer(s):  
-                Jake Strawn 
+Maintainer(s):
+                Jake Strawn
                   http://himerus.com
                   http://developmentgeeks.com
                   http://facebook.com/developmentgeeks

@@ -12,17 +12,17 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
   $theme = alpha_get_theme();
   $containers = isset($theme->grids[$theme->settings['grid']]) ? alpha_container_options($theme->grids[$theme->settings['grid']]) : array();
   $options = alpha_zone_options($theme->zones);
-  $columns = $spacing = !empty($containers) ? alpha_column_options(max(array_keys($containers))) : array();  
-  
+  $columns = $spacing = !empty($containers) ? alpha_column_options(max(array_keys($containers))) : array();
+
   unset($columns[0]);
   array_pop($spacing);
-  
+
   $form['alpha_settings']['structure'] = array(
     '#type' => 'fieldset',
     '#title' => t('Zone and region configuration'),
     '#weight' => -8,
   );
-  
+
   $form['alpha_settings']['structure']['__unassigned__'] = array(
     '#type' => 'fieldset',
     '#title' => t('Unassigned zones'),
@@ -32,7 +32,7 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
       'class' => array('alpha-unassigned'),
     ),
   );
-  
+
   $form['alpha_settings']['structure']['__unassigned__']['__unassigned__']['regions'] = array(
     '#type' => 'fieldset',
     '#title' => t('Unassigned regions'),
@@ -42,7 +42,7 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
       'class' => array('alpha-unassigned'),
     ),
   );
-  
+
   foreach ($theme->sections as $section => $name) {
     $form['alpha_settings']['structure'][$section] = array(
       '#type' => 'fieldset',
@@ -50,12 +50,12 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
       '#description' => t('This section is empty.'),
     );
   }
-  
+
   foreach ($theme->zones as $zone => $item) {
     $section = $item['enabled'] ? $item['section'] : '__unassigned__';
-    
+
     unset($form['alpha_settings']['structure'][$section]['#description']);
-    
+
     $form['alpha_settings']['structure'][$section][$zone] = array(
       '#type' => 'fieldset',
       '#title' => $item['name'] . ' ' . t('Zone'),
@@ -63,7 +63,7 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
       '#collapsible' => TRUE,
       '#collapsed' => TRUE,
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['zone'] = array(
       '#type' => 'fieldset',
       '#title' => t('Configuration'),
@@ -74,7 +74,7 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
         'class' => array('alpha-inline'),
       ),
     );
-    
+
     // Provide a full width wrapper around the zone (allowing for design elements outside the grid)
     $form['alpha_settings']['structure'][$section][$zone]['zone']['alpha_zone_' . $zone . '_wrapper'] = array(
       '#type' => 'checkbox',
@@ -82,14 +82,14 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
       '#description' => t('Enabling this feature will give a &lt;div&gt; wrapper around the zone itself, allowing you to theme in elements that appear outside the 960 pixel container zone.'),
       '#default_value' => $item['wrapper'],
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['zone']['alpha_zone_' . $zone . '_force'] = array(
       '#type' => 'checkbox',
       '#title' => t('Force this zone to be rendered'),
       '#description' => t('Enabling this will always render this zone, even if it is empty.'),
       '#default_value' => $item['force'],
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['zone']['alpha_zone_' . $zone . '_order'] = array(
       '#type' => 'checkbox',
       '#title' => t('Customize the region positioning'),
@@ -98,7 +98,7 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
       '#element_validate' => array('alpha_theme_settings_validate_order'),
       '#zone' => $zone,
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['zone']['alpha_zone_' . $zone . '_section'] = array(
       '#type' => 'select',
       '#title' => t('Section'),
@@ -106,13 +106,13 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
       '#element_validate' => array('alpha_theme_settings_validate_not_empty'),
       '#options' => array('_none' => '- None -') + $theme->sections,
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['zone']['alpha_zone_' . $zone . '_weight'] = array(
       '#type' => 'weight',
       '#title' => t('Weight'),
       '#default_value' => $item['weight'],
     );
-          
+
     // Create a container width selection menu for EACH zone
     $form['alpha_settings']['structure'][$section][$zone]['zone']['alpha_zone_' . $zone . '_columns'] = array(
       '#type' => 'select',
@@ -120,7 +120,7 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
       '#default_value' => $item['columns'],
       '#options' => $containers,
     );
-    
+
     // Decide which region is the primary item.
     // The primary region is the one that will absorb the size of empty regions that are related in the same zone.
     $form['alpha_settings']['structure'][$section][$zone]['zone']['alpha_zone_' . $zone . '_primary'] = array(
@@ -131,7 +131,7 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
       '#element_validate' => array('alpha_theme_settings_validate_not_empty', 'alpha_theme_settings_validate_primary'),
       '#zone' => $zone,
     );
-    
+
     // Allow for zone classes
     $form['alpha_settings']['structure'][$section][$zone]['zone']['alpha_zone_' . $zone . '_css'] = array(
       '#type' => 'textfield',
@@ -152,7 +152,7 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
         ),
       ),
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['regions'] = array(
       '#type' => 'fieldset',
       '#title' => t('Regions'),
@@ -162,11 +162,11 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
       '#collapsed' => TRUE,
     );
   }
-  
+
   foreach($theme->regions as $region => $item) {
     $zone = $item['enabled'] ? $item['zone'] : '__unassigned__';
     $section = $item['enabled'] && $theme->zones[$item['zone']]['enabled'] ? $item['section'] : '__unassigned__';
-    
+
     unset($form['alpha_settings']['structure'][$section][$zone]['regions']['#description']);
 
     $form['alpha_settings']['structure'][$section][$zone]['regions'][$region] = array(
@@ -179,14 +179,14 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
         'class' => array('alpha-inline'),
       ),
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['regions'][$region]['alpha_region_' . $region . '_force'] = array(
       '#type' => 'checkbox',
       '#title' => t('Force this region to be rendered'),
       '#description' => t('Enabling this will always render this region, even if it is empty.'),
       '#default_value' => $item['force'],
     );
-      
+
     $form['alpha_settings']['structure'][$section][$zone]['regions'][$region]['alpha_region_' . $region . '_zone'] = array(
       '#type' => 'select',
       '#title' => t('Zone'),
@@ -194,35 +194,35 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
       '#element_validate' => array('alpha_theme_settings_validate_not_empty'),
       '#options' => array('_none' => '- None -') + $options,
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['regions'][$region]['alpha_region_' . $region . '_prefix'] = array(
       '#type' => 'select',
       '#title' => t('Prefix'),
       '#default_value' => $item['prefix'],
       '#options' => $spacing,
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['regions'][$region]['alpha_region_' . $region . '_columns'] = array(
       '#type' => 'select',
       '#title' => t('Width'),
       '#default_value' => $item['columns'],
       '#options' => $columns,
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['regions'][$region]['alpha_region_' . $region . '_suffix'] = array(
       '#type' => 'select',
       '#title' => t('Suffix'),
       '#default_value' => $item['suffix'],
       '#options' => $spacing,
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['regions'][$region]['alpha_region_' . $region . '_weight'] = array(
       '#type' => 'weight',
       '#delta' => 50,
       '#title' => t('Weight'),
       '#default_value' => $item['weight'],
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['regions'][$region]['alpha_region_' . $region . '_position'] = array(
       '#type' => 'weight',
       '#delta' => 50,
@@ -234,7 +234,7 @@ function alpha_theme_settings_structure(&$form, &$form_state) {
         ),
       ),
     );
-    
+
     $form['alpha_settings']['structure'][$section][$zone]['regions'][$region]['alpha_region_' . $region . '_css'] = array(
       '#type' => 'textfield',
       '#title' => t('Additional region classes'),

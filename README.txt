@@ -16,8 +16,8 @@ Project Page:   http://drupal.org/project/omega
 Issue Queue:    http://drupal.org/project/issues/omega
 Usage Stats:    http://drupal.org/project/usage/omega
 Twitter:        http://twitter.com/Omeglicon
-Maintainer(s):  
-                Jake Strawn 
+Maintainer(s):
+                Jake Strawn
                   http://himerus.com
                   http://developmentgeeks.com
                   http://facebook.com/developmentgeeks
@@ -31,12 +31,12 @@ Maintainer(s):
 Omega Theme Information
 =======================
 The Omega theme is the most powerful and flexible base theme available for Drupal 7.
-Omega includes HTML5, CSS3 responsive layouts, customizable grids based on 960.gs, advanced 
-preprocess functionality, and integration with Delta/Context modules to provide different 
+Omega includes HTML5, CSS3 responsive layouts, customizable grids based on 960.gs, advanced
+preprocess functionality, and integration with Delta/Context modules to provide different
 layouts based on context.
 
-Omega 3.x has been completely rewritten for performance enhancements and a host of new 
-features. Every region/zone is now fully configurable in the theme settings UI, and can be 
+Omega 3.x has been completely rewritten for performance enhancements and a host of new
+features. Every region/zone is now fully configurable in the theme settings UI, and can be
 placed anywhere you like on a page without having to edit/manipulate templates.
 
 Additional 960gs/Omega Resources
