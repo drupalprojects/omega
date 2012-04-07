@@ -184,7 +184,8 @@ function alpha_alter($type, &$data, &$context1 = NULL, &$context2 = NULL) {
 function alpha_theme_trail($theme) {
   $static = &drupal_static(__FUNCTION__);
 
-  if (!isset($static)) {
+  if (!isset($static[$theme])) {
+    $static[$theme] = array();
     $themes = list_themes();
 
     if (isset($themes[$theme]->info['base theme'])) {
@@ -196,14 +197,10 @@ function alpha_theme_trail($theme) {
     }
 
     // Add our current subtheme ($key) to that array.
-    if (isset($themes[$theme])) {
-      $static[$theme][$theme] = $themes[$theme]->info['name'];
-    }
+    $static[$theme][$theme] = $themes[$theme]->info['name'];
   }
 
-  if (isset($static[$theme])) {
-    return $static[$theme];
-  }
+  return $static[$theme];
 }
 
 /**
@@ -223,14 +220,12 @@ function alpha_get_theme() {
   }
 
   if (!isset($container[$key])) {
-    foreach (array_keys(alpha_theme_trail($theme)) as $item) {
+    foreach (array_keys(array_reverse(alpha_theme_trail($theme))) as $item) {
       if (class_exists($item . '_theme_container')) {
         $class = $item . '_theme_container';
+        $container[$key] = new $class($theme, $delta);
+        break;
       }
-    }
-
-    if (isset($class)) {
-      $container[$key] = new $class($theme, $delta);
     }
   }
 

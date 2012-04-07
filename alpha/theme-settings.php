@@ -14,24 +14,26 @@ require_once dirname(__FILE__) . '/includes/theme-settings-structure.inc';
  * Implements hook_form_system_theme_settings_alter().
  */
 function alpha_form_system_theme_settings_alter(&$form, &$form_state) {
-  drupal_add_css(drupal_get_path('theme', 'alpha') . '/css/alpha-theme-settings.css', array('group' => CSS_THEME, 'weight' => 100));
+  if ($GLOBALS['theme_key'] == $form_state['build_info']['args'][0]) {
+    drupal_add_css(drupal_get_path('theme', 'alpha') . '/css/alpha-theme-settings.css', array('group' => CSS_THEME, 'weight' => 100));
 
-  $theme = alpha_get_theme();
-  $form_state['theme'] = $theme->theme;
-  $form_state['regions'] = $theme->regions;
-  $form_state['zones'] = $theme->zones;
+    $theme = alpha_get_theme();
+    $form_state['theme'] = $theme->theme;
+    $form_state['regions'] = $theme->regions;
+    $form_state['zones'] = $theme->zones;
 
-  $form['alpha_settings'] = array(
-    '#type' => 'vertical_tabs',
-    '#weight' => -10,
-    '#prefix' => t('<h3>Layout configuration</h3>'),
-  );
+    $form['alpha_settings'] = array(
+      '#type' => 'vertical_tabs',
+      '#weight' => -10,
+      '#prefix' => t('<h3>Layout configuration</h3>'),
+    );
 
-  alpha_theme_settings_general($form, $form_state);
-  alpha_theme_settings_structure($form, $form_state);
+    alpha_theme_settings_general($form, $form_state);
+    alpha_theme_settings_structure($form, $form_state);
 
-  $form['#validate'][] = 'alpha_theme_settings_form_validate';
-  $form['#submit'][] = 'alpha_theme_settings_form_submit';
+    $form['#validate'][] = 'alpha_theme_settings_form_validate';
+    $form['#submit'][] = 'alpha_theme_settings_form_submit';
+  }
 }
 
 /**
