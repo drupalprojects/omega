@@ -132,8 +132,8 @@ function omega_alpha_preprocess_node(&$vars) {
   }
 
   // Add a class to allow styling based on the node author.
-  $vars['attributes_array']['class'][] = drupal_html_class('author-' . $vars['node']->name);
-
+  $vars['attributes_array']['class'][] = drupal_html_class('author-' . $vars['node']->uid);
+  
   // Add a class to allow styling for zebra striping.
   $vars['attributes_array']['class'][] = drupal_html_class($vars['zebra']);
 
