@@ -76,6 +76,14 @@ function omega_form_system_theme_settings_alter(&$form, $form_state) {
     }
   }
 
+  // Custom option for toggling the main content blog on the front page.
+  $form['theme_settings']['omega_toggle_front_page_content'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Front page content'),
+    '#description' => t('Uncheck this checkbox in order to hide the main content block on the front page.'),
+    '#default_value' => theme_get_setting('omega_toggle_front_page_content'),
+  );
+
   // We need a custom form submit handler for processing some of the values.
   $form['#submit'][] = 'omega_theme_settings_form_submit';
 }

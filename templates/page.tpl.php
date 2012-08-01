@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Zen theme's implementation to display a single Drupal page.
+ * Default theme implementation to display a single Drupal page.
  *
  * Available variables:
  *
@@ -65,7 +65,6 @@
  *
  * @see template_preprocess()
  * @see template_preprocess_page()
- * @see zen_preprocess_page()
  * @see template_process()
  */
 ?>

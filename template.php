@@ -236,8 +236,11 @@ function omega_theme_registry_alter(&$registry) {
   }
 }
 
+/**
+ * Implements hook_block_list_alter().
+ */
 function omega_block_list_alter(&$blocks) {
-  if (drupal_is_front_page()) {
+  if (!theme_get_setting('omega_toggle_front_page_content') && drupal_is_front_page()) {
     foreach ($blocks as $key => $block) {
       if ($block->module == 'system' && $block->delta == 'main') {
         unset($blocks[$key]);
