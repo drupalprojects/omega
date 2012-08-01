@@ -56,11 +56,6 @@ function omega_drush_command() {
     'aliases' => array('orev'),
   );
 
-  $items['omega-download-libraries'] = array(
-    'description' => dt('Downloads all available (and downloadable) libraries defined by the current default theme and all its base themes.'),
-    'aliases' => array('odll'),
-  );
-
   return $items;
 }
 
@@ -75,8 +70,6 @@ function omega_drush_help($section) {
       return dt('Exports the theme settings of a given theme.');
     case 'drush:omega-revert':
       return dt('Reverts the theme settings of a given theme.');
-    case 'drush:omega-download-libraries':
-      return dt('Downloads all available (and downloadable) libraries for a theme.');
   }
 }
 
@@ -231,98 +224,6 @@ function drush_omega_revert($theme) {
   system_rebuild_theme_data();
 
   drush_log(dt('You have successfully reverted the theme settings for the @theme theme.', array('@theme' => $themes[$theme]->info['name'])), 'success');
-}
-
-/**
- * Implements drush_hook_COMMAND_validate().
- */
-function drush_omega_download_libraries_validate() {
-  if ($GLOBALS['theme_key'] == 'omega') {
-    return TRUE;
-  }
-
-  foreach ($GLOBALS['base_theme_info'] as $info) {
-    if ($info->name == 'omega') {
-      return TRUE;
-    }
-  }
-
-  return drush_set_error('OMEGA_ERROR', dt('The current default theme has to be a Omega subtheme for this operation to work.'));
-}
-
-/**
- * Implements drush_hook_COMMAND().
- */
-function drush_omega_download_libraries() {
-  foreach (omega_theme_libraries_info() as $library => $info) {
-    if (!empty($info['download url']) && omega_drush_download_library($library, $info)) {
-      drush_log(dt('Successfully downloaded the @library library.', array('@library' => $info['name'])), 'success');
-    }
-  }
-}
-
-/**
- * Helper function for downloading a library with drush.
- *
- * @param $library
- *   The machine-readable name of the library to download.
- * @param $url
- *   The url that the library archive can be downloaded from.
- *
- * @return bool
- *   TRUE if the library could be downloaded and extracted successfully, FALSE
- *   otherwise.
- */
-function omega_drush_download_library($library, $info) {
-  // Retrieve the path of the library.
-  if (!$path = libraries_get_path($library)) {
-    if (!$site = drush_site_path()) {
-      return drush_set_error('OMEGA_LIBRARY_PATH', dt('The path of the @library library could not be identified.', array('@library' => $info['name'])));
-    }
-
-    $path = $site . '/libraries/' . $library;
-  }
-
-  // Create the directory if it doesn't exist yet.
-  if (!is_dir($path) && !drush_mkdir($path)) {
-    return drush_set_error('OMEGA_LIBRARY_PATH', dt('An error occurred while trying to prepare the @path directory for the @library library.', array('@library' => $info['name'], '@path' => $path)));
-  }
-
-  // Make sure that the directory is writable.
-  if (!is_writable($path) && !file_prepare_directory($path)) {
-    return drush_set_error('OMEGA_LIBRARY_PATH', dt('An error occurred while trying to prepare the @path directory for the @library library.', array('@library' => $info['name'], '@path' => $path)));
-  }
-
-  // Try to download the archive to the library folder.
-  $archive = $path . '/drush-library-' . $library;
-  if (!drush_download_file($info['download url'], $archive)) {
-    return drush_set_error('OMEGA_LIBRARY_DOWNLOAD', dt('There was a problem when trying to download the @library library.', array('@library' => $info['name'])));
-  }
-
-  // The download succeeded, now lets try to extract the archive.
-  if (!drush_shell_exec('unzip -o %s -d %s', $archive, $path) && !drush_tarball_extract($archive)) {
-    return drush_set_error('OMEGA_LIBRARY_EXTRACT', dt('There was a problem when trying to extract the @library library.', array('@library' => $info['name'])));
-  }
-
-  // Collapse possible subdirectories if any.
-  if (!empty($info['download subdirectory'])) {
-    foreach (drush_scan_directory($path, $info['download subdirectory'], array('.', '..'), FALSE, FALSE) as $file) {
-      if (is_dir($file->filename)) {
-        $directory = dir($file->filename);
-        while (FALSE !== ($read = $directory->read())) {
-          if (!in_array($read, array('.', '..'))) {
-            drush_move_dir($file->filename . '/' . $read, $path . '/' . $read, TRUE);
-          }
-        }
-        $directory->close();
-
-        // Delete the archive subdirectory.
-        drush_delete_dir($file->filename);
-      }
-    }
-  }
-
-  return TRUE;
 }
 
 /**

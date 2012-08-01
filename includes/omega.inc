@@ -398,24 +398,6 @@ function omega_get_nested_value(&$object, array $parents, &$key_exists = NULL) {
 }
 
 /**
- * Wrapper for hook_libraries_info() to allow themes to easily define libraries
- * and distinguish between module and theme provided libraries.
- *
- * @return array
- *   An array of libraries defined by themes in the theme trail of the active
- *   theme.
- *
- * @see hook_libraries_info()
- */
-function omega_theme_libraries_info() {
-  $libraries = array();
-  foreach (omega_invoke_all('omega_theme_libraries_info') as $library => $info) {
-    $libraries[$library] = libraries_info_defaults($info, $library);
-  }
-  return $libraries;
-}
-
-/**
  * @return array
  */
 function omega_layouts_info($theme = NULL) {
