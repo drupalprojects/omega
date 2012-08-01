@@ -489,9 +489,7 @@ function _omega_drush_generate_theme_name($string) {
 }
 
 /**
- * @param $from
- * @param $to
- * @return string
+ * Helper function for retrieving the relative path between two endpoints.
  */
 function _omega_relative_path($from, $to) {
   $from = explode('/', $from);

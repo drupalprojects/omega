@@ -13,9 +13,9 @@ features[] = name
 features[] = slogan
 features[] = development
 features[] = libraries
-features[] = performance
 features[] = compatibility
-features[] = manipulation
+features[] = scripts
+features[] = css
 
 regions[header] = Header
 regions[help] = Help

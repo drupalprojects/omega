@@ -230,9 +230,8 @@ function omega_extensions($theme = NULL) {
 }
 
 /**
- * @param null $theme
- * @param bool $merge
- * @return mixed
+ * Looks up the info array of all themes in the theme trail and retrieves a
+ * particular info array element.
  */
 function omega_theme_trail_info($element, $merge = TRUE, $theme = NULL) {
   $output = array();
@@ -398,7 +397,7 @@ function omega_get_nested_value(&$object, array $parents, &$key_exists = NULL) {
 }
 
 /**
- * @return array
+ * Retrieves the info array for all available layouts.
  */
 function omega_layouts_info($theme = NULL) {
   $theme = isset($theme) ? $theme : $GLOBALS['theme_key'];
@@ -423,7 +422,7 @@ function omega_layouts_info($theme = NULL) {
       foreach (array('css', 'js') as $type) {
         if (!empty($layouts[$theme][$layout]['attached'][$type])) {
           foreach ($layouts[$theme][$layout]['attached'][$type] as $file => &$options) {
-            if ($file = omega_theme_trail_find_file_specific($file, NULL, $theme)) {
+            if ($file = omega_theme_trail_find_file($file, NULL, $theme)) {
               $options['data'] = $file;
             }
           }
@@ -439,11 +438,22 @@ function omega_layouts_info($theme = NULL) {
 }
 
 /**
+ * Iterates over all themes in the theme trail in order to find an
+ * implementation of a specific file and returns the first occurance of that
+ * file. Sub-theme implementations override base-theme implementations.
+ *
  * @param $file
- * @param null $theme
+ *   The name of the file.
+ * @param $path
+ *   (Optional) The path to the file (relative to the theme root).
+ * @param $theme
+ *   (Optional) The key (machine-readable name) of a theme. Defaults to the key
+ *   of the current theme.
+ *
  * @return bool|string
+ *   The path to the file or FALSE if no implementation exists.
  */
-function omega_theme_trail_find_file_specific($file, $path = NULL, $theme = NULL) {
+function omega_theme_trail_find_file($file, $path = NULL, $theme = NULL) {
   $theme = isset($theme) ? $theme : $GLOBALS['theme_key'];
 
   foreach (array_reverse(omega_theme_trail($theme)) as $key => $name) {
