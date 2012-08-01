@@ -88,7 +88,7 @@ function omega_element_info_alter(&$elements) {
  * Implements hook_css_alter().
  */
 function omega_css_alter(&$css) {
-  if (theme_get_setting('toggle_manipulation') && $exclude = theme_get_setting('omega_css_exclude')) {
+  if (theme_get_setting('toggle_css') && $exclude = theme_get_setting('omega_css_exclude')) {
     omega_exclude_assets($css, $exclude);
   }
 
@@ -108,7 +108,7 @@ function omega_css_alter(&$css) {
  * Implements hook_js_alter().
  */
 function omega_js_alter(&$js) {
-  if (theme_get_setting('toggle_manipulation') && $exclude = theme_get_setting('omega_js_exclude')) {
+  if (theme_get_setting('toggle_scripts') && $exclude = theme_get_setting('omega_js_exclude')) {
     omega_exclude_assets($js, $exclude);
   }
 
