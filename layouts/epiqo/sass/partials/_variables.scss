@@ -1,0 +1,16 @@
+// Media queries.
+$breakpoint-mobile-down: 'all and (max-width: 800px)' !default;
+$breakpoint-mobile-up: 'all and (min-width: 800px)' !default;
+
+// Grid variables.
+$total-columns: 24;
+$gutter-width: 1.5%;
+$grid-padding: 10px;
+$column-width: (100% - (($total-columns - 1) * $gutter-width)) / $total-columns;
+$grid-max-width: 1200px;
+
+// Miscelanoues variables.
+$sidebar-collapsed-width: 10px;
+$sidebar-visible-gutter: 40px;
+$sidebar-toggle-width: $sidebar-visible-gutter - 10px;
+$sidebar-toggle-height: $sidebar-visible-gutter;

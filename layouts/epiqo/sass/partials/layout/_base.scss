@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+}
+
+// Set the min-width to the smallest smartphone landscape view width.
+.page {
+  min-width: 320px;
+  overflow: hidden;
+}
+
+// This is required for the sidebar's positioning but might affect other
+// layout elements as well and is therefore defined globally.
+.main {
+  position: relative;
+  overflow: hidden;
+}
+
+// Fix to stop the main content area from collapsing even when it is empty.
+.main-content {
+  min-height: 1px;
+}
+
+// Implements the major building blocks as grid containers. By setting the
+// max-width we make sure that the website doesn't scale infinitly.
+.main, .topbar, .region-navigation, .region-footer, .region-search, .region-banner {
+  @include grid-container;
+}

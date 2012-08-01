@@ -1,0 +1,6 @@
+// Simple mixin to allow easy media query usage with variables.
+@mixin at-media-query($query) {
+  @media #{$query} {
+    @content;
+  }
+}
