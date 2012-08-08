@@ -38,11 +38,6 @@ if ($GLOBALS['theme'] == $GLOBALS['theme_key'] && !$static = &drupal_static('the
     // Extract the theme settings from the previously populated static cache.
     $static = &drupal_static('theme_get_setting');
 
-    // Write the toggled state of all extensions into the theme settings.
-    foreach (omega_extensions() as $extension) {
-      $static[$GLOBALS['theme']]['toggle_' . $extension] = TRUE;
-    }
-
     // Cache the theme settings in the database.
     cache_set('theme_settings:' . $GLOBALS['theme'], $static[$GLOBALS['theme']]);
   }
@@ -54,7 +49,7 @@ if ($GLOBALS['theme'] == $GLOBALS['theme_key'] && !$static = &drupal_static('the
  * declaration to make sure that the registry is rebuilt before invoking any
  * theme hooks.
  */
-if (theme_get_setting('toggle_development') && theme_get_setting('omega_rebuild_theme_registry') &&  user_access('administer site configuration')) {
+if (omega_extension_enabled('development') && theme_get_setting('omega_rebuild_theme_registry') &&  user_access('administer site configuration')) {
   drupal_theme_rebuild();
 
   if (flood_is_allowed('omega_' . $GLOBALS['theme'] . '_rebuild_registry_warning', 3)) {
@@ -88,7 +83,7 @@ function omega_element_info_alter(&$elements) {
  * Implements hook_css_alter().
  */
 function omega_css_alter(&$css) {
-  if (theme_get_setting('toggle_css') && $exclude = theme_get_setting('omega_css_exclude')) {
+  if (omega_extension_enabled('css') && $exclude = theme_get_setting('omega_css_exclude')) {
     omega_exclude_assets($css, $exclude);
   }
 
@@ -108,7 +103,7 @@ function omega_css_alter(&$css) {
  * Implements hook_js_alter().
  */
 function omega_js_alter(&$js) {
-  if (theme_get_setting('toggle_scripts') && $exclude = theme_get_setting('omega_js_exclude')) {
+  if (omega_extension_enabled('scripts') && $exclude = theme_get_setting('omega_js_exclude')) {
     omega_exclude_assets($js, $exclude);
   }
 
@@ -126,12 +121,12 @@ function omega_js_alter(&$js) {
 function omega_theme($existing, $type, $theme, $path) {
   $info = array();
 
-  if (theme_get_setting('toggle_layouts') && $layouts = omega_layouts_info()) {
+  if (omega_extension_enabled('layouts') && $layouts = omega_layouts_info()) {
     foreach ($layouts as $key => $layout) {
       $info['page__' . $key . '_layout'] = array(
         'layout' => $layout,
-        'template' => $layout['template'],
-        'path' => $layout['path'],
+        'template' => $key,
+        'path' => drupal_get_path('theme', $layout['theme']) . '/layouts/' . $key,
       );
     }
   }
@@ -238,6 +233,9 @@ function omega_theme_registry_alter(&$registry) {
 
 /**
  * Implements hook_block_list_alter().
+ *
+ * Effectively hides the main content block on the front page if the theme
+ * settings are configured that way.
  */
 function omega_block_list_alter(&$blocks) {
   if (!theme_get_setting('omega_toggle_front_page_content') && drupal_is_front_page()) {
@@ -280,25 +278,4 @@ function omega_page_alter(&$page) {
 function omega_html_head_alter(&$head) {
   // Simplify the meta tag for character encoding.
   $head['system_meta_content_type']['#attributes'] = array('charset' => str_replace('text/html; charset=', '', $head['system_meta_content_type']['#attributes']['content']));
-}
-
-/**
- * Implements hook_omega_layouts_info().
- */
-function omega_omega_layouts_info() {
-  $info['epiqo'] = array(
-    'label' => t('epiqo'),
-    'description' => t('Default layout for epiqo distributions.'),
-    'attached' => array(
-      'css' => array(
-        'layouts/epiqo/css/epiqo.layout.css' => array('group' => CSS_THEME),
-      ),
-      'js' => array(
-        'js/libraries/jquery.matchmedia.js' => array('group' => JS_THEME),
-        'layouts/epiqo/js/epiqo.layout.js' => array('group' => JS_THEME),
-      ),
-    ),
-  );
-
-  return $info;
 }

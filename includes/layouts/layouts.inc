@@ -31,7 +31,7 @@ function omega_extension_layouts_init_layout(&$variables) {
 /**
  * Implements hook_extension_EXTENSION_process_page().
  */
-function omega_extension_layouts_process_layout(&$variables, $hook) {
+function omega_extension_layouts_process_layout(&$variables) {
   if (!empty($variables['omega layout'])) {
     $registry = theme_get_registry();
     $suggestion = 'page__' . $variables['omega layout'] . '_layout';
