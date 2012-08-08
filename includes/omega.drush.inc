@@ -13,7 +13,6 @@ function omega_drush_command() {
     'description' => dt('Creates a Omega subtheme.'),
     'arguments' => array(
       'name' => dt('The name of your subtheme.'),
-      'machine_name' => dt('[optional] The machine-readable name of your subtheme. This will be auto-generated from the human-readable name if omitted.'),
     ),
     'options' => array(
       'destination' => dt('The destination of your subtheme. Defaults to "all" (sites/all/themes).'),
@@ -76,30 +75,26 @@ function omega_drush_help($section) {
 /**
  * Implements drush_hook_COMMAND_validate().
  */
-function drush_omega_subtheme_validate($name, $machine_name = NULL) {
+function drush_omega_subtheme_validate($name = NULL) {
   // Rebuild the theme data so that we can safely check for the existance of
   // themes by using the information provided by list_themes().
   system_rebuild_theme_data();
 
-  $themes = list_themes();
-
   // Retrieve the option values from the drush command.
   $destination = drush_get_option('destination', 'all');
-  $machine_name = $machine_name ? $machine_name : drush_get_option('machine_name', _omega_drush_generate_theme_name($name));
   $starterkit = drush_get_option('starterkit', 'omega_starterkit');
 
-  // Override the machine-readable name of the theme in case it was generated
-  // from the human-readable name.
-  drush_set_option('machine_name', $machine_name);
+  if ($machine_name = drush_get_option('machine_name')) {
+    // Validate the machine-readable name of the theme.
+    if (!preg_match('/^[a-z][a-z0-9_]*$/', $machine_name)) {
+      return drush_set_error('OMEGA_THEME_NAME_INVALID', dt('The machine name is invalid. It may only contain lowercase numbers, letters and underscores and must start with a letter.'));
+    }
 
-  // Validate the machine-readable name of the theme.
-  if (!$machine_name || !preg_match('/^[a-z][a-z0-9_]*$/', $machine_name)) {
-    return drush_set_error('OMEGA_THEME_NAME_INVALID', dt('The machine name is invalid. It may only contain lowercase numbers, letters and underscores and must start with a letter.'));
-  }
-
-  // Validate that the machine-readable name of the theme is unique.
-  if (isset($themes[$machine_name])) {
-    return drush_set_error('OMEGA_THEME_ALREADY_EXISTS', dt('A theme with that name already exists. The machine-readable name must be unique.'));
+    $themes = list_themes();
+    // Validate that the machine-readable name of the theme is unique.
+    if (isset($themes[$machine_name])) {
+      return drush_set_error('OMEGA_THEME_ALREADY_EXISTS', dt('A theme with that name already exists. The machine-readable name must be unique.'));
+    }
   }
 
   // Check if the destination is valid.
@@ -116,10 +111,14 @@ function drush_omega_subtheme_validate($name, $machine_name = NULL) {
 /**
  * Implements drush_hook_COMMAND().
  */
-function drush_omega_subtheme($name) {
+function drush_omega_subtheme($name = NULL) {
+  if (!isset($name)) {
+    drush_prompt(dt('Please enter the name of the new sub-theme'));
+  }
+
   $subtheme = new stdClass();
   $subtheme->name = $name;
-  $subtheme->machine_name = drush_get_option('machine_name');
+  $subtheme->machine_name = drush_get_option('machine_name', _omega_drush_generate_theme_name($name));
   $subtheme->path = 'sites/' . drush_get_option('destination', 'all') . '/themes/' . $subtheme->machine_name;
   $subtheme->starterkit = drush_get_option('starterkit', 'omega_starterkit');
   $subtheme->default = drush_get_option('set-default') !== NULL;
@@ -133,10 +132,10 @@ function drush_omega_subtheme($name) {
 /**
  * Implements drush_hook_COMMAND_validate().
  */
-function drush_omega_export_validate($theme) {
+function drush_omega_export_validate($theme = NULL) {
   $themes = list_themes();
   // Check if the given theme exists.
-  if (!isset($themes[$theme])) {
+  if (isset($theme) && !isset($themes[$theme])) {
     return drush_set_error('OMEGA_THEME_NOT_EXISTS', dt('There is no theme with that name.'));
   }
 }
@@ -150,11 +149,21 @@ function drush_omega_export_validate($theme) {
  * @param $name
  *   The machine-readable name of a theme.
  */
-function drush_omega_export($theme) {
+function drush_omega_export($theme = NULL) {
+  if (!isset($theme) && !$theme = _omega_drush_theme_choice()) {
+    return;
+  }
+
   $themes = list_themes();
 
-  // Load the theme settings from the database.
-  if (!$settings = variable_get('theme_' . $theme . '_settings') && !drush_confirm(dt('There are no theme settings for @theme stored in the database. Do you want to purge the theme settings from the .info file too?', array('@theme' => $themes[$theme]->info['name'])))) {
+  // Insert the theme settings from the database.
+  if ($settings = variable_get('theme_' . $theme . '_settings')) {
+    foreach (_system_default_theme_features() as $feature) {
+      // Remove the 'toggle_foobar' elements from the theme settings array.
+      unset($settings['toggle_' . $feature]);
+    }
+  }
+  elseif (!drush_confirm(dt('There are no theme settings for @theme stored in the database. Do you want to purge the theme settings from the .info file too?', array('@theme' => $themes[$theme]->info['name'])))) {
     return;
   }
 
@@ -194,7 +203,7 @@ function drush_omega_export($theme) {
 function drush_omega_revert_validate($theme) {
   $themes = list_themes();
   // Check if the given theme exists.
-  if (!isset($themes[$theme])) {
+  if (isset($theme) && !isset($themes[$theme])) {
     return drush_set_error('OMEGA_THEME_NOT_EXISTS', dt('There is no theme with that name.'));
   }
 }
@@ -208,7 +217,11 @@ function drush_omega_revert_validate($theme) {
  * @param $name
  *   The machine-readable name of a theme.
  */
-function drush_omega_revert($theme) {
+function drush_omega_revert($theme = NULL) {
+  if (!isset($theme) && !$theme = _omega_drush_theme_choice()) {
+    return;
+  }
+
   $themes = list_themes();
   // Delete the theme settings variable for the given theme.
   variable_del('theme_' . $theme . '_settings');
@@ -218,6 +231,29 @@ function drush_omega_revert($theme) {
   system_rebuild_theme_data();
 
   drush_log(dt('You have successfully reverted the theme settings for the @theme theme.', array('@theme' => $themes[$theme]->info['name'])), 'success');
+}
+
+/**
+ * Helper function for printing a list of available themes that the user can
+ * choose from in a drush prompt.
+ *
+ * @return bool|string
+ *   The machine-readable name of the chosen theme or FALSE if the operation was
+ *   cancelled.
+ */
+function _omega_drush_theme_choice() {
+  $themes = list_themes();
+  $values = array_values($themes);
+  $options = array();
+  foreach ($values as $key => $info) {
+    $options[$key] = $info->info['name'];
+  }
+
+  if (!$theme = drush_choice($options, dt('Which theme do you want to export the theme settings for?'))) {
+    return FALSE;
+  }
+
+  return $values[$theme]->name;
 }
 
 /**
@@ -474,10 +510,22 @@ function omega_drush_sites() {
 function _omega_drush_generate_theme_name($string) {
   // Machine-readable names have to start with a lowercase letter.
   $string = preg_replace('/^[^a-z]+/', '', strtolower($string));
-  // Machine-readable may only contain alphanumeric characters and underscores.
+  // Machine-readable names may only contain alphanumeric characters and
+  // underscores.
   $string = preg_replace('/[^a-z0-9_]+/', '_', $string);
   // Trim all trailing and leading underscores.
   $string = trim($string, '_');
+
+  $themes = list_themes();
+  if (isset($themes[$string])) {
+    $plain = $string;
+    $counter = 0;
+
+    while (isset($themes[$string])) {
+      // Make sure that the machine-readable name of the theme is unique.
+      $string = $plain . '_' . $counter++;
+    }
+  }
 
   return $string;
 }
