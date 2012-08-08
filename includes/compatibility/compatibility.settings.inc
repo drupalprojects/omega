@@ -8,7 +8,7 @@
 /**
  * Implements hook_extension_EXTENSION_theme_settings_form_alter().
  */
-function omega_extension_compatibility_theme_settings_form_alter($element, &$form, $form_state) {
+function omega_extension_compatibility_settings_form($element, &$form, $form_state) {
   $element['omega_conditional_classes_html'] = array(
     '#type' => 'checkbox',
     '#title' => t('Add conditional classes for Internet Explorer'),

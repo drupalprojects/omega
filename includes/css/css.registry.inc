@@ -2,13 +2,13 @@
 
 /**
  * @file
- * Main extension file for the 'scripts' extension.
+ * Main extension file for the 'css' extension.
  */
 
 /**
  * Implements hook_extension_EXTENSION_theme_registry_alter().
  */
-function omega_extension_scripts_theme_registry_alter(&$registry) {
+function omega_extension_css_theme_registry_alter(&$registry) {
   // Store all configured class rules in the right hook definition and add the
   // class killer hook to the array of preprocess functions.
   if ($rules = theme_get_setting('omega_class_rules')) {
@@ -22,7 +22,7 @@ function omega_extension_scripts_theme_registry_alter(&$registry) {
 
           // Make sure that we don't add the hook multiple times.
           if (!array_search('omega_apply_class_rules', $registry[$rule['hook']]['preprocess functions'])) {
-            $registry[$rule['hook']]['includes'][] = drupal_get_path('theme', 'omega') . '/includes/scripts/scripts.inc';
+            $registry[$rule['hook']]['includes'][] = drupal_get_path('theme', 'omega') . '/includes/css/css.inc';
             $registry[$rule['hook']]['preprocess functions'][] = 'omega_apply_class_rules';
           }
         }

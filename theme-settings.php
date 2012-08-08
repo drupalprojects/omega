@@ -18,9 +18,17 @@ function omega_form_system_theme_settings_alter(&$form, $form_state) {
     return;
   }
 
-  // Include the template.php for all the themes in the theme trail.
+  // Include the template.php and theme-settings.php files for all the themes in
+  // the theme trail.
   foreach (omega_theme_trail() as $theme => $name) {
-    $filename = DRUPAL_ROOT . '/' . drupal_get_path('theme', $theme) . '/template.php';
+    $path = drupal_get_path('theme', $theme);
+
+    $filename = DRUPAL_ROOT . '/' . $path . '/template.php';
+    if (file_exists($filename)) {
+      require_once $filename;
+    }
+
+    $filename = DRUPAL_ROOT . '/' . $path . '/theme-settings.php';
     if (file_exists($filename)) {
       require_once $filename;
     }
@@ -44,35 +52,57 @@ function omega_form_system_theme_settings_alter(&$form, $form_state) {
     }
   }
 
-  $form['omega'] = array(
-    '#type' => 'vertical_tabs',
-    '#weight' => -10,
-  );
-
-  // Load the theme settings for all enabled extensions.
-  foreach (omega_extensions() as $extension) {
-    // Load all the implementations for this extensions and invoke the according
-    // hooks.
-    omega_theme_trail_load_include('inc', 'includes/' . $extension . '/' . $extension . '.settings');
-
-    // By default, each extension resides in a vertical tab.
-    $element = array(
-      '#type' => 'fieldset',
-      '#title' => t(filter_xss_admin(ucfirst($extension))),
+  if ($extensions = omega_extensions()) {
+    $form['omega'] = array(
+      '#type' => 'vertical_tabs',
+      '#weight' => -10,
     );
 
-    foreach (omega_theme_trail() as $theme => $title) {
-      $function = $theme . '_extension_' . $extension . '_theme_settings_form_alter';
+    $form['omega_extensions'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Extensions'),
+      '#description' => t('Enable or disable certain theme extensions.'),
+      '#collapsible' => TRUE,
+      '#weight' => -9,
+    );
 
-      if (function_exists($function)) {
-        $element = $function($element, $form, $form_state);
+    // Load the theme settings for all enabled extensions.
+    foreach ($extensions as $extension => $theme) {
+      $label = t(filter_xss_admin(ucfirst($extension)));
+
+      $form['omega_extensions']['omega_toggle_extension_' . $extension] = array(
+        '#type' => 'checkbox',
+        '#title' => $label,
+        '#default_value' => theme_get_setting('omega_toggle_extension_' . $extension),
+      );
+
+      if (theme_get_setting('omega_toggle_extension_' . $extension)) {
+        $element = array();
+
+        // Load all the implementations for this extensions and invoke the according
+        // hooks.
+        $file = drupal_get_path('theme', $theme) . '/includes/' . $extension . '/' . $extension . '.settings.inc';
+        if (is_file($file)) {
+          require_once $file;
+        }
+
+        $function = $theme . '_extension_' . $extension . '_settings_form';
+        if (function_exists($function)) {
+          // By default, each extension resides in a vertical tab
+          $element = $function($element, $form, $form_state) + array(
+            '#type' => 'fieldset',
+            '#title' => $label,
+          );
+
+          drupal_alter($theme . '_extension_' . $extension . '_settings_form', $element, $form, $form_state);
+        }
+
+        if (element_children($element)) {
+          // Append the extension form to the theme settings form if it has any
+          // children.
+          $form['omega']['omega_' . $extension] = $element;
+        }
       }
-    }
-
-    if (element_children($element)) {
-      // Append the extension form to the theme settings form if it has any
-      // children.
-      $form['omega']['omega_' . $extension] = $element;
     }
   }
 

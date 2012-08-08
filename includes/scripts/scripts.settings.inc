@@ -5,12 +5,10 @@
  * Contains the theme settings form elements for the development extension.
  */
 
-include_once dirname(__FILE__) . '/scripts.inc';
-
 /**
  * Implements hook_extension_EXTENSION_theme_settings_form_alter().
  */
-function omega_extension_scripts_theme_settings_form_alter($element, &$form, $form_state) {
+function omega_extension_scripts_settings_form($element, &$form, $form_state) {
   $element['omega_js_footer'] = array(
     '#type' => 'checkbox',
     '#title' => t('Output JavaScript in the footer'),

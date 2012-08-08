@@ -8,7 +8,7 @@
 /**
  * Implements hook_extension_EXTENSION_theme_settings_form_alter().
  */
-function omega_extension_layouts_theme_settings_form_alter($element, &$form, $form_state) {
+function omega_extension_layouts_settings_form($element, &$form, $form_state) {
   if ($layouts = omega_layouts_info()) {
     $element['omega_layout'] = array(
       '#type' => 'radios',

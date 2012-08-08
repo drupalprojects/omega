@@ -194,15 +194,20 @@ function omega_theme_registry_alter(&$registry) {
     }
   }
 
-  // Include the main extension file for every enabled extensions. This is
+  // Include the main extension file for every enabled extension. This is
   // required for the next step (allowing extensions to register hooks in the
   // theme registry).
-  foreach (omega_extensions() as $extension) {
-    omega_theme_trail_load_include('inc', 'includes/' . $extension . '/' . $extension);
+  foreach (omega_extensions() as $extension => $theme) {
+    if (theme_get_setting('omega_toggle_extension_' . $extension)) {
+      // Load all the implementations for this extensions and invoke the according
+      // hooks.
+      $file = drupal_get_path('theme', $theme) . '/includes/' . $extension . '/' . $extension . '.registry.inc';
+      if (is_file($file)) {
+        require_once $file;
+      }
 
-    // Give every enabled extension a chance to alter the theme registry.
-    foreach (omega_theme_trail() as $key => $theme) {
-      $hook = $key . '_extension_' . $extension . '_theme_registry_alter';
+      // Give every enabled extension a chance to alter the theme registry.
+      $hook = $theme . '_extension_' . $extension . '_theme_registry_alter';
       if (function_exists($hook)) {
         $hook($registry);
       }
@@ -256,6 +261,11 @@ function omega_block_list_alter(&$blocks) {
  * within a preprocess_block function.
  */
 function omega_page_alter(&$page) {
+  // Load the default layout from the theme settings.
+  if (!isset($page['#omega_layout']) && omega_extension_enabled('layouts')) {
+    $page['#omega_layout'] = theme_get_setting('omega_layout');
+  }
+
   // Look in each visible region for blocks.
   foreach (system_region_list($GLOBALS['theme'], REGIONS_VISIBLE) as $region => $name) {
     if (!empty($page[$region])) {

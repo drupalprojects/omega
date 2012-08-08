@@ -10,7 +10,7 @@ include_once dirname(__FILE__) . '/css.inc';
 /**
  * Implements hook_extension_EXTENSION_theme_settings_form_alter().
  */
-function omega_extension_css_theme_settings_form_alter($element, &$form, $form_state) {
+function omega_extension_css_settings_form($element, &$form, $form_state) {
   $element['omega_media_queries_inline'] = array(
     '#type' => 'checkbox',
     '#title' => t('Enforce embedded media queries'),

@@ -214,13 +214,12 @@ function omega_extensions($theme = NULL) {
   $extensions = &drupal_static(__FUNCTION__);
   $theme = isset($theme) ? $theme : $GLOBALS['theme_key'];
 
-  if (!isset($features[$theme])) {
+  if (!isset($extensions[$theme])) {
     $extensions[$theme] = array();
-    foreach (array_reverse(omega_theme_trail($theme)) as $key => $title) {
-      $info = system_get_info('theme', $key);
+    foreach (omega_theme_trail($theme) as $key => $title) {
+      $info = omega_theme_info($key);
       if (!empty($info['extensions'])) {
-        $extensions[$theme] = $info['extensions'];
-        break;
+        $extensions[$theme] = array_merge($extensions[$theme], array_fill_keys($info['extensions'], $key));
       }
     }
   }
@@ -238,7 +237,7 @@ function omega_theme_trail_info($element, $merge = TRUE, $theme = NULL) {
   // Loop over all themes in the theme trail and look up $element in the .info
   // array.
   foreach (array_reverse(omega_theme_trail($theme)) as $key => $name) {
-    $info = system_get_info('theme', $key);
+    $info = omega_theme_info($key);
 
     // If $merge is TRUE we combine all the results of all themes in the theme
     // trail. Otherwise we just return the first occurrence.
@@ -274,7 +273,8 @@ function omega_theme_info($theme = NULL) {
     return $GLOBALS['theme_info']->info;
   }
 
-  return system_get_info('theme', $theme);
+  $themes = list_themes();
+  return $themes[$theme]->info;
 }
 
 /**
@@ -411,7 +411,7 @@ function omega_layouts_info($theme = NULL) {
 
   if (!isset($layouts[$theme])) {
     foreach (array_reverse(omega_theme_trail($theme)) as $key => $theme_name) {
-      $info = system_get_info('theme', $key);
+      $info = omega_theme_info($key);
 
       if (array_key_exists('layouts', $info)) {
         foreach ($info['layouts'] as $layout => $info) {
@@ -441,6 +441,7 @@ function omega_layouts_info($theme = NULL) {
               }
             }
 
+            // The bare stylesheets array is not needed anymore after this step.
             unset($info['stylesheets']);
           }
 
@@ -455,6 +456,7 @@ function omega_layouts_info($theme = NULL) {
               }
             }
 
+            // The bare scripts array is not needed anymore after this step.
             unset($info['scripts']);
           }
 
@@ -506,7 +508,7 @@ function omega_theme_trail_find_file($file, $path = NULL, $theme = NULL) {
 }
 
 /**
- * Checks if an extension is enabled.
+ * Checks if an extension exists and is enabled.
  *
  * @param $extension
  *   The name of the extension.
@@ -515,11 +517,18 @@ function omega_theme_trail_find_file($file, $path = NULL, $theme = NULL) {
  *   of the current theme.
  *
  * @return bool
- *   TRUE if the extension is enabled for the given theme, FALSE otherwise.
+ *   TRUE if the extension exists and is enabled for the given theme, FALSE
+ *   otherwise.
  */
 function omega_extension_enabled($extension, $theme = NULL) {
   $theme = isset($theme) ? $theme : $GLOBALS['theme_key'];
-  $info = system_get_info('theme', $theme);
+  $cache = &drupal_static(__FUNCTION__);
 
-  return array_key_exists('extensions', $info) && in_array($extension, $info['extensions']);
+  if (!isset($cache[$theme])) {
+    foreach (omega_extensions($theme) as $key => $theme_name) {
+      $cache[$theme][$key] = theme_get_setting('omega_toggle_extension_' . $key, $theme);
+    }
+  }
+
+  return !empty($cache[$theme][$extension]);
 }

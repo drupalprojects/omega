@@ -8,7 +8,7 @@
 /**
  * Implements hook_extension_EXTENSION_theme_settings_form_alter().
  */
-function omega_extension_development_theme_settings_form_alter($element, &$form, $form_state) {
+function omega_extension_development_settings_form($element, &$form, $form_state) {
   $element['omega_rebuild_theme_registry'] = array(
     '#type' => 'checkbox',
     '#title' => t('Rebuild the theme registry on every page load'),
