@@ -64,6 +64,7 @@ function omega_css_preprocessor($elements) {
       $item['media'] = 'all';
     }
   }
+
   return $elements;
 }
 
@@ -410,68 +411,34 @@ function omega_layouts_info($theme = NULL) {
   $layouts = drupal_static('__FUNCTION__');
 
   if (!isset($layouts[$theme])) {
-    foreach (array_reverse(omega_theme_trail($theme)) as $key => $theme_name) {
-      $info = omega_theme_info($key);
-
-      if (array_key_exists('layouts', $info)) {
-        foreach ($info['layouts'] as $layout => $info) {
-          // Make sure sub-themes override base-theme implementations.
-          if (isset($layouts[$layout])) {
-            break;
-          }
-
-          $info['layout'] = $layout;
-          $info['theme'] = $key;
-
-          // Check if the layout is supported by comparing the available theme
-          // regions with those required by the layout.
-          $info['supported'] = array_diff_key($info['regions'], system_region_list($theme)) ? FALSE : TRUE;
-
-          // Add stylesheets used by this layout.
-          if (!empty($info['stylesheets'])) {
-            foreach ($info['stylesheets'] as $media => $stylesheets) {
-              foreach ($stylesheets as $name => $stylesheet) {
-                if ($file = omega_theme_trail_find_file($stylesheet, NULL, $theme)) {
-                  $info['attached']['css'][$name] = array(
-                    'group' => CSS_THEME,
-                    'media' => $media,
-                    'data' => $file,
-                  );
-                }
-              }
-            }
-
-            // The bare stylesheets array is not needed anymore after this step.
-            unset($info['stylesheets']);
-          }
-
-          // Add scripts used by this layout.
-          if (!empty($info['scripts'])) {
-            foreach ($info['scripts'] as $name => $script) {
-              if ($file = omega_theme_trail_find_file($script, NULL, $theme)) {
-                $info['attached']['js'][$name] = array(
-                  'group' => JS_THEME,
-                  'data' => $file,
-                );
-              }
-            }
-
-            // The bare scripts array is not needed anymore after this step.
-            unset($info['scripts']);
-          }
-
-          // Provide some defaults.
-          $layouts[$theme][$layout] = $info + array(
-            'label' => ucfirst($layout),
-            'description' => '',
-            'template' => $layout,
-            'regions' => array(),
-            'icon' => drupal_get_path('theme', 'omega') . '/images/layout-icon-placeholder.png',
-            'attached' => array(),
-          );
-        }
+    foreach (omega_invoke_all('omega_layouts_info') as $layout => $info) {
+      // Make sure sub-themes override base-theme implementations.
+      if (isset($layouts[$layout])) {
+        break;
       }
+
+      $info['layout'] = $layout;
+
+      // Check if the layout is supported by comparing the available theme
+      // regions with those required by the layout.
+      $info['supported'] = module_exists('omega_tools') || !array_diff_key($info['regions'], system_region_list($theme)) ? TRUE : FALSE;
+
+      // Provide some defaults.
+      $layouts[$theme][$layout] = $info + array(
+        'label' => ucfirst($layout),
+        'description' => '',
+        'template' => $layout,
+        'path' => drupal_get_path('theme', $info['theme']) . '/layouts/' . $layout,
+        'regions' => array(),
+        'icon' => drupal_get_path('theme', 'omega') . '/images/layout-icon-placeholder.png',
+        'attached' => array(),
+      );
     }
+
+    $context = $theme;
+
+    // Give modules and themes a chance to alter the layout info array.
+    drupal_alter('omega_layouts_info', $layouts[$theme], $context);
   }
 
   return $layouts[$theme];

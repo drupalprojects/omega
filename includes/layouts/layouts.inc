@@ -14,7 +14,7 @@ function omega_extension_layouts_process_layout(&$variables) {
     $suggestion = 'page__' . $variables['page']['#omega_layout'] . '_layout';
 
     // Check if the provided layout is valid.
-    if (isset($registry[$suggestion]) && isset($registry[$suggestion]['layout'])) {
+    if (isset($registry[$suggestion]) && isset($registry[$suggestion]['layout']) && $registry[$suggestion]['layout']['supported']) {
       $variables['theme_hook_suggestion'] = $suggestion;
 
       // Load all the assets for the active layout.

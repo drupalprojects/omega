@@ -1,0 +1,52 @@
+$default-form-breakpoint: "all and (min-width: 700px)" !default;
+$default-form-item-columns: round($total-columns * 3/4);
+$default-form-item-label-columns: round($total-columns * 1/4);
+
+@mixin form-default-layout(
+  $form-breakpoint: $default-form-breakpoint
+) {
+  .form-item  {
+    @include form-item-stacked;
+  }
+
+  @include at-media-query($form-breakpoint) {
+    .form-item {
+      @include form-item-inline;
+    }
+  }
+}
+
+@mixin form-item-inline(
+  $form-item-columns: $default-form-item-columns,
+  $form-item-label-columns: $default-form-item-label-columns
+) {
+  @include span-columns($form-item-columns omega);
+  @include prefix($form-item-label-columns);
+  position: relative;
+
+  label {
+    width: columns($form-item-label-columns) * (($default-form-item-columns + $form-item-label-columns) / $default-form-item-columns);
+    left: 0;
+    margin-left: -(space($form-item-label-columns)) * (($default-form-item-columns + $form-item-label-columns) / $default-form-item-columns);
+    display: block;
+    float: left;
+  }
+
+  .form-item {
+    @include prefix(0);
+    @include span-columns(24);
+  }
+}
+
+@mixin form-item-stacked($form-item-columns: $total-columns) {
+  @include span-columns($form-item-columns omega);
+  @include prefix(0);
+
+  label {
+    @include reset-columns;
+    position: static;
+    margin-bottom: .25em;
+    margin-top: 0;
+    margin-left: 0;
+  }
+}

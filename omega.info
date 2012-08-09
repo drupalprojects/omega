@@ -15,21 +15,6 @@ extensions[] = compatibility
 extensions[] = scripts
 extensions[] = css
 
-layouts[epiqo][label] = epiqo
-layouts[epiqo][description] = Default layout for epiqo distributions.
-layouts[epiqo][regions][navigation] = Navigation
-layouts[epiqo][regions][banner] = Banner
-layouts[epiqo][regions][search] = Search
-layouts[epiqo][regions][preface] = Preface
-layouts[epiqo][regions][content] = Content
-layouts[epiqo][regions][postscript] = Postscript
-layouts[epiqo][regions][footer] = Footer
-layouts[epiqo][regions][sidebar_first] = First Sidebar
-layouts[epiqo][regions][sidebar_second] = Second Sidebar
-layouts[epiqo][stylesheets][all][] = layouts/epiqo/css/epiqo.layout.css
-layouts[epiqo][scripts][] = js/libraries/jquery.matchmedia.js
-layouts[epiqo][scripts][] = layouts/epiqo/js/epiqo.layout.js
-
 regions[header] = Header
 regions[help] = Help
 regions[page_top] = Page top

@@ -24,12 +24,10 @@ function omega_extension_layouts_settings_form($element, &$form, $form_state) {
       $element['omega_layout'][$layout]['#suffix'] = '<img class="omega-layout-icon" src="' . file_create_url($info['icon']) . '" /></div>';
     }
 
-    if (!module_exists('omega_tools')) {
-      foreach ($layouts as $layout => $info) {
-        if (!$info['supported']) {
-          $element['omega_layout']['#options'][$layout] .= ' (<span class="admin-disabled">' . t('unsupported') . '</span>)';
-          $element['omega_layout']['#disabled'] = TRUE;
-        }
+    foreach ($layouts as $layout => $info) {
+      if (!$info['supported']) {
+        $element['omega_layout']['#options'][$layout] .= ' (<span class="admin-disabled">' . t('unsupported') . '</span>)';
+        $element['omega_layout']['#disabled'] = TRUE;
       }
     }
   }
