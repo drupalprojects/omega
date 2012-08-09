@@ -42,14 +42,14 @@
  */
 ?><!DOCTYPE html>
 <?php if (omega_extension_enabled('compatibility') && theme_get_setting('omega_conditional_classes_html')): ?>
-  <!--[if IEMobile 7]><html class="ie iem7"<?php print $attributes; ?>><![endif]-->
-  <!--[if lte IE 6]><html class="ie lt-ie9 lt-ie8 lt-ie7"<?php print $attributes; ?>><![endif]-->
-  <!--[if (IE 7)&(!IEMobile)]><html class="ie lt-ie9 lt-ie8"<?php print $attributes; ?>><![endif]-->
-  <!--[if IE 8]><html class="ie lt-ie9"<?php print $attributes; ?>><![endif]-->
-  <!--[if (gte IE 9)|(gt IEMobile 7)]><html class="ie"<?php print $attributes ?> <?php print $rdf_namespaces; ?>><![endif]-->
-  <![if !IE]><html<?php print $attributes ?> <?php print $rdf_namespaces; ?>><![endif]>
+  <!--[if IEMobile 7]><html class="ie iem7" lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>"><![endif]-->
+  <!--[if lte IE 6]><html class="ie lt-ie9 lt-ie8 lt-ie7" lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>"><![endif]-->
+  <!--[if (IE 7)&(!IEMobile)]><html class="ie lt-ie9 lt-ie8" lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>"><![endif]-->
+  <!--[if IE 8]><html class="ie lt-ie9" lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>"><![endif]-->
+  <!--[if (gte IE 9)|(gt IEMobile 7)]><html class="ie" lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>" <?php print $rdf_namespaces; ?>><![endif]-->
+  <![if !IE]><html lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>" <?php print $rdf_namespaces; ?>><![endif]>
 <?php else: ?>
-  <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php print $language->language; ?>" version="XHTML+RDFa 1.0" dir="<?php print $language->dir; ?>"<?php print $rdf_namespaces; ?>>
+  <html lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>" <?php print $rdf_namespaces; ?>>
 <?php endif; ?>
 <head profile="<?php print $grddl_profile; ?>">
   <title><?php print $head_title; ?></title>

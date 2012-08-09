@@ -83,6 +83,11 @@
       border-right: $sidebar-collapsed-width solid #444;
       z-index: 100;
       height: 100%;
+
+      .block {
+        @include single-transition(opacity, .4s, linear);
+        @include opacity(0);
+      }
     }
 
     .sidebar-first-toggle {
@@ -114,6 +119,10 @@
         position: relative;
         left: 0;
         height: auto;
+
+        .block {
+          @include opacity(1);
+        }
       }
 
       .sidebar-first-toggle {

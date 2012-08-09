@@ -280,6 +280,15 @@ function omega_page_alter(&$page) {
       }
     }
   }
+
+  if (omega_extension_enabled('development') && theme_get_setting('omega_dummy_blocks')) {
+    foreach (system_region_list($GLOBALS['theme'], REGIONS_VISIBLE) as $region => $name) {
+      $page[$region]['dummy'] = array(
+        '#markup' => '<div class="omega-dummy-block">' . $name . '</div>',
+        '#weight' => -999,
+      );
+    }
+  }
 }
 
 /**

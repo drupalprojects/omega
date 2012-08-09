@@ -9,7 +9,7 @@
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   border-radius: 5px;
-  background: url('../images/rgbapng/000000bf.png?1343397144');
+  background: url('../images/rgbapng/000000bf.png?1344419502');
   background: rgba(0, 0, 0, 0.75);
   z-index: 1000;
   position: fixed;
@@ -23,4 +23,12 @@
   line-height: 30px;
   padding: 5px 10px;
   float: left;
+}
+
+/* line 21, ../sass/omega.development.scss */
+.omega-dummy-block {
+  background-color: #ff6;
+  clear: both;
+  margin: 1em 0;
+  padding: 1em;
 }

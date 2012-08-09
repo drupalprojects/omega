@@ -497,7 +497,7 @@ function omega_theme_trail_find_file($file, $path = NULL, $theme = NULL) {
   $theme = isset($theme) ? $theme : $GLOBALS['theme_key'];
 
   foreach (array_reverse(omega_theme_trail($theme)) as $key => $name) {
-    $current = drupal_get_path('theme', $key) . '/' . $path . '/' . $file;
+    $current = drupal_get_path('theme', $key) . (isset($path) ? '/' . $path : '') . '/' . $file;
 
     if (is_file($current)) {
       return $current;

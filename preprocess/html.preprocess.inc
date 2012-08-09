@@ -8,7 +8,22 @@
 /**
  * Implements hook_preprocess_html().
  */
-function omega_preprocess_html(&$variables) {
+function omega_preprocess_html(&$variables, $hook) {
+  // Return early, so the maintenance page does not call any of the code below.
+  if ($hook != 'html') {
+    return;
+  }
+
+  // Serialize RDF Namespaces into an RDFa 1.1 prefix attribute.
+  if ($variables['rdf_namespaces']) {
+    $prefixes = array();
+    foreach (explode("\n  ", ltrim($variables['rdf_namespaces'])) as $namespace) {
+      // Remove xlmns: and ending quote and fix prefix formatting.
+      $prefixes[] = str_replace('="', ': ', substr($namespace, 6, -1));
+    }
+    $variables['rdf_namespaces'] = ' prefix="' . implode(' ', $prefixes) . '"';
+  }
+
   // Classes for body element. Allows advanced theming based on context
   // (home page, node of certain type, etc.).
   if (!$variables['is_front']) {

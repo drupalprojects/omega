@@ -23,5 +23,12 @@ function omega_extension_development_settings_form($element, &$form, $form_state
     '#default_value' => theme_get_setting('omega_browser_width_indicator'),
   );
 
+  $element['omega_dummy_blocks'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Dummy blocks'),
+    '#description' => t('Places dummy blocks in all (otherwise empty) regions.'),
+    '#default_value' => theme_get_setting('omega_dummy_blocks'),
+  );
+
   return $element;
 }
