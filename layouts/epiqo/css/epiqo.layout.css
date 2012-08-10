@@ -105,7 +105,7 @@ body {
   }
 
   /* line 28, ../sass/partials/layout/_main.scss */
-  .sidebar-first.sidebar-second .main-content {
+  .two-sidebars .main-content {
     width: 49.25%;
     float: left;
     margin-right: 1.5%;
@@ -113,12 +113,24 @@ body {
     padding-left: 25.375%;
   }
   /* line 33, ../sass/partials/layout/_main.scss */
-  .sidebar-first.sidebar-second .sidebar-first-container {
+  .two-sidebars .sidebar-second-container {
+    width: 23.875%;
+    float: right;
+    margin-right: 0;
+    #margin-left: -1.5%;
+    display: inline;
+  }
+  /* line 37, ../sass/partials/layout/_main.scss */
+  .two-sidebars .sidebar-first-container {
+    width: 23.875%;
+    float: left;
+    margin-right: 1.5%;
+    display: inline;
     margin-left: -76.125%;
   }
 }
 @media all and (min-width: 800px) {
-  /* line 42, ../sass/partials/layout/_main.scss */
+  /* line 47, ../sass/partials/layout/_main.scss */
   .region-postscript .block, .region-preface .block, .region-footer .block {
     width: 23.875%;
     float: left;
@@ -137,27 +149,12 @@ body {
     clear: both;
   }
 
-  /* line 50, ../sass/partials/layout/_main.scss */
+  /* line 55, ../sass/partials/layout/_main.scss */
   .sidebar-first .region-postscript .block, .sidebar-first .region-preface .block, .sidebar-second .region-postscript .block, .sidebar-second .region-preface .block {
-    float: none;
-    width: auto;
-    margin-right: auto;
-    #margin-left: auto;
-    display: block;
     width: 32.33333%;
     float: left;
     margin-right: 1.5%;
     display: inline;
-  }
-  /* line 34, ../../../sass/omega/utility/_grid.scss */
-  .sidebar-first .region-postscript .block:nth-child(1n), .sidebar-first .region-preface .block:nth-child(1n), .sidebar-second .region-postscript .block:nth-child(1n), .sidebar-second .region-preface .block:nth-child(1n) {
-    float: left;
-    margin-right: 1.5%;
-    #margin-left: 0;
-  }
-  /* line 39, ../../../sass/omega/utility/_grid.scss */
-  .sidebar-first .region-postscript .block:nth-child(1n), .sidebar-first .region-preface .block:nth-child(1n), .sidebar-second .region-postscript .block:nth-child(1n), .sidebar-second .region-preface .block:nth-child(1n) {
-    clear: none;
   }
   /* line 20, ../../../sass/omega/utility/_grid.scss */
   .sidebar-first .region-postscript .block:nth-child(3n), .sidebar-first .region-preface .block:nth-child(3n), .sidebar-second .region-postscript .block:nth-child(3n), .sidebar-second .region-preface .block:nth-child(3n) {
@@ -171,47 +168,32 @@ body {
     clear: both;
   }
 
-  /* line 59, ../sass/partials/layout/_main.scss */
-  .sidebar-first.sidebar-second .region-postscript .block, .sidebar-first.sidebar-second .region-preface .block {
-    float: none;
-    width: auto;
-    margin-right: auto;
-    #margin-left: auto;
-    display: block;
+  /* line 63, ../sass/partials/layout/_main.scss */
+  .two-sidebars .region-postscript .block, .two-sidebars .region-preface .block {
     width: 49.25%;
     float: left;
     margin-right: 1.5%;
     display: inline;
   }
-  /* line 34, ../../../sass/omega/utility/_grid.scss */
-  .sidebar-first.sidebar-second .region-postscript .block:nth-child(1n), .sidebar-first.sidebar-second .region-preface .block:nth-child(1n) {
-    float: left;
-    margin-right: 1.5%;
-    #margin-left: 0;
-  }
-  /* line 39, ../../../sass/omega/utility/_grid.scss */
-  .sidebar-first.sidebar-second .region-postscript .block:nth-child(1n), .sidebar-first.sidebar-second .region-preface .block:nth-child(1n) {
-    clear: none;
-  }
   /* line 20, ../../../sass/omega/utility/_grid.scss */
-  .sidebar-first.sidebar-second .region-postscript .block:nth-child(2n), .sidebar-first.sidebar-second .region-preface .block:nth-child(2n) {
+  .two-sidebars .region-postscript .block:nth-child(2n), .two-sidebars .region-preface .block:nth-child(2n) {
     float: right;
     margin-right: 0;
     #margin-left: -1.5%;
     display: inline;
   }
   /* line 25, ../../../sass/omega/utility/_grid.scss */
-  .sidebar-first.sidebar-second .region-postscript .block:nth-child(2n+3), .sidebar-first.sidebar-second .region-preface .block:nth-child(2n+3) {
+  .two-sidebars .region-postscript .block:nth-child(2n+3), .two-sidebars .region-preface .block:nth-child(2n+3) {
     clear: both;
   }
 }
 @media all and (max-width: 800px) {
-  /* line 70, ../sass/partials/layout/_main.scss */
-  html.js .sidebar-first .main {
+  /* line 73, ../sass/partials/layout/_main.scss */
+  html.js .sidebar-first .main, html.js .two-sidebars .main {
     padding-left: 20px;
   }
-  /* line 74, ../sass/partials/layout/_main.scss */
-  html.js .sidebar-first .sidebar-first-container {
+  /* line 77, ../sass/partials/layout/_main.scss */
+  html.js .sidebar-first .sidebar-first-container, html.js .two-sidebars .sidebar-first-container {
     -webkit-transition: left 0.4s ease-in-out;
     -moz-transition: left 0.4s ease-in-out;
     -o-transition: left 0.4s ease-in-out;
@@ -227,8 +209,8 @@ body {
     z-index: 100;
     height: 100%;
   }
-  /* line 87, ../sass/partials/layout/_main.scss */
-  html.js .sidebar-first .sidebar-first-container .block {
+  /* line 90, ../sass/partials/layout/_main.scss */
+  html.js .sidebar-first .sidebar-first-container .block, html.js .two-sidebars .sidebar-first-container .block {
     -webkit-transition: opacity 0.4s linear;
     -moz-transition: opacity 0.4s linear;
     -o-transition: opacity 0.4s linear;
@@ -236,8 +218,8 @@ body {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
     opacity: 0;
   }
-  /* line 93, ../sass/partials/layout/_main.scss */
-  html.js .sidebar-first .sidebar-first-toggle {
+  /* line 96, ../sass/partials/layout/_main.scss */
+  html.js .sidebar-first .sidebar-first-toggle, html.js .two-sidebars .sidebar-first-toggle {
     background-color: #444;
     width: 30px;
     height: 40px;
@@ -246,8 +228,8 @@ body {
     right: -40px;
     float: right;
   }
-  /* line 104, ../sass/partials/layout/_main.scss */
-  html.js .sidebar-first.show-sidebar .main {
+  /* line 107, ../sass/partials/layout/_main.scss */
+  html.js .sidebar-first.show-sidebar .main, html.js .two-sidebars.show-sidebar .main {
     padding-left: 0;
     padding-right: 0;
     margin-left: 0;
@@ -257,12 +239,12 @@ body {
     padding-right: 40px;
     cursor: pointer;
   }
-  /* line 109, ../sass/partials/layout/_main.scss */
-  html.js .sidebar-first.show-sidebar .main > *:not(.sidebar-first-container) {
+  /* line 112, ../sass/partials/layout/_main.scss */
+  html.js .sidebar-first.show-sidebar .main > *:not(.sidebar-first-container), html.js .two-sidebars.show-sidebar .main > *:not(.sidebar-first-container) {
     display: none;
   }
-  /* line 114, ../sass/partials/layout/_main.scss */
-  html.js .sidebar-first.show-sidebar .sidebar-first-container {
+  /* line 117, ../sass/partials/layout/_main.scss */
+  html.js .sidebar-first.show-sidebar .sidebar-first-container, html.js .two-sidebars.show-sidebar .sidebar-first-container {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -273,17 +255,17 @@ body {
     left: 0;
     height: auto;
   }
-  /* line 123, ../sass/partials/layout/_main.scss */
-  html.js .sidebar-first.show-sidebar .sidebar-first-container .block {
+  /* line 126, ../sass/partials/layout/_main.scss */
+  html.js .sidebar-first.show-sidebar .sidebar-first-container .block, html.js .two-sidebars.show-sidebar .sidebar-first-container .block {
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
     opacity: 1;
   }
-  /* line 128, ../sass/partials/layout/_main.scss */
-  html.js .sidebar-first.show-sidebar .sidebar-first-toggle {
+  /* line 131, ../sass/partials/layout/_main.scss */
+  html.js .sidebar-first.show-sidebar .sidebar-first-toggle, html.js .two-sidebars.show-sidebar .sidebar-first-toggle {
     right: -50px;
   }
 
-  /* line 136, ../sass/partials/layout/_main.scss */
+  /* line 139, ../sass/partials/layout/_main.scss */
   .sidebar-first-container {
     left: -100%;
   }

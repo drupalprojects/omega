@@ -288,6 +288,7 @@ function omega_page_alter(&$page) {
       $page[$region]['dummy']['#markup'] = '<div class="omega-dummy-block">' . $name . '</div>';
     }
   }
+  dpm($page);
 }
 
 /**

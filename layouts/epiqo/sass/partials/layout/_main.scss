@@ -24,13 +24,18 @@
   }
 
   // Both sidebars are active.
-  .sidebar-first.sidebar-second {
+  .two-sidebars {
     .main-content {
       @include span-columns(12);
       @include prefix(6);
     }
 
+    .sidebar-second-container {
+      @include span-columns(6 omega);
+    }
+
     .sidebar-first-container {
+      @include span-columns(6);
       @include pull(18);
     }
   }
@@ -48,16 +53,14 @@
   .sidebar-first, .sidebar-second {
     .region-postscript, .region-preface {
       .block {
-        @include reset-block-columns;
         @include block-columns(3);
       }
     }
   }
 
-  .sidebar-first.sidebar-second {
+  .two-sidebars {
     .region-postscript, .region-preface {
       .block {
-        @include reset-block-columns;
         @include block-columns(2);
       }
     }
@@ -66,7 +69,7 @@
 
 // Mobile sidebar.
 @include at-media-query($breakpoint-mobile-down) {
-  html.js .sidebar-first {
+  html.js .sidebar-first, html.js .two-sidebars {
     .main {
       padding-left: $grid-padding + $sidebar-collapsed-width;
     }
