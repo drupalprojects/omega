@@ -19,6 +19,16 @@ function omega_extension_layouts_process_layout(&$variables) {
 
       // Load all the assets for the active layout.
       drupal_process_attached(array('#attached' => $registry[$suggestion]['layout']['attached']));
+
+      // Load the callback file if it has been defined.
+      if (!empty($registry[$suggestion]['layout']['callback file'])) {
+        require_once $registry[$suggestion]['layout']['callback file'];
+      }
+
+      // Invoke the callback if it has been defined.
+      if (!empty($registry[$suggestion]['layout']['callback'])) {
+        $registry[$suggestion]['layout']['callback']($variables, $variables['page']['#omega_layout'], $registry[$suggestion]['layout']);
+      }
     }
   }
 }

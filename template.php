@@ -118,7 +118,7 @@ function omega_js_alter(&$js) {
 /**
  * Implements hook_theme().
  */
-function omega_theme($existing, $type, $theme, $path) {
+function omega_theme() {
   $info = array();
 
   if (omega_extension_enabled('layouts') && $layouts = omega_layouts_info()) {
@@ -282,15 +282,6 @@ function omega_page_alter(&$page) {
       }
     }
   }
-
-  if (omega_extension_enabled('development') && theme_get_setting('omega_dummy_blocks')) {
-    foreach (system_region_list($GLOBALS['theme'], REGIONS_VISIBLE) as $region => $name) {
-      $page[$region]['dummy'] = array(
-        '#markup' => '<div class="omega-dummy-block">' . $name . '</div>',
-        '#weight' => -999,
-      );
-    }
-  }
 }
 
 /**
@@ -304,7 +295,9 @@ function omega_html_head_alter(&$head) {
 /**
  * Implements hook_omega_theme_libraries_info().
  */
-function omega_omega_theme_libraries_info() {
+function omega_omega_theme_libraries_info($theme) {
+  $path = drupal_get_path('theme', 'omega');
+
   $libraries['selectivizr'] = array(
     'name' => t('Selectivizr'),
     'description' => t('Selectivizr is a JavaScript utility that emulates CSS3 pseudo-classes and attribute selectors in Internet Explorer 6-8. Simply include the script in your pages and selectivizr will do the rest.'),
@@ -312,7 +305,7 @@ function omega_omega_theme_libraries_info() {
     'vendor url' => 'http://selectivizr.com/',
     'files' => array(
       'js' => array(
-        'selectivizr-min.js' => array(
+        $path . '/libraries/selectivizr/selectivizr.min.js' => array(
           // Only load Selectivizr for Internet Explorer > 6 and < 8.
           'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
           'group' => JS_LIBRARY,
@@ -327,7 +320,7 @@ function omega_omega_theme_libraries_info() {
         'description' => t('During development it might be useful to include the source files instead of the minified version.'),
         'files' => array(
           'js' => array(
-            'selectivizr.js' => array(
+            $path . '/libraries/selectivizr/selectivizr.js' => array(
               // Only load Selectivizr for Internet Explorer > 6 and < 8.
               'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
               'group' => JS_LIBRARY,
@@ -346,7 +339,7 @@ function omega_omega_theme_libraries_info() {
     'vendor url' => 'http://woutervandergraaf.nl/',
     'files' => array(
       'js' => array(
-        'css3-mediaqueries.min.js' => array(
+        $path . '/libraries/css3mediaqueries/css3-mediaqueries.min.js' => array(
           'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
           'group' => JS_LIBRARY,
           'weight' => -100,
@@ -359,7 +352,7 @@ function omega_omega_theme_libraries_info() {
         'description' => t('During development it might be useful to include the source files instead of the minified version.'),
         'files' => array(
           'js' => array(
-            'css3-mediaqueries.js' => array(
+            $path . '/libraries/css3mediaqueries/css3-mediaqueries.js' => array(
               'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
               'group' => JS_LIBRARY,
               'weight' => -100,
@@ -378,7 +371,7 @@ function omega_omega_theme_libraries_info() {
     'theme' => 'omega',
     'files' => array(
       'js' => array(
-        'respond.min.js' => array(
+        $path . '/libraries/respond/respond.min.js' => array(
           'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
           'group' => JS_LIBRARY,
           'weight' => -100,
@@ -391,7 +384,7 @@ function omega_omega_theme_libraries_info() {
         'description' => t('During development it might be useful to include the source files instead of the minified version.'),
         'files' => array(
           'js' => array(
-            'respond.js' => array(
+            $path . '/libraries/respond/respond.js' => array(
               'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
               'group' => JS_LIBRARY,
               'weight' => -100,
@@ -407,19 +400,15 @@ function omega_omega_theme_libraries_info() {
     'description' => t('PIE makes Internet Explorer 6-9 capable of rendering several of the most useful CSS3 decoration features.'),
     'vendor' => 'Keith Clark',
     'vendor url' => 'http://css3pie.com/',
-    'options form callback' => 'omega_library_pie_options_form',
+    'options form' => 'omega_library_pie_options_form',
     'files' => array(),
-    // The pie library is completely different to all other libraries in how it
-    // is loaded (different inclusion types, etc.) so we just handle it with a
-    // custom pre-load callback.
-    'callbacks' => 'omega_library_pie_post_load_callback',
     'variants' => array(
       'js' => array(
         'name' => t('JavaScript'),
         'description' => t('While the .htc behavior is still the recommended approach for most users, the JS version has some advantages that may be a better fit for some users.'),
         'files' => array(
           'js' => array(
-            'pie.js' => array(
+            $path . '/libraries/css3pie/PIE.js' => array(
               'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
               'group' => JS_LIBRARY,
               'weight' => -100,
@@ -430,13 +419,36 @@ function omega_omega_theme_libraries_info() {
     ),
   );
 
+  // Add the generated .css file to the corresponding variant.
+  $path = file_create_url('public://omega/' . $theme . '/pie-selectors.css');
+  $path = substr($path, strlen($GLOBALS['base_url']) + 1);
+
+  if (is_file($path)) {
+    $libraries['css3pie']['files']['css'][$path] = array(
+      'group' => CSS_DEFAULT,
+      'weight' => -100,
+    );
+  }
+
+  // Add the generated .js file to the corresponding variant.
+  $path = file_create_url('public://omega/' . $theme . '/pie-selectors.js');
+  $path = substr($path, strlen($GLOBALS['base_url']) + 1);
+
+  if (is_file($path)) {
+    $libraries['css3pie']['variants']['js']['files']['js'][$path] = array(
+      'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
+      'group' => JS_LIBRARY,
+      'weight' => -100,
+    );
+  }
+
   $libraries['html5shiv'] = array(
     'name' => t('HTML5 Shiv'),
     'description' => t('This script is the defacto way to enable use of HTML5 sectioning elements in legacy Internet Explorer, as well as default HTML5 styling in Internet Explorer 6 - 9, Safari 4.x (and iPhone 3.x), and Firefox 3.x.'),
     'vendor' => 'Alexander Farkas',
     'files' => array(
       'js' => array(
-        'html5shiv.js' => array(
+        $path . '/libraries/html5shiv/html5shiv.js' => array(
           'type' => 'external',
           'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
           'group' => JS_LIBRARY,
@@ -449,7 +461,7 @@ function omega_omega_theme_libraries_info() {
         'description' => t('During development it might be useful to include the source files instead of the minified version.'),
         'files' => array(
           'js' => array(
-            'html5shiv.js' => array(
+            $path . '/libraries/html5shiv/html5shiv.js' => array(
               'type' => 'external',
               'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
               'group' => JS_LIBRARY,
@@ -488,6 +500,7 @@ function omega_omega_layouts_info() {
         $path . '/layouts/epiqo/css/epiqo.layout.css' => array('group' => CSS_THEME),
       ),
       'js' => array(
+        drupal_get_path('theme', 'omega') . '/js/jquery.matchmedia.js' => array('group' => JS_THEME),
         $path . '/layouts/epiqo/js/epiqo.layout.js' => array('group' => JS_THEME),
       ),
     ),

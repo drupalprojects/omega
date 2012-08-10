@@ -333,15 +333,18 @@ function omega_theme_trail_load_include($type, $name, $all = TRUE, $theme = NULL
  * @see module_invoke_all()
  */
 function omega_invoke_all($hook, $theme = NULL) {
+  $theme = isset($theme) ? $theme : $GLOBALS['theme_key'];
+
   $args = func_get_args();
-  // Remove $hook and $theme from the arguments.
+  // Remove $hook from the arguments.
   unset($args[0], $args[1]);
+
   $return = array();
   foreach (omega_theme_trail($theme) as $key => $name) {
     $function = $key . '_' . $hook;
 
     if (function_exists($function)) {
-      $result = call_user_func_array($function, $args);
+      $result = call_user_func_array($function, array_merge(array($theme), array_values($args)));
       if (isset($result) && is_array($result)) {
         // Append the 'theme' property to each array element.
         foreach ($result as &$item) {
@@ -423,15 +426,37 @@ function omega_layouts_info($theme = NULL) {
       // regions with those required by the layout.
       $info['supported'] = module_exists('omega_tools') || !array_diff_key($info['regions'], system_region_list($theme)) ? TRUE : FALSE;
 
+      // Path of the layout providing theme.
+      $path = drupal_get_path('theme', $info['theme']);
+
+      // Try to provide a default callback file if not defined explicityl
+      if (empty($info['callback']) && empty($info['callback file']) && is_file($path . '/layouts/' . $layout . '/' . $layout . '.inc')) {
+        $info['callback file'] = $path . '/layouts/' . $layout . '/' . $layout . '.inc';
+      }
+
+      // Try to provide a default callback if not defined explicitly.
+      if (empty($info['callback']))  {
+        if (!empty($info['callback file'])) {
+          require_once $info['callback file'];
+
+          $callback = $info['theme'] . '_' . $layout . '_layout_callback';
+          if (function_exists($callback)) {
+            $info['callback'] = $callback;
+          }
+        }
+      }
+
       // Provide some defaults.
       $layouts[$theme][$layout] = $info + array(
         'label' => ucfirst($layout),
         'description' => '',
         'template' => $layout,
-        'path' => drupal_get_path('theme', $info['theme']) . '/layouts/' . $layout,
+        'path' => $path . '/layouts/' . $layout,
         'regions' => array(),
         'icon' => drupal_get_path('theme', 'omega') . '/images/layout-icon-placeholder.png',
         'attached' => array(),
+        'callback' => FALSE,
+        'callback file' => FALSE,
       );
     }
 
@@ -442,6 +467,37 @@ function omega_layouts_info($theme = NULL) {
   }
 
   return $layouts[$theme];
+}
+
+/**
+ * Allow themes to easily define libraries.
+ *
+ * @param $theme
+ *   (Optional) The key (machine-readable name) of a theme. Defaults to the key
+ *   of the current theme.
+ *
+ * @return array
+ *   An array of libraries defined by themes in the theme trail of the given
+ *   theme.
+ */
+function omega_theme_libraries_info($theme = NULL) {
+  $theme = isset($theme) ? $theme : $GLOBALS['theme_key'];
+  $libraries = drupal_static('__FUNCTION__');
+
+  if (!isset($libraries[$theme])) {
+    $libraries[$theme] = array();
+
+    foreach (omega_invoke_all('omega_theme_libraries_info') as $library => $info) {
+      $libraries[$theme][$library] = $info;
+    }
+
+    $context = $theme;
+
+    // Give modules and themes a chance to alter the libraries info array.
+    drupal_alter('omega_theme_libraries_info', $libraries[$theme], $context);
+  }
+
+  return $libraries[$theme];
 }
 
 /**

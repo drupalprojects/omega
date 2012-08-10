@@ -2,7 +2,7 @@
 
 Drupal.behaviors.epiqoMobileSidebar = {
   attach: function (context, settings) {
-    $('#sidebar-first').once('mobile-sidebar', function () {
+    $('#sidebar-first-container').once('mobile-sidebar', function () {
       // Show the sidebar when a click is performed on its overlapping border.
       $(this).click(function (e) {
         if ($.matchmedia('all and (max-width: 800px)') && !$('body').hasClass('show-sidebar') && $(e.srcElement).attr('id') != 'sidebar-first-toggle') {
@@ -12,7 +12,7 @@ Drupal.behaviors.epiqoMobileSidebar = {
 
       // Hide the sidebar when the area outside of it is clicked.
       $('#main').click(function (e) {
-        if ($.matchmedia('all and (max-width: 800px)') && $('body').hasClass('show-sidebar') && $(e.srcElement).attr('id') != 'sidebar-first' && !$(e.srcElement).parents('#sidebar-first').length) {
+        if ($.matchmedia('all and (max-width: 800px)') && $('body').hasClass('show-sidebar') && $(e.srcElement).attr('id') != 'sidebar-first-container' && !$(e.srcElement).parents('#sidebar-first-container').length) {
           // Check if the clicked element is the sidebar or a child element of
           // the sidebar.
           $('body').removeClass('show-sidebar');
@@ -20,7 +20,7 @@ Drupal.behaviors.epiqoMobileSidebar = {
       });
 
       // Toggle the sidebar with the toggle button.
-      $('<a href="#sidebar-first" id="sidebar-first-toggle" class="sidebar-first-toggle" />').click(function (e) {
+      $('<a href="#sidebar-first-container" id="sidebar-first-toggle" class="sidebar-first-toggle" />').click(function (e) {
         if ($.matchmedia('all and (max-width: 800px)')) {
           if (!$('body').hasClass('show-sidebar')) {
             $('body').addClass('show-sidebar');

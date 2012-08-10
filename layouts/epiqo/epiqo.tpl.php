@@ -23,7 +23,7 @@
     </div>
 
     <?php if ($navigation = render($page['navigation'])): ?>
-    <div id="navigation" class="navigation">
+    <div id="navigation-container" class="navigation-container">
       <?php print $navigation; ?>
     </div>
     <?php endif; ?>
@@ -31,13 +31,13 @@
 
   <div id="main-wrapper" class="main-wrapper">
     <?php if ($banner = drupal_render($page['banner'])): ?>
-    <div class="banner">
+    <div id="banner-container" class="banner-container">
       <?php print $banner; ?>
     </div>
     <?php endif; ?>
 
     <?php if ($search = render($page['search'])): ?>
-    <div class="search">
+    <div id="search-container" class="search-container">
       <?php print $search; ?>
     </div>
     <?php endif; ?>
@@ -64,13 +64,13 @@
       </div>
 
       <?php if ($sidebar_first = drupal_render($page['sidebar_first'])): ?>
-      <div id="sidebar-first" class="sidebar-first">
+      <div id="sidebar-first-container" class="sidebar-first-container">
         <?php print $sidebar_first; ?>
       </div>
       <?php endif; ?>
 
       <?php if ($sidebar_second = drupal_render($page['sidebar_second'])): ?>
-      <div id="sidebar-second" class="sidebar-second">
+      <div id="sidebar-second-container" class="sidebar-second-container">
         <?php print $sidebar_second; ?>
       </div>
       <?php endif; ?>
@@ -78,7 +78,7 @@
   </div>
 
   <?php if ($footer = render($page['footer'])): ?>
-  <div id="footer" class="footer">
+  <div id="footer-container" class="footer-container">
     <?php print $footer; ?>
   </div>
   <?php endif; ?>

@@ -2,7 +2,7 @@
 // the mobile layout.
 @include at-media-query($breakpoint-mobile-up) {
   // The first sidebar is active.
-  .with-sidebar-first {
+  .sidebar-first {
     .sidebar-first {
       @include span-columns(6);
     }
@@ -13,8 +13,8 @@
   }
 
   // The second sidebar is active.
-  .with-sidebar-second {
-    .sidebar-second {
+  .sidebar-second {
+    .sidebar-second-container {
       @include span-columns(6 omega);
     }
 
@@ -24,13 +24,13 @@
   }
 
   // Both sidebars are active.
-  .with-sidebar-first.with-sidebar-second {
+  .sidebar-first.sidebar-second {
     .main-content {
       @include span-columns(12);
       @include prefix(6);
     }
 
-    .sidebar-first {
+    .sidebar-first-container {
       @include pull(18);
     }
   }
@@ -45,7 +45,7 @@
   }
 
   // The postscript and preface regions need to react to sidebar visibility.
-  .with-sidebar-first, .with-sidebar-second {
+  .sidebar-first, .sidebar-second {
     .region-postscript, .region-preface {
       .block {
         @include reset-block-columns;
@@ -54,7 +54,7 @@
     }
   }
 
-  .with-sidebar-first.with-sidebar-second {
+  .sidebar-first.sidebar-second {
     .region-postscript, .region-preface {
       .block {
         @include reset-block-columns;
@@ -66,12 +66,12 @@
 
 // Mobile sidebar.
 @include at-media-query($breakpoint-mobile-down) {
-  html.js .with-sidebar-first {
+  html.js .sidebar-first {
     .main {
       padding-left: $grid-padding + $sidebar-collapsed-width;
     }
 
-    .sidebar-first {
+    .sidebar-first-container {
       @include single-transition(left, .4s, ease-in-out);
       background-color: #888;
       float: left;
@@ -106,12 +106,12 @@
         padding-right: $sidebar-visible-gutter;
         cursor: pointer;
 
-        & > *:not(.sidebar-first) {
+        & > *:not(.sidebar-first-container) {
           display: none;
         }
       }
 
-      .sidebar-first {
+      .sidebar-first-container {
         @include box-sizing(border-box);
         padding-left: $grid-padding;
         padding-right: $grid-padding;
@@ -133,7 +133,7 @@
 
   // Fix for hiding the CSS3 transition that appears after loading the page due
   // to the JavaScript delay.
-  .sidebar-first {
+  .sidebar-first-container {
     left: -100%;
   }
 }

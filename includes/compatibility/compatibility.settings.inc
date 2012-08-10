@@ -58,26 +58,3 @@ function omega_extension_compatibility_settings_form($element, &$form, $form_sta
 
   return $element;
 }
-
-/**
- * A helper function for building a float value options array that can be used
- * in a form.
- *
- * @param $start
- *   The number to start with.
- * @param $end
- *   The number to end with.
- * @param $gap
- *   The gap between steps.
- *
- * @return
- *   An array of scale options.
- */
-function omega_extension_compatibility_scale_options($start, $end, $gap) {
-  $options = array();
-  foreach (range($start, $end, $gap) as $number) {
-    // Format the value to display with one decimal.
-    $options[(string) $number] = number_format($number, 1);
-  }
-  return $options;
-}

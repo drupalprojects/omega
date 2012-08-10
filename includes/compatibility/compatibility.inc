@@ -55,32 +55,3 @@ function omega_extension_compatibility_preprocess_html(&$variables) {
     drupal_add_http_header('X-UA-Compatible', 'IE=edge,chrome=1');
   }
 }
-
-function omega_extension_scripts_attach_libraries($variables) {
-  $registry = theme_get_registry();
-
-  // Check if there are any enabled libraries.
-  foreach ($registry['html']['libraries'] as $library => $info) {
-    $response = omega_library_load($library, $info);
-  }
-}
-
-/**
- * Include callback for the CSS3PIE library.
- */
-function omega_library_pie_post_load_callback($library, $version, $variant) {
-  // Include the selectors depending on the inclusion method setting.
-  $settings = theme_get_setting('omega_libraries');
-  if (!empty($settings['css3pie']['selectors'])) {
-    if ($variant == 'js') {
-      $path = file_create_url('public://omega/' . $GLOBALS['theme_key'] . '/pie-selectors.js');
-      $path = substr($path, strlen($GLOBALS['base_url']) + 1);
-      drupal_add_js($path, array('group' => JS_THEME, 'weight' => -10));
-    }
-    else {
-      $path = file_create_url('public://omega/' . $GLOBALS['theme_key'] . '/pie-selectors.css');
-      $path = substr($path, strlen($GLOBALS['base_url']) + 1);
-      drupal_add_css($path, array('group' => CSS_THEME, 'weight' => -10));
-    }
-  }
-}
