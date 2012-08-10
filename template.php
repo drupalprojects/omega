@@ -282,6 +282,12 @@ function omega_page_alter(&$page) {
       }
     }
   }
+
+  if (omega_extension_enabled('development') && theme_get_setting('omega_dummy_blocks') && user_access('administer site configuration')) {
+    foreach (system_region_list($GLOBALS['theme'], REGIONS_VISIBLE) as $region => $name) {
+      $page[$region]['dummy']['#markup'] = '<div class="omega-dummy-block">' . $name . '</div>';
+    }
+  }
 }
 
 /**
