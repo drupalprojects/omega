@@ -420,22 +420,22 @@ function omega_omega_theme_libraries_info($theme) {
   );
 
   // Add the generated .css file to the corresponding variant.
-  $path = file_create_url('public://omega/' . $theme . '/pie-selectors.css');
-  $path = substr($path, strlen($GLOBALS['base_url']) + 1);
+  $file = file_create_url('public://omega/' . $theme . '/pie-selectors.css');
+  $file = substr($file, strlen($GLOBALS['base_url']) + 1);
 
-  if (is_file($path)) {
-    $libraries['css3pie']['files']['css'][$path] = array(
+  if (is_file($file)) {
+    $libraries['css3pie']['files']['css'][$file] = array(
       'group' => CSS_DEFAULT,
       'weight' => -100,
     );
   }
 
   // Add the generated .js file to the corresponding variant.
-  $path = file_create_url('public://omega/' . $theme . '/pie-selectors.js');
-  $path = substr($path, strlen($GLOBALS['base_url']) + 1);
+  $file = file_create_url('public://omega/' . $theme . '/pie-selectors.js');
+  $file = substr($file, strlen($GLOBALS['base_url']) + 1);
 
-  if (is_file($path)) {
-    $libraries['css3pie']['variants']['js']['files']['js'][$path] = array(
+  if (is_file($file)) {
+    $libraries['css3pie']['variants']['js']['files']['js'][$file] = array(
       'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
       'group' => JS_LIBRARY,
       'weight' => -100,
