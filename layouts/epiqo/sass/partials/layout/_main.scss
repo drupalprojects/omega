@@ -3,7 +3,7 @@
 @include at-media-query($breakpoint-mobile-up) {
   // The first sidebar is active.
   .sidebar-first {
-    .sidebar-first {
+    .sidebar-first-container {
       @include span-columns(6);
     }
 

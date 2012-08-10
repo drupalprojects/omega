@@ -73,7 +73,7 @@ body {
 
 @media all and (min-width: 800px) {
   /* line 6, ../sass/partials/layout/_main.scss */
-  .sidebar-first .sidebar-first {
+  .sidebar-first .sidebar-first-container {
     width: 23.875%;
     float: left;
     margin-right: 1.5%;
