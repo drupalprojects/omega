@@ -284,8 +284,13 @@ function omega_page_alter(&$page) {
   }
 
   if (omega_extension_enabled('development') && theme_get_setting('omega_dummy_blocks') && user_access('administer site configuration')) {
-    foreach (system_region_list($GLOBALS['theme'], REGIONS_VISIBLE) as $region => $name) {
-      $page[$region]['dummy']['#markup'] = '<div class="omega-dummy-block">' . $name . '</div>';
+    $item = menu_get_item();
+
+    // Don't interfere with the 'Demonstrate block regions' page.
+    if ($item['path'] != 'admin/structure/block/demo/' . $GLOBALS['theme']) {
+      foreach (system_region_list($GLOBALS['theme'], REGIONS_VISIBLE) as $region => $name) {
+        $page[$region]['dummy']['#markup'] = '<div class="omega-dummy-block">' . $name . '</div>';
+      }
     }
   }
 }
@@ -485,19 +490,21 @@ function omega_omega_theme_libraries_info($theme) {
 function omega_omega_layouts_info() {
   $path = drupal_get_path('theme', 'omega');
 
+  // Don't use the t() function here because this is cached in the theme
+  // registry.
   $info['epiqo'] = array(
-    'label' => t('Epiqo'),
-    'description' => t('Default layout for epiqo distributions.'),
+    'label' => 'Epiqo',
+    'description' => 'Default layout for epiqo distributions.',
     'regions' => array(
-      'navigation' => t('Navigation'),
-      'banner' => t('Banner'),
-      'search' => t('Search'),
-      'preface' => t('Preface'),
-      'content' => t('Content'),
-      'postscript' => t('Postscript'),
-      'footer' => t('Footer'),
-      'sidebar_first' => t('First Sidebar'),
-      'sidebar_second' => t('Second Sidebar'),
+      'navigation' => 'Navigation',
+      'banner' => 'Banner',
+      'search' => 'Search',
+      'preface' => 'Preface',
+      'content' => 'Content',
+      'postscript' => 'Postscript',
+      'footer' => 'Footer',
+      'sidebar_first' => 'First Sidebar',
+      'sidebar_second' => 'Second Sidebar',
     ),
     'attached' => array(
       'css' => array(

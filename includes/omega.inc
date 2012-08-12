@@ -23,25 +23,25 @@ function omega_theme_name($theme) {
  */
 function omega_theme_trail($theme = NULL) {
   $theme = isset($theme) ? $theme : $GLOBALS['theme_key'];
-  $static = &drupal_static(__FUNCTION__);
+  $cache = &drupal_static(__FUNCTION__);
 
-  if (!isset($static[$theme])) {
-    $static[$theme] = array();
+  if (!isset($cache[$theme])) {
+    $cache[$theme] = array();
+
+    if ($theme == $GLOBALS['theme']) {
+      $cache[$theme] = $GLOBALS['theme_info']->base_themes;
+    }
+
     $themes = list_themes();
-
-    if (isset($themes[$theme]->info['base theme'])) {
-      foreach (system_find_base_themes($themes, $theme) as $base => $name) {
-        if ($name && isset($themes[$base])) {
-          $static[$theme][$base] = $themes[$base]->info['name'];
-        }
-      }
+    if (empty($cache[$theme]) && isset($themes[$theme]->info['base theme'])) {
+      $cache[$theme] = drupal_find_base_themes($themes, $theme);
     }
 
     // Add our current subtheme ($key) to that array.
-    $static[$theme][$theme] = $themes[$theme]->info['name'];
+    $cache[$theme][$theme] = $themes[$theme]->info['name'];
   }
 
-  return $static[$theme];
+  return $cache[$theme];
 }
 
 /**

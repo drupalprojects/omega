@@ -13,17 +13,10 @@ function omega_extension_scripts_attach_libraries($variables) {
 
   // Check if there are any enabled libraries.
   foreach ($registry['html']['libraries'] as $library => $info) {
-    $variant = NULL;
+    drupal_process_attached(array('#attached' => $info['attached']));
 
-    if (isset($info['settings']['variant']) && $variant = $info['settings']['variant']) {
-      drupal_process_attached(array('#attached' => $info['info']['variants'][$variant]['files']));
-    }
-    else {
-      drupal_process_attached(array('#attached' => $info['info']['files']));
-    }
-
-    if (isset($info['info']['callback'])) {
-      $info['info']['callback']($library, $info['info'], $info['settings'], $variant);
+    if ($info['callback']) {
+      $info['callback']($library, $info['settings']);
     }
   }
 }

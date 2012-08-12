@@ -13,9 +13,17 @@ function omega_extension_scripts_theme_registry_alter(&$registry) {
     foreach (omega_theme_libraries_info() as $library => $info) {
       if (!empty($settings[$library]['status'])) {
         $registry['html']['libraries'][$library] = array(
-          'info' => $info,
+          'attached' => array(),
           'settings' => $settings[$library],
+          'callback' => isset($info['callback']) ? $info['callback'] : FALSE,
         );
+
+        if (isset($settings[$library]['variant']) && $variant = $settings[$library]['variant']) {
+          $registry['html']['libraries'][$library]['attached'] = $info['variants'][$variant]['files'];
+        }
+        else {
+          $registry['html']['libraries'][$library]['attached'] = $info['files'];
+        }
       }
     }
   }
