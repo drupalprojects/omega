@@ -28,7 +28,7 @@ function omega_theme_trail($theme = NULL) {
   if (!isset($cache[$theme])) {
     $cache[$theme] = array();
 
-    if ($theme == $GLOBALS['theme']) {
+    if ($theme == $GLOBALS['theme'] && isset($GLOBALS['theme_info']->base_themes)) {
       $cache[$theme] = $GLOBALS['theme_info']->base_themes;
     }
 
