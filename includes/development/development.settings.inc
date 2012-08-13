@@ -16,6 +16,13 @@ function omega_extension_development_settings_form($element, &$form, $form_state
     '#default_value' => theme_get_setting('omega_rebuild_theme_registry'),
   );
 
+  $element['omega_rebuild_aggregates'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Rebuild CSS and JS aggregates on every page load'),
+    '#description' => t('This can be useful for debugging your CSS or JS with activated aggregation. Note: This has a high (negative) performance impact and has to be deactivated once your website goes into production.'),
+    '#default_value' => theme_get_setting('omega_rebuild_aggregates'),
+  );
+
   $element['omega_browser_width_indicator'] = array(
     '#type' => 'checkbox',
     '#title' => t('Browser width indicator'),

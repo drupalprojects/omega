@@ -44,18 +44,36 @@ if ($GLOBALS['theme'] == $GLOBALS['theme_key'] && !$static = &drupal_static('the
 }
 
 /**
- * Rebuild the theme registry on every page load if the development extension
- * is enabled and configured to do so. This also lives outside of any function
- * declaration to make sure that the registry is rebuilt before invoking any
- * theme hooks.
+ * Rebuild the theme registry / aggregates on every page load if the development
+ * extension is enabled and configured to do so. This also lives outside of any
+ * function declaration to make sure that the code is executed before any theme
+ * hooks.
  */
-if (omega_extension_enabled('development') && theme_get_setting('omega_rebuild_theme_registry') &&  user_access('administer site configuration')) {
-  drupal_theme_rebuild();
+if ($GLOBALS['theme'] == $GLOBALS['theme_key'] && omega_extension_enabled('development') && user_access('administer site configuration')) {
+  if (theme_get_setting('omega_rebuild_theme_registry')) {
+    drupal_theme_rebuild();
 
-  if (flood_is_allowed('omega_' . $GLOBALS['theme'] . '_rebuild_registry_warning', 3)) {
-    // Alert the user that the theme registry is being rebuilt on every request.
-    flood_register_event('omega_' . $GLOBALS['theme'] . '_rebuild_registry_warning');
-    drupal_set_message(t('The theme registry is being rebuilt on every request. Remember to <a href="!url">turn off</a> this feature on production websites.', array("!url" => url('admin/appearance/settings/' . $GLOBALS['theme']))));
+    if (flood_is_allowed('omega_' . $GLOBALS['theme'] . '_rebuild_registry_warning', 3)) {
+      // Alert the user that the theme registry is being rebuilt on every request.
+      flood_register_event('omega_' . $GLOBALS['theme'] . '_rebuild_registry_warning');
+      drupal_set_message(t('The theme registry is being rebuilt on every request. Remember to <a href="!url">turn off</a> this feature on production websites.', array("!url" => url('admin/appearance/settings/' . $GLOBALS['theme']))));
+    }
+  }
+
+  if (theme_get_setting('omega_rebuild_aggregates') && variable_get('preprocess_css', FALSE) && (!defined('MAINTENANCE_MODE') || MAINTENANCE_MODE != 'update')) {
+    foreach (array('css', 'js') as $type) {
+      variable_del('drupal_' . $type . '_cache_files');
+
+      foreach (file_scan_directory('public://' . $type . '', '/.*/') as $file) {
+        file_unmanaged_delete($file->uri);
+      };
+    }
+
+    if (flood_is_allowed('omega_' . $GLOBALS['theme'] . '_rebuild_aggregates_warning', 3)) {
+      // Alert the user that the theme registry is being rebuilt on every request.
+      flood_register_event('omega_' . $GLOBALS['theme'] . '_rebuild_aggregates_warning');
+      drupal_set_message(t('The CSS and JS aggregates are being rebuilt on every request. Remember to <a href="!url">turn off</a> this feature on production websites.', array("!url" => url('admin/appearance/settings/' . $GLOBALS['theme']))));
+    }
   }
 }
 
