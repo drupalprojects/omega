@@ -34,7 +34,7 @@ function omega_theme_trail($theme = NULL) {
 
     $themes = list_themes();
     if (empty($cache[$theme]) && isset($themes[$theme]->info['base theme'])) {
-      $cache[$theme] = drupal_find_base_themes($themes, $theme);
+      $cache[$theme] = system_find_base_themes($themes, $theme);
     }
 
     // Add our current subtheme ($key) to that array.
