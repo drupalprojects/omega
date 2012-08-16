@@ -25,3 +25,20 @@ body {
 .main, .topbar, .region-navigation, .region-footer, .region-search, .region-banner {
   @include grid-container;
 }
+
+// Add a gap between the content and the surrounding areas.
+.main-content {
+  margin-top: $vertical-page-gap;
+  margin-bottom: $vertical-page-gap;
+}
+
+@include at-media-query($media-narrow-up) {
+  .sidebar-first-container, .sidebar-second-container {
+    margin-top: $vertical-page-gap;
+    margin-bottom: $vertical-page-gap;
+  }
+}
+
+.region-postscript, .region-preface, .region-footer, .region-content {
+  @include clearfix;
+}

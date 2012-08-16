@@ -22,7 +22,7 @@
   }
 
   // The first block after a row clears left.
-  &:nth-child(#{$columns}n+#{$columns+1}) {
+  &:first-child, &:nth-child(#{$columns}n+#{$columns+1}) {
     clear: both;
   }
 }
@@ -31,7 +31,7 @@
   @include reset-columns;
 
   // The last block in a row gets the omega postfix.
-  &:nth-child(1n) {
+  & {
     @include remove-omega;
   }
 

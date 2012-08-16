@@ -1,5 +1,64 @@
 (function ($) {
 
+/**
+ * Adds a button to the toolbar that scrolls the viewport to the top of the page
+ * on click.
+ */
+Drupal.behaviors.epiqoScrollTop = {
+  attach: function (context, settings) {
+    $('body', context).once('scrolltop', function () {
+      var $button = $('<a href="#page" class="scroll-button"></a>').appendTo($('#topbar', this)).click(function () {
+        $.scrollTop();
+      });
+
+      $(window).bind('scroll', function (e) {
+        if ($(this).scrollTop() > 100) {
+          $button.show();
+        }
+        else {
+          $button.hide();
+        }
+      });
+    });
+  }
+},
+
+/**
+ * Adds a toggle button for every block in the navigation region that reveals
+ * that block on click.
+ */
+Drupal.behaviors.epiqoMobileNavigation = {
+  attach: function (context, settings) {
+    $('#header', context).once('mobile-navigation', function () {
+      var $navigation = $('#navigation-container', this);
+      var $blocks = $navigation.find('.block');
+      var $topbar = $('#topbar', this);
+
+      $blocks.each(function () {
+        var $block = $(this);
+        var $toggle = $('<a href="#" class="block-toggle block-toggle-' + $block.attr('id') + '"></a>').appendTo($topbar);
+
+        $toggle.click(function () {
+          // Hide any other currently toggled block.
+          $blocks.not($block).removeClass('block-toggled');
+
+          if (!$block.hasClass('block-toggled')) {
+            $block.addClass('block-toggled');
+          }
+          else {
+            $block.removeClass('block-toggled');
+          }
+
+          // Scroll to the top of the page.
+          $('body', 'html').scrollTop(0);
+
+          return false;
+        });
+      });
+    });
+  }
+},
+
 Drupal.behaviors.epiqoMobileSidebar = {
   attach: function (context, settings) {
     $('#sidebar-first-container').once('mobile-sidebar', function () {

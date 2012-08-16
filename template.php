@@ -526,7 +526,7 @@ function omega_omega_layouts_info() {
     ),
     'attached' => array(
       'css' => array(
-        $path . '/layouts/epiqo/css/epiqo.layout.css' => array('group' => CSS_THEME),
+        $path . '/layouts/epiqo/css/epiqo.layout.css' => array('group' => CSS_DEFAULT),
       ),
       'js' => array(
         drupal_get_path('theme', 'omega') . '/js/jquery.matchmedia.js' => array('group' => JS_THEME),

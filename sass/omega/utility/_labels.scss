@@ -1,0 +1,14 @@
+$label-color: #505050 !default;
+$background-color: #E9E9E9 !default;
+$label-radius: 5px !default;
+
+@mixin label($background-color, $label-color, $radius: $label-radius) {
+  @if $radius {
+    @include border-radius($radius);
+  }
+
+  background-color: $background;
+  color: $color;
+  text-align: center;
+  white-space: nowrap;
+}
