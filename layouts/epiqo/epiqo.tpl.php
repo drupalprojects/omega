@@ -77,9 +77,17 @@
     </div>
   </div>
 
-  <?php if ($footer = render($page['footer'])): ?>
+  <?php if ($page['footer'] || $page['footer_second']): ?>
   <div id="footer-container" class="footer-container">
-    <?php print $footer; ?>
+
+    <?php if ($footer = render($page['footer'])): ?>
+      <?php print $footer; ?>
+    <?php endif; ?>
+
+    <?php if ($footer_second = render($page['footer_second'])): ?>
+      <?php print $footer_second; ?>
+    <?php endif; ?>
+
   </div>
   <?php endif; ?>
 </div>

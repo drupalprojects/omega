@@ -1,6 +1,7 @@
+@import "susy";
+
 @mixin grid-container {
   @include container;
-  @include clearfix;
   max-width: $grid-max-width;
 }
 
@@ -29,13 +30,13 @@
 
 @mixin reset-block-columns {
   @include reset-columns;
-
-  // The last block in a row gets the omega postfix.
-  & {
+  
+  // Reset 'omega' definitions for all elements.
+  &:nth-child(1n) {
     @include remove-omega;
   }
 
-  // The first block after a row clears left.
+  // Reset clears.
   &:nth-child(1n) {
     clear: none;
   }

@@ -128,7 +128,9 @@ function omega_js_alter(&$js) {
   // Move all the JavaScript to the footer if the theme is configured that way.
   if (theme_get_setting('omega_js_footer')) {
     foreach ($js as &$item) {
-      $item['scope'] = 'footer';
+      if (empty($item['force header'])) {
+        $item['scope'] = 'footer';
+      }
     }
   }
 }
@@ -340,6 +342,7 @@ function omega_omega_theme_libraries_info($theme) {
     'description' => t('Selectivizr is a JavaScript utility that emulates CSS3 pseudo-classes and attribute selectors in Internet Explorer 6-8. Simply include the script in your pages and selectivizr will do the rest.'),
     'vendor' => 'Keith Clark',
     'vendor url' => 'http://selectivizr.com/',
+    'package' => t('polyfills'),
     'files' => array(
       'js' => array(
         $path . '/libraries/selectivizr/selectivizr.min.js' => array(
@@ -374,6 +377,7 @@ function omega_omega_theme_libraries_info($theme) {
     'description' => t('CSS3 Media Queries is a JavaScript library to make IE 5+, Firefox 1+ and Safari 2 transparently parse, test and apply CSS3 Media Queries. Firefox 3.5+, Opera 7+, Safari 3+ and Chrome already offer native support.'),
     'vendor' => 'Wouter van der Graaf',
     'vendor url' => 'http://woutervandergraaf.nl/',
+    'package' => t('polyfills'),
     'files' => array(
       'js' => array(
         $path . '/libraries/css3mediaqueries/css3-mediaqueries.min.js' => array(
@@ -405,7 +409,7 @@ function omega_omega_theme_libraries_info($theme) {
     'description' => t('Respond is a fast & lightweight polyfill for min/max-width CSS3 Media Queries (for IE 6-8, and more).'),
     'vendor' => 'Scott Jehl',
     'vendor url' => 'http://scottjehl.com/',
-    'theme' => 'omega',
+    'package' => 'polyfills',
     'files' => array(
       'js' => array(
         $path . '/libraries/respond/respond.min.js' => array(
@@ -438,6 +442,7 @@ function omega_omega_theme_libraries_info($theme) {
     'vendor' => 'Keith Clark',
     'vendor url' => 'http://css3pie.com/',
     'options form' => 'omega_library_pie_options_form',
+    'package' => 'polyfills',
     'files' => array(),
     'variants' => array(
       'js' => array(
@@ -483,11 +488,13 @@ function omega_omega_theme_libraries_info($theme) {
     'name' => t('HTML5 Shiv'),
     'description' => t('This script is the defacto way to enable use of HTML5 sectioning elements in legacy Internet Explorer, as well as default HTML5 styling in Internet Explorer 6 - 9, Safari 4.x (and iPhone 3.x), and Firefox 3.x.'),
     'vendor' => 'Alexander Farkas',
+    'package' => 'polyfills',
     'files' => array(
       'js' => array(
         $path . '/libraries/html5shiv/html5shiv.js' => array(
           'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
           'group' => JS_LIBRARY,
+          'force header' => TRUE,
         ),
       ),
     ),
@@ -500,8 +507,27 @@ function omega_omega_theme_libraries_info($theme) {
             $path . '/libraries/html5shiv/html5shiv.js' => array(
               'browsers' => array('IE' => '(gte IE 6)&(lte IE 8)', '!IE' => FALSE),
               'group' => JS_LIBRARY,
+              'force header' => TRUE,
             ),
           ),
+        ),
+      ),
+    ),
+  );
+
+  $libraries['messages'] = array(
+    'name' => t('Discardable messages'),
+    'description' => t("Adds a 'close' button to each message."),
+    'package' => 'goodies',
+    'files' => array(
+      'js' => array(
+        $path . '/js/omega.messages.js' => array(
+          'group' => JS_LIBRARY,
+        ),
+      ),
+      'css' => array(
+        $path . '/css/omega.messages.css' => array(
+          'group' => CSS_DEFAULT,
         ),
       ),
     ),
@@ -514,8 +540,6 @@ function omega_omega_theme_libraries_info($theme) {
  * Implements hook_omega_layout_info().
  */
 function omega_omega_layouts_info() {
-  $path = drupal_get_path('theme', 'omega');
-
   // Don't use the t() function here because this is cached in the theme
   // registry.
   $info['epiqo'] = array(
@@ -534,12 +558,11 @@ function omega_omega_layouts_info() {
     ),
     'attached' => array(
       'css' => array(
-        'css/epiqo.layout.css' => array('group' => CSS_THEME, 'weight' => -1),
-        'css/epiqo.styles.css' => array('group' => CSS_THEME, 'weight' => -1),
+        'css/epiqo.layout.css' => array('group' => CSS_DEFAULT),
+        'css/epiqo.styles.css' => array('group' => CSS_DEFAULT),
       ),
       'js' => array(
-        $path . '/js/jquery.matchmedia.js' => array('group' => JS_DEFAULT, 'data' => $path . '/js/jquery.matchmedia.js'),
-        'js/epiqo.layout.js' => array('group' => JS_THEME, 'weight' => -1),
+        'js/epiqo.layout.js' => array('group' => JS_DEFAULT),
       ),
     ),
   );

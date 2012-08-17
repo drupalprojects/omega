@@ -1,4 +1,8 @@
+@import "compass/css3/box-sizing";
+@import "compass/css3/border-radius";
+@import "compass/css3/box-shadow";
 @import "definition-lists";
+@import "responsive";
 @import "selectors";
 
 $form-breakpoint: "all and (min-width: 800px)" !default;
@@ -80,6 +84,7 @@ $form-input-radius: 3px !default;
   }
 
   form .form-item .form-item {
+    margin-top: 0;
     width: auto;
     padding-left: 0;
   }
@@ -88,6 +93,10 @@ $form-input-radius: 3px !default;
     // On larger screens, we shift to a inline form layout.
     form .form-item {
       @include form-item-inline($prefix);
+
+      .form-item {
+        margin-top: 1em;
+      }
     }
   }
 

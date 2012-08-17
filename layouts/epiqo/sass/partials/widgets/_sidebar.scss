@@ -1,7 +1,28 @@
+// This is required for the sidebar's positioning but might affect other
+// layout elements as well and is therefore defined globally.
+.main {
+  position: relative;
+  overflow: hidden;
+}
+
 // Mobile sidebar.
 @include at-media-query($media-narrow-down) {
-  html.js .sidebar-first, html.js .two-sidebars {
-    .main {
+  .sidebar-first-toggle {
+    background-color: darken($primary-color, 10);
+    width: $sidebar-toggle-width;
+    height: $sidebar-toggle-height;
+    display: block;
+    position: relative;
+    right: -($sidebar-toggle-width + $sidebar-collapsed-width);
+    float: right;
+
+    .show-sidebar & {
+      right: -($sidebar-toggle-width + $sidebar-collapsed-width + $grid-padding);
+    }
+  }
+
+  html.js {
+    .sidebar-first .main, .two-sidebars .main {
       padding-left: $grid-padding + $sidebar-collapsed-width;
     }
 
@@ -24,17 +45,7 @@
       }
     }
 
-    .sidebar-first-toggle {
-      background-color: darken($primary-color, 10);
-      width: $sidebar-toggle-width;
-      height: $sidebar-toggle-height;
-      display: block;
-      position: relative;
-      right: -($sidebar-toggle-width + $sidebar-collapsed-width);
-      float: right;
-    }
-
-    &.show-sidebar {
+    .show-sidebar {
       .main {
         @include clear-container;
         padding-right: $sidebar-visible-gutter;
@@ -57,10 +68,6 @@
         .block {
           @include opacity(1);
         }
-      }
-
-      .sidebar-first-toggle {
-        right: -($sidebar-toggle-width + $sidebar-collapsed-width + $grid-padding);
       }
     }
   }

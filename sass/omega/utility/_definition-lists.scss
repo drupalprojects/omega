@@ -1,3 +1,5 @@
+@import "susy";
+
 $definition-list-label-columns: round($total-columns * 1/4) !default;
 
 @mixin definition-list-inline-item(

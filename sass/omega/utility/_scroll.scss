@@ -1,3 +1,5 @@
+@import "compass/css3/images";
+
 @mixin webkit-scroll {
   &::-webkit-scrollbar {
     width: 8px;

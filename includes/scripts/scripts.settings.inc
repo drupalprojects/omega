@@ -25,69 +25,73 @@ function omega_extension_scripts_settings_form($element, &$form, $form_state) {
   );
 
   $element['omega_libraries'] = array(
-    '#type' => 'fieldset',
-    '#title' => t('Libraries'),
+    '#type' => 'container',
     '#tree' => TRUE,
   );
 
   $libraries = theme_get_setting('omega_libraries');
 
   foreach (omega_theme_libraries_info() as $library => $info) {
-    if (isset($info['theme'])) {
-      $element['omega_libraries'][$library]['status'] = array(
-        '#type' => 'checkbox',
-        '#title' => isset($info['vendor url']) ? t('@library by <a href="!url">@vendor</a>', array('@library' => $info['name'], '!url' => $info['vendor url'], '@vendor' => $info['vendor'])) : t('@library by @vendor', array('@library' => $info['name'], '@vendor' => $info['vendor'])),
-        '#description' => $info['description'],
-        '#default_value' => !empty($libraries[$library]['status']),
-        '#parents' => array('omega_libraries', $library, 'status'),
+    if (!isset($element['omega_libraries'][$info['package']])) {
+      $element['omega_libraries'][$info['package']] = array(
+        '#type' => 'fieldset',
+        '#title' => t(filter_xss_admin(ucfirst($info['package']))),
       );
+    }
 
-      $options = array();
+    $element['omega_libraries'][$info['package']][$library]['status'] = array(
+      '#type' => 'checkbox',
+      '#title' => !isset($info['vendor']) ? $info['name'] : (isset($info['vendor url']) ? t('@library by <a href="!url">@vendor</a>', array('@library' => $info['name'], '!url' => $info['vendor url'], '@vendor' => $info['vendor'])) : t('@library by @vendor', array('@library' => $info['name'], '@vendor' => $info['vendor']))),
+      '#description' => $info['description'],
+      '#default_value' => !empty($libraries[$library]['status']),
+      '#parents' => array('omega_libraries', $library, 'status'),
+    );
 
-      // Some libraries might want to provide special options.
-      if (isset($info['options form']) && function_exists($info['options form'])) {
-        // If a library options form callback exists and actually returns some
-        // options for this library append conditionally show them underneath
-        // the library checkbox with #states.
-        $info['options form']($options, $form, $form_state, $library, $info);
+    $options = array();
+
+    // Some libraries might want to provide special options.
+    if (isset($info['options form']) && function_exists($info['options form'])) {
+      // If a library options form callback exists and actually returns some
+      // options for this library append conditionally show them underneath
+      // the library checkbox with #states.
+      $info['options form']($options, $form, $form_state, $library, $info);
+    }
+
+    if (!empty($info['variants'])) {
+      $variants = array();
+      foreach ($info['variants'] as $variant => $variant_info) {
+        $variants[$variant] = $variant_info['name'] . (isset($variant_info['description']) ? '<div class="description">' . $variant_info['description'] . '</div>': '');
       }
 
-      if (!empty($info['variants'])) {
-        $variants = array();
-        foreach ($info['variants'] as $variant => $variant_info) {
-          $variants[$variant] = $variant_info['name'] . (isset($variant_info['description']) ? '<div class="description">' . $variant_info['description'] . '</div>': '');
-        }
+      if (!empty($variants)) {
+        $variants = array_merge(array('_default' => t('Default') . '<div class="description">' . t('The default variant generally is a minified version of the library and provides the optimal production solution in most cases.') . '</div>'), $variants);
 
-        if (!empty($variants)) {
-          $variants = array_merge(array('_default' => t('Default') . '<div class="description">' . t('The default variant generally is a minified version of the library and provides the optimal production solution in most cases.') . '</div>'), $variants);
-
-          $options['variant'] = array(
-            '#type' => 'radios',
-            '#title' => t('Variant'),
-            '#options' => $variants,
-            '#default_value' => !empty($libraries[$library]['variant']) ? $libraries[$library]['variant'] : '_default',
-            '#parents' => array('omega_libraries', $library, 'variant'),
-            '#weight' => -10,
-          );
-        }
+        $options['variant'] = array(
+          '#type' => 'radios',
+          '#title' => t('Variant'),
+          '#options' => $variants,
+          '#default_value' => !empty($libraries[$library]['variant']) ? $libraries[$library]['variant'] : '_default',
+          '#parents' => array('omega_libraries', $library, 'variant'),
+          '#weight' => -10,
+        );
       }
+    }
 
-      if (!empty($options)) {
-        $element['omega_libraries'][$library]['options'] = array(
-          '#type' => 'fieldset',
-          '#title' => t('Options'),
-          '#states' => array(
-            'visible' => array(
-              ':input[name="omega_libraries[' . $library . '][status]"]' => array('checked' => TRUE),
-            ),
+    if (!empty($options)) {
+      $element['omega_libraries'][$info['package']][$library]['options'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Options'),
+        '#states' => array(
+          'visible' => array(
+            ':input[name="omega_libraries[' . $library . '][status]"]' => array('checked' => TRUE),
           ),
-          '#parents' => array('omega_libraries', $library),
-          '#tree' => TRUE,
-          '#attributes' => array('class' => array('omega-settings-container')),
-          '#collapsible' => TRUE,
-          '#collapsed' => TRUE,
-        ) + $options;
-      }
+        ),
+        '#parents' => array('omega_libraries', $library),
+        '#tree' => TRUE,
+        '#attributes' => array('class' => array('omega-settings-container')),
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+      ) + $options;
     }
   }
 

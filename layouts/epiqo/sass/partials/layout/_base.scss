@@ -5,14 +5,6 @@ body {
 // Set the min-width to the smallest smartphone landscape view width.
 .page {
   min-width: 320px;
-  overflow: hidden;
-}
-
-// This is required for the sidebar's positioning but might affect other
-// layout elements as well and is therefore defined globally.
-.main {
-  position: relative;
-  overflow: hidden;
 }
 
 // Fix to stop the main content area from collapsing even when it is empty.
@@ -22,7 +14,7 @@ body {
 
 // Implements the major building blocks as grid containers. By setting the
 // max-width we make sure that the website doesn't scale infinitly.
-.main, .topbar, .region-navigation, .region-footer, .region-search, .region-banner {
+.main, .topbar, .region-navigation, .footer-container .region, .region-search, .region-banner {
   @include grid-container;
 }
 
@@ -39,6 +31,6 @@ body {
   }
 }
 
-.region-postscript, .region-preface, .region-footer, .region-content {
+.region-postscript, .region-preface, .footer-container .region, .region-content {
   @include clearfix;
 }
