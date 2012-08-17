@@ -21,14 +21,15 @@ body {
 /* line 6, ../sass/partials/layout/_base.scss */
 .page {
   min-width: 320px;
+  overflow: hidden;
 }
 
-/* line 11, ../sass/partials/layout/_base.scss */
+/* line 12, ../sass/partials/layout/_base.scss */
 .main-content {
   min-height: 1px;
 }
 
-/* line 17, ../sass/partials/layout/_base.scss */
+/* line 18, ../sass/partials/layout/_base.scss */
 .main, .topbar, .region-navigation, .footer-container .region, .region-search, .region-banner {
   *zoom: 1;
   max-width: 100%;
@@ -39,27 +40,27 @@ body {
   padding-right: 10px;
   max-width: 1200px;
 }
-/* line 38, ../../../../../../../../../../../Library/Ruby/Gems/1.8/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+/* line 38, ../../../../../../../../../../../var/lib/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
 .main:after, .topbar:after, .region-navigation:after, .footer-container .region:after, .region-search:after, .region-banner:after {
   content: "";
   display: table;
   clear: both;
 }
 
-/* line 22, ../sass/partials/layout/_base.scss */
+/* line 23, ../sass/partials/layout/_base.scss */
 .main-content {
   margin-top: 1em;
   margin-bottom: 1em;
 }
 
 @media all and (min-width: 800px) {
-  /* line 28, ../sass/partials/layout/_base.scss */
+  /* line 29, ../sass/partials/layout/_base.scss */
   .sidebar-first-container, .sidebar-second-container {
     margin-top: 1em;
     margin-bottom: 1em;
   }
 }
-/* line 34, ../sass/partials/layout/_base.scss */
+/* line 35, ../sass/partials/layout/_base.scss */
 .region-postscript, .region-preface, .footer-container .region, .region-content {
   overflow: hidden;
   *zoom: 1;
@@ -488,7 +489,6 @@ body {
   html.js .sidebar-first-container {
     -webkit-transition: left 0.4s ease-in-out;
     -moz-transition: left 0.4s ease-in-out;
-    -ms-transition: left 0.4s ease-in-out;
     -o-transition: left 0.4s ease-in-out;
     transition: left 0.4s ease-in-out;
     background-color: #2e2e2c;
@@ -506,7 +506,6 @@ body {
   html.js .sidebar-first-container .block {
     -webkit-transition: opacity 0.4s linear;
     -moz-transition: opacity 0.4s linear;
-    -ms-transition: opacity 0.4s linear;
     -o-transition: opacity 0.4s linear;
     transition: opacity 0.4s linear;
     filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
