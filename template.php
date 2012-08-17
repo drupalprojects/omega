@@ -145,8 +145,16 @@ function omega_theme() {
         $info['page__' . $key . '_layout'] = array(
           'layout' => $layout,
           'template' => $layout['template'],
-          'path' => $layout['path'],
         );
+
+        if ($GLOBALS['theme_engine'] == 'phptemplate') {
+          // Try to find a template override in the theme trail.
+          $path = omega_theme_trail_find_file($layout['path'] . '/' . $layout['template'] . '.tpl.php');
+          $info['page__' . $key . '_layout']['path'] = dirname($path);
+        }
+        else {
+          $info['page__' . $key . '_layout']['path'] = drupal_get_path('theme', $layout['theme']) . '/' . $layout['path'];
+        }
       }
     }
   }
@@ -526,11 +534,12 @@ function omega_omega_layouts_info() {
     ),
     'attached' => array(
       'css' => array(
-        $path . '/layouts/epiqo/css/epiqo.layout.css' => array('group' => CSS_DEFAULT),
+        'css/epiqo.layout.css' => array('group' => CSS_THEME, 'weight' => -1),
+        'css/epiqo.styles.css' => array('group' => CSS_THEME, 'weight' => -1),
       ),
       'js' => array(
-        drupal_get_path('theme', 'omega') . '/js/jquery.matchmedia.js' => array('group' => JS_THEME),
-        $path . '/layouts/epiqo/js/epiqo.layout.js' => array('group' => JS_THEME),
+        $path . '/js/jquery.matchmedia.js' => array('group' => JS_DEFAULT, 'data' => $path . '/js/jquery.matchmedia.js'),
+        'js/epiqo.layout.js' => array('group' => JS_THEME, 'weight' => -1),
       ),
     ),
   );

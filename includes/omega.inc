@@ -426,37 +426,17 @@ function omega_layouts_info($theme = NULL) {
       // regions with those required by the layout.
       $info['supported'] = module_exists('omega_tools') || !array_diff_key($info['regions'], system_region_list($theme)) ? TRUE : FALSE;
 
-      // Path of the layout providing theme.
-      $path = drupal_get_path('theme', $info['theme']);
-
-      // Try to provide a default callback file if not defined explicityl
-      if (empty($info['callback']) && empty($info['callback file']) && is_file($path . '/layouts/' . $layout . '/' . $layout . '.inc')) {
-        $info['callback file'] = $path . '/layouts/' . $layout . '/' . $layout . '.inc';
-      }
-
-      // Try to provide a default callback if not defined explicitly.
-      if (empty($info['callback']))  {
-        if (!empty($info['callback file'])) {
-          require_once $info['callback file'];
-
-          $callback = $info['theme'] . '_' . $layout . '_layout_callback';
-          if (function_exists($callback)) {
-            $info['callback'] = $callback;
-          }
-        }
-      }
-
       // Provide some defaults.
       $layouts[$theme][$layout] = $info + array(
         'label' => ucfirst($layout),
         'description' => '',
         'template' => $layout,
-        'path' => $path . '/layouts/' . $layout,
+        'path' => 'layouts/' . $layout,
         'regions' => array(),
         'icon' => drupal_get_path('theme', 'omega') . '/images/layout-icon-placeholder.png',
         'attached' => array(),
-        'callback' => FALSE,
-        'callback file' => FALSE,
+        'includes' => array(),
+        'hooks' => array(),
       );
     }
 
@@ -528,6 +508,37 @@ function omega_theme_trail_find_file($file, $path = NULL, $theme = NULL) {
   }
 
   return FALSE;
+}
+
+
+/**
+ * Iterates over all themes in the theme trail in order to find all
+ * implementations of a specific file.
+ *
+ * @param $file
+ *   The name of the file.
+ * @param $path
+ *   (Optional) The path to the file (relative to the theme root).
+ * @param $theme
+ *   (Optional) The key (machine-readable name) of a theme. Defaults to the key
+ *   of the current theme.
+ *
+ * @return array
+ *   An array containing the pathes to all implementations of the given file.
+ */
+function omega_theme_trail_find_files($file, $path = NULL, $theme = NULL) {
+  $theme = isset($theme) ? $theme : $GLOBALS['theme_key'];
+
+  $files = array();
+  foreach (omega_theme_trail($theme) as $key => $name) {
+    $current = drupal_get_path('theme', $key) . (isset($path) ? '/' . $path : '') . '/' . $file;
+
+    if (is_file($current)) {
+      $files[$key] = $current;
+    }
+  }
+
+  return $files;
 }
 
 /**
