@@ -10,7 +10,7 @@ require_once dirname(__FILE__) . '/template.php';
 /**
  * Implements hook_form_FORM_alter().
  */
-function omega_form_system_theme_settings_alter(&$form, $form_state) {
+function omega_form_system_theme_settings_alter(&$form, $form_state, $form_id = NULL) {
   // General "alters" use a form id. Settings should not be set here. The only
   // thing useful about this is if you need to alter the form for the running
   // theme and *not* the theme setting. @see http://drupal.org/node/943212

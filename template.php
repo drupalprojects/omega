@@ -7,6 +7,8 @@
 
 require_once dirname(__FILE__) . '/includes/omega.inc';
 
+drupal_set_message('asdasd');
+
 /**
  * Slightly hacky performance tweak for theme_get_setting(). This resides
  * outside of any function declaration to make sure that it runs directly after
