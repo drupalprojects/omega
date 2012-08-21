@@ -7,8 +7,6 @@
 
 require_once dirname(__FILE__) . '/includes/omega.inc';
 
-drupal_set_message('asdasd');
-
 /**
  * Slightly hacky performance tweak for theme_get_setting(). This resides
  * outside of any function declaration to make sure that it runs directly after
@@ -229,11 +227,11 @@ function omega_theme_registry_alter(&$registry) {
   // Include the main extension file for every enabled extension. This is
   // required for the next step (allowing extensions to register hooks in the
   // theme registry).
-  foreach (omega_extensions() as $extension => $theme) {
+  foreach (omega_extensions() as $extension => $info) {
     if (theme_get_setting('omega_toggle_extension_' . $extension)) {
       // Load all the implementations for this extensions and invoke the according
       // hooks.
-      $file = drupal_get_path('theme', $theme) . '/includes/' . $extension . '/' . $extension . '.registry.inc';
+      $file = drupal_get_path('theme', $info['theme']) . '/includes/' . $extension . '/' . $extension . '.registry.inc';
       if (is_file($file)) {
         require_once $file;
       }
