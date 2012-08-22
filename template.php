@@ -252,6 +252,8 @@ function omega_theme_registry_alter(&$registry) {
     }
   }
 
+  // Override template_process_html() in order to add support for conditional
+  // comments for JavaScript files.
   if (($index = array_search('template_process_html', $registry['html']['process functions'], TRUE)) !== FALSE) {
     array_splice($registry['html']['process functions'], $index, 1, 'omega_template_process_html_override');
   }

@@ -45,6 +45,11 @@ function omega_group_js($javascript) {
   $current_group_keys = NULL;
   $index = -1;
   foreach ($javascript as $item) {
+    $item['browsers'] = isset($item['browsers']) ? $item['browsers'] : array();
+    $item['browsers'] += array(
+      'IE'
+    );
+
     // The browsers for which the JavaScript item needs to be loaded is part of
     // the information that determines when a new group is needed, but the order
     // of keys in the array doesn't matter, and we don't want a new group if all
