@@ -48,7 +48,3 @@ relative_assets = true
 # Pass options to sass. For development, we turn on the FireSass-compatible
 # debug_info if the firesass config variable above is true.
 sass_options = (environment == :development && firesass == true) ? {:debug_info => true} : {}
-
-# Add the root partials folder as import path so we don't have to build the
-# relative paths.
-add_import_path "../../sass"
