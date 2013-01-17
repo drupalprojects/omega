@@ -27,19 +27,20 @@ function omega_alpha_zones_alter(&$zones, $theme) {
  */
 function omega_alpha_preprocess_html(&$vars) {
   $theme = alpha_get_theme();
+  $vars['doctype'] = '<!DOCTYPE html>' . "\n";
   $vars['rdf'] = new stdClass;
+  $vars['rdf']->version = '';
+  $vars['rdf']->namespaces = '';
+  $vars['rdf']->profile = '';
 
-  if (module_exists('rdf')) {
-    $vars['doctype'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">' . "\n";
-    $vars['rdf']->version = ' version="HTML+RDFa 1.1"';
-    $vars['rdf']->namespaces = $vars['rdf_namespaces'];
-    $vars['rdf']->profile = ' profile="' . $vars['grddl_profile'] . '"';
-  }
-  else {
-    $vars['doctype'] = '<!DOCTYPE html>' . "\n";
-    $vars['rdf']->version = '';
-    $vars['rdf']->namespaces = '';
-    $vars['rdf']->profile = '';
+  // Serialize RDF Namespaces into an RDFa 1.1 prefix attribute.
+  if ($vars['rdf_namespaces']) {
+    $prefixes = array();
+    foreach (explode("\n  ", ltrim($vars['rdf_namespaces'])) as $namespace) {
+      // Remove xlmns: and ending quote and fix prefix formatting.
+      $prefixes[] = str_replace('="', ': ', substr($namespace, 6, -1));
+    }
+    $vars['rdf']->namespaces = ' prefix="' . implode(' ', $prefixes) . '"';
   }
 
   if (alpha_library_active('omega_mediaqueries')) {
