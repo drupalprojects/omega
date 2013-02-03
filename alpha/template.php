@@ -107,7 +107,10 @@ function alpha_process(&$vars, $hook) {
  */
 function alpha_element_info_alter(&$elements) {
   if (variable_get('preprocess_css', FALSE) && (!defined('MAINTENANCE_MODE') || MAINTENANCE_MODE != 'update')) {
-    array_unshift($elements['styles']['#pre_render'], 'alpha_css_preprocessor');
+    // Ensure alpha_css_preprocessor() is executed immediately before
+    // drupal_pre_render_styles(), regardless of other preprocess functions.
+    $position = array_search('drupal_pre_render_styles', $elements['styles']['#pre_render']);
+    array_splice($elements['styles']['#pre_render'], $position, 0, 'alpha_css_preprocessor');
   }
 }
 
