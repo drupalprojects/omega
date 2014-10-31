@@ -42,6 +42,22 @@ Drupal.settings.omega.currentBreakpoints = {
     });
   };
   
+  Drupal.omega.toolbarFix = function() {
+    // this function needs to compensate for admin users (or anyone w/access to toolbar) 
+    // and rearrange the positioning of the top nav bar accordingly.
+    // assuming that the user is anonymous, it already just "works" with the CSS
+    $(document).ready(function(){    
+      if ($('body').hasClass('toolbar')) {
+        // default toolbar height = 30px;
+        var toolbarHeight = $('#toolbar').height();
+        // reapply padding to body because toolbar module doesn't do this... LOL
+        $('body').css('padding-top', toolbarHeight);
+      }
+    });
+  }
+  
+  
+  
   //console.log('Hello from Omega.js!!');
   /*
 Drupal.behaviors.omegaMediaQueries = {
@@ -247,6 +263,19 @@ Drupal.behaviors.omegaMediaQueries = {
   };
   
   
+  // Handles Drupal's lack of ability to adjust the padding applied to the <body> 
+  // when the toolbar becomes 'taller' when shrinking the screen
+  Drupal.behaviors.toolbarResize = {
+    attach: function (context) {
+      
+      $(document).ready(function(){  
+        Drupal.omega.toolbarFix();
+      });
+      $(window).resize(function(){
+        Drupal.omega.toolbarFix();
+      });
+    }
+  };
   
   
 })(jQuery);

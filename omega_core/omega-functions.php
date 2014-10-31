@@ -213,29 +213,13 @@ function _omega_optional_css($theme) {
       'status' => isset($status['scss_tabs']) ? $status['scss_tabs'] : 0,
     ),
     'scss_toolbar' => array(
-      'title' => 'Toolbar',
-      'description' => 'Custom styles for default Drupal toolbar.',
-      'file' => 'toolbar.css',
+      'title' => 'Responsive Drupal Toolbar',
+      'description' => 'Tweaks to enhance the default Drupal toolbar with responsive features. This should be disabled if you are using a contributed toolbar module.',
+      'file' => 'toolbar-responsive.css',
       'status' => isset($status['scss_toolbar']) ? $status['scss_toolbar'] : 0,
     ),
   );
 }
-
-/*
-function _omega_getBreakpointId($theme) {
-  // get the appropriate id based on theme name
-  if (entity_load('breakpoint_group', 'theme.'.$theme.'.'.$theme)) {
-    // custom theme breakpoints
-    return 'theme.'.$theme.'.'.$theme;
-  }
-  else {
-    // default omega breakpoints
-    return 'theme.omega.omega';
-  }
-}
-*/
-
-
 
 function _omega_compile_layout_css($scss, $options) {
   $parser = new SassParser($options);
@@ -245,12 +229,6 @@ function _omega_compile_layout_css($scss, $options) {
   //dsm($css);
   return $css;
 }
-
-
-
-
-
-
 
 function _omega_save_layout_files($scss, $css, $json, $theme, $layout) {
   global $base_path;

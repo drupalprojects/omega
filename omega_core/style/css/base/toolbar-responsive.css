@@ -1,0 +1,18 @@
+/* Fonts */
+#toolbar {
+  display: block; }
+  #toolbar strong {
+    display: inline; }
+  #toolbar #toolbar-home,
+  #toolbar #toolbar-user {
+    display: none; }
+    @media all and (min-width: 1024px) {
+      #toolbar #toolbar-home,
+      #toolbar #toolbar-user {
+        display: block; } }
+  #toolbar div.toolbar-menu .toolbar-inner {
+    position: relative;
+    padding: 5px 35px 5px 0; }
+  #toolbar div.toolbar-menu a.toggle {
+    bottom: 0;
+    right: 5px; }
