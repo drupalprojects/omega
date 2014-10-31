@@ -283,7 +283,8 @@ function omega_preprocess_page(&$vars) {
  */
 function omega_preprocess_node(&$vars) {
   $node = $vars['node'];
-
+  
+  // add a class to the title to signify it is a node title
   if (!isset($vars['title_attributes_array']['class'])) {
     $vars['title_attributes_array']['class'] = array();
   }
@@ -317,7 +318,14 @@ function omega_preprocess_node(&$vars) {
   
   // add a better comment status class
   $vars['classes_array'][] = $node->comment ? 'node-comments--enabled' : 'node-comments--disabled';
-  
+}
+
+function omega_preprocess_block(&$vars) {
+  // add a class to the title to signify it is a block title
+  if (!isset($vars['title_attributes_array']['class'])) {
+    $vars['title_attributes_array']['class'] = array();
+  }
+  $vars['title_attributes_array']['class'][] = 'block-title';
 }
 
 /**
