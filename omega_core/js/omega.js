@@ -9,13 +9,7 @@ Drupal.omega = Drupal.omega || {};
 
 
 (function($) {
-//(function ($, Modernizr, Drupal, drupalSettings, window) {
   "use strict";
-  /*
-Drupal.settings.omega.currentBreakpoints = {
-     'all' : true
-   };
-*/
   
   var breakpoints;
   var breakpointMatch;
@@ -55,35 +49,6 @@ Drupal.settings.omega.currentBreakpoints = {
       }
     });
   }
-  
-  
-  
-  //console.log('Hello from Omega.js!!');
-  /*
-Drupal.behaviors.omegaMediaQueries = {
-    attach: function (context) {
-      $('body', context).once('omega-mediaqueries', function () {
-        var primary = $.inArray(Drupal.settings.omega.layouts.primary, Drupal.settings.omega.layouts.order);
-        var dummy = $('<div id="omega-media-query-dummy"></div>').prependTo('body');
-
-        dummy.append('<style media="all">#omega-media-query-dummy { position: relative; z-index: -1; }</style>');
-        dummy.append('<!--[if (lt IE 9)&(!IEMobile)]><style media="all">#omega-media-query-dummy { z-index: ' + primary + '; }</style><![endif]-->');
-
-        for (var i in Drupal.settings.omega.layouts.order) {
-          dummy.append('<style media="' + Drupal.settings.omega.layouts.queries[Drupal.settings.omega.layouts.order[i]] + '">#omega-media-query-dummy { z-index: ' + i + '; }</style>');
-        }
-
-        $(window).bind('resize.omegamediaqueries', function () {
-          setCurrentLayout(dummy.css('z-index'));
-        }).load(function () {
-          $(this).trigger('resize.omegamediaqueries');
-        });
-      });
-    }
-  };
-*/
-  
-  
   
   Drupal.behaviors.omegaBreakpoint = {
     attach: function (context) {
@@ -176,7 +141,6 @@ Drupal.behaviors.omegaMediaQueries = {
     }
   };
   
-  
   Drupal.behaviors.attachIndicatorData = {
     attach: function (context) {
       // grab the wrapper element to manipulate
@@ -223,10 +187,8 @@ Drupal.behaviors.omegaMediaQueries = {
       });
     }
   };
-  
-  
+
   // need to use some LocalStorage to keep the indicator open/closed based on last setting.
-  
   Drupal.behaviors.indicatorToggle = {
     attach: function (context) {
       
@@ -255,13 +217,11 @@ Drupal.behaviors.omegaMediaQueries = {
           }, 250, function() {
             // Animation complete.
           });
-          
         }
         return false;
       });
     }
   };
-  
   
   // Handles Drupal's lack of ability to adjust the padding applied to the <body> 
   // when the toolbar becomes 'taller' when shrinking the screen
@@ -277,6 +237,4 @@ Drupal.behaviors.omegaMediaQueries = {
     }
   };
   
-  
 })(jQuery);
-//})(jQuery, Modernizr, Drupal, drupalSettings, window);
