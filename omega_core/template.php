@@ -321,11 +321,22 @@ function omega_preprocess_node(&$vars) {
 }
 
 function omega_preprocess_block(&$vars) {
+  $block = $vars['block'];
+  
   // add a class to the title to signify it is a block title
   if (!isset($vars['title_attributes_array']['class'])) {
     $vars['title_attributes_array']['class'] = array();
   }
   $vars['title_attributes_array']['class'][] = 'block-title';
+  
+  // add a class to the block's outer wrapper if there is or is not 
+  // a title so the blocks can be styled differently
+  if (strlen($block->subject) == 0) {
+    $vars['classes_array'][] = 'without--block-title';
+  }
+  if (strlen($block->subject) > 0) {
+    $vars['classes_array'][] = 'with--block-title';
+  }
 }
 
 /**
