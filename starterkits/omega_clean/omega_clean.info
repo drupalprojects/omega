@@ -36,6 +36,9 @@ settings[styles][scss_main_menus] = 1
 settings[styles][scss_messages] = 1
 settings[styles][scss_pagers] = 1
 settings[styles][scss_tabs] = 1
+settings[styles][scss_toolbar] = 1
+settings[styles][scss_forms] = 1
+settings[styles][scss_nodes] = 1
 
 ; default layout name
 settings[default_layout] = 'omega_clean'

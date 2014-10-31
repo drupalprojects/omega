@@ -218,6 +218,18 @@ function _omega_optional_css($theme) {
       'file' => 'toolbar-responsive.css',
       'status' => isset($status['scss_toolbar']) ? $status['scss_toolbar'] : 0,
     ),
+    'scss_forms' => array(
+      'title' => 'Form Elements',
+      'description' => 'Provides enhanced default styling to basic form elements in Drupal.',
+      'file' => 'form-elements.css',
+      'status' => isset($status['scss_forms']) ? $status['scss_forms'] : 0,
+    ),
+    'scss_nodes' => array(
+      'title' => 'Node Elements',
+      'description' => 'Provides enhanced default styling to Drupal nodes.',
+      'file' => 'node-elements.css',
+      'status' => isset($status['scss_nodes']) ? $status['scss_nodes'] : 0,
+    ),
   );
 }
 
