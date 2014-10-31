@@ -255,6 +255,26 @@ function omega_preprocess_page(&$vars) {
   if (isset($vars['page']['help']) && $helpsize == 0) {
     unset($vars['page']['help']);
   }
+  
+  // add some classes to $tabs wrapper that makes them easier to style
+  $tabs_classes = array();
+  $tabs = $vars['tabs'];
+  
+  // check for primary menu
+  if (isset($tabs['#primary']) && is_array($tabs['#primary'])) {
+    $tabs_classes[] = 'with--primary';
+  }
+  // check for secondary menu
+  // We only need the without-- class here as when the #primary
+  // tabs are empty, nothing would be printed anyway for div.tabs
+  if (isset($tabs['#secondary']) && is_array($tabs['#secondary'])) {
+    $tabs_classes[] = 'with--secondary';
+  }
+  else {
+    $tabs_classes[] = 'without--secondary';
+  }
+  // assign the classes to a variable to be printed in page.tpl.php
+  $vars['tabs_classes'] = implode(' ', $tabs_classes);
 }
 
 

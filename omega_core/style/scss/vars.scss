@@ -94,6 +94,15 @@ $menuitemColor: $primaryColor2 !default;
   -moz-border-radius: $rad;
   border-radius: $rad;
 }
+@mixin omegaCornersAdvanced($tl: 5px, $tr: 5px, $br: 5px, $bl: 5px) {
+  -webkit-border-radius: $tl $tr $br $bl;
+  -moz-border-radius: $tl $tr $br $bl;
+  border-radius: $tl $tr $br $bl;
+}
+
+@mixin omegaCornersReset() {
+  @include omegaCorners(0px);
+}
 // The micro clearfix 
 // http://nicolasgallagher.com/micro-clearfix-hack/
 @mixin clearfix() {
@@ -107,4 +116,11 @@ $menuitemColor: $primaryColor2 !default;
 	&:after {
 	    clear:both;
 	}
+}
+
+@mixin omegaShadow() {
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  -ms-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
