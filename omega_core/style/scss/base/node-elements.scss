@@ -1,0 +1,233 @@
+@import "../vars";
+
+.node {
+  
+  margin-bottom: 20px;
+  
+  
+  
+  // #### NODE HEADER ####
+  
+  .node-header {
+    margin-bottom: 10px;
+  }
+  
+  div.user-picture {
+    float: left;
+    margin-right: 10px;
+    background: $gray-0;
+    padding: 2px;
+    @include omegaShadow();
+    @include omegaCorners(2px);
+    
+    img {
+      display: block;
+      max-width: 60px;
+    }
+  }
+  
+  h2.node-title {
+    font-weight: normal;
+    margin: 0 0 5px 0;
+  }
+  
+  div.submitted {
+    font-size: $font-size-smaller;
+  }
+  
+  // #### NODE CONTENT ####
+  
+  // field labels are ridiculous to display
+  // but Drupal DOES display them, even by default (tags)
+  // SO here's a default style so they look less dumb.
+  // I mean, HONESTLY, why is the colon there by default?!
+  
+  
+  // This is the actual field wrapper.
+  // we'll do something for someone that decides to show
+  // field labels inline (kinda dumb and ugly to do so)
+  .field-label-inline {
+    display: block;
+    margin-bottom: 20px;
+    
+    .field-label {
+      width: 15%;
+    }
+    .field-items {
+      width: 80%;
+      margin-left: 5%;
+    }
+  }
+  
+  .field-label {
+    font-size: $font-size-med;
+    font-family: $bodyFont;
+    
+    .label {
+      display: block;
+      padding: 4px 5px;
+      background: $gray-1;
+      border: 1px solid $gray-0;
+      margin: 0 5px 5px 0;
+      //@include omegaShadow();
+      @include omegaCorners(3px);
+      
+      -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      -ms-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
+  
+  .field-type-image {
+    //float: left;
+    //margin: 0 $font-size-smaller $font-size-smaller 0;
+    
+    img {
+      display: block;
+    }
+  }
+  
+  .field-type-text-with-summary {
+    font-family: $headerFont;
+    font-size: $font-size-large;
+    line-height: $font-size-huge;
+    
+    .field-items {
+      
+      .field-item {
+        &:first-child {
+          margin-top: 0;
+        }
+        &:last-child {
+          margin-bottom: 0;
+        }    
+      }
+    }
+    
+    
+  }
+  
+  // Taxonomy Terms (.field-type-taxonomy-term-reference)
+  .field-type-taxonomy-term-reference {
+    font-size: $font-size-smaller;
+    clear: both;
+    // the group of terms
+    .field-items {
+      
+      // the individual term wrappers
+      .field-item {
+        
+        display: inline-block;
+        
+        // the term link itself
+        a {
+          display: block;
+          text-decoration: none;
+          padding: 4px 5px;
+          background: $gray-1;
+          border: 1px solid $gray-0;
+          margin: 0 5px 5px 0;
+          //@include omegaShadow();
+          @include omegaCorners(3px);
+          
+          -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          -ms-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+          
+          &:hover {
+            background: $gray-3;
+            color: $gray-0;
+          }
+        }
+      }
+    }
+  }
+  
+  // #### NODE FOOTER ####
+  
+  ul.links {
+    margin: 0;
+    padding: 0;
+    font-size: $font-size-med;
+    font-weight: bold;
+    display: block;
+    
+    li {
+      margin: 0;
+      padding: 0;
+      float: left;
+      
+      a {
+        display: block;
+        text-decoration: none;
+        margin: 0 5px 5px 0;
+        padding: 5px 10px;
+        background: $blue-2;
+        color: $gray-0;
+        border: 1px solid $gray-0;
+        @include omegaCorners(3px);
+        
+        -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        -ms-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        
+        &:hover {
+          background: $gray-3;
+          color: $gray-0;
+        }
+      }
+    }
+  }
+  
+  .node-footer {
+    margin-top: 20px;
+  }
+}
+
+
+// styles that will only apply to teasers
+.node-teaser {
+  margin-bottom: 60px;
+  
+  .node-header {
+    //background: $gray-1;
+    //border: 1px solid $gray-0;
+    //padding: 5px;
+    //@include omegaShadow();
+    //@include omegaCorners(5px);
+  }
+  
+  h2.node-title {
+    font-size: $font-size-really-huge;
+  }
+  
+  .field-type-image {
+    float: left;
+    
+    margin-right: $font-size-smaller;
+    margin-bottom: $font-size-smaller;
+    
+    
+    &.field-label-inline {
+      float: none;
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
+    
+    .field-items {
+      
+      .field-item {
+        float: left;
+        background: $gray-0;
+        padding: 5px;
+        @include omegaShadow();
+        @include omegaCorners(5px);
+      }
+    }
+    
+  }
+}
