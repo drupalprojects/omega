@@ -430,14 +430,14 @@ function _omega_compile_layout_sass($layout, $layoutName, $theme = 'omega', $opt
   $parser = new SassParser($options);
   
   // get the variables for the theme
-  $vars = realpath(".") . $base_path . drupal_get_path('theme', 'omega') . '/style/scss/vars.scss';
+  $vars = realpath(".") . '/' . drupal_get_path('theme', 'omega') . '/style/scss/vars.scss';
   $omegavars = new SassFile;
   $varscss = $omegavars->get_file_contents($vars, $parser);
   // set the grid to fluid
   $varscss .= '$twidth: 100%;';
   
   // get the SCSS for the grid system
-  $gs = realpath(".") . $base_path . drupal_get_path('theme', 'omega') . '/style/scss/grids/omega.scss';
+  $gs = realpath(".") . '/' . drupal_get_path('theme', 'omega') . '/style/scss/grids/omega.scss';
   $omegags = new SassFile;
   $gsscss = $omegags->get_file_contents($gs, $parser);
   $scss = $varscss . $gsscss;  
