@@ -389,3 +389,23 @@ function omega_system_powered_by() {
   ));
   return '<div class="powered-by">Powered by ' . $drupal . ' and ' . $omega . '</div>';
 }
+
+function omega_node_view_alter (&$build) {
+  
+  if ($build['#view_mode'] == 'teaser') {
+    
+    // These links are the DUMBEST thing ever on a teaser. 
+    // Why in the heck would someone click straight to comment
+    // rather than hitting 'read more' and READING the article
+    // OR clicking the button that says how many comments there ARE
+    // before commenting. That's why these are disabled by default
+    
+    // @todo: CONFIG SETTING
+    
+    // don't ask me why one of these has an _ and one has a - ??
+    // remove login or register to post comments
+    unset($build['links']['comment']['#links']['comment_forbidden']);
+    // remove add comments
+    unset($build['links']['comment']['#links']['comment-add']);
+  }
+}
